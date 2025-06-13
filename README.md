@@ -57,7 +57,7 @@ src/
 │   │   └── ...
 │   ├── layout.tsx      # Root layout
 │   └── page.tsx        # Home page
-└── lib/               # Utility functions and constants
+└── utils/              # Utility functions
 ```
 
 ## 📝 License
@@ -86,3 +86,5 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## 📧 Contact
 
 For any questions or suggestions, please open an issue in the repository.
+
+Or send an email to contact@aerovia.org
