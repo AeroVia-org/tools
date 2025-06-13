@@ -27,7 +27,7 @@ A collection of open-source aerospace engineering calculators and tools built wi
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/aerovia-tools.git
+git clone https://github.com/AeroVia-org/aerovia-tools
 cd aerovia-tools
 ```
 
