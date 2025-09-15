@@ -142,7 +142,7 @@ export default function HomePage() {
                     <div className="flex items-center gap-3 p-3 rounded-lg bg-card border">
                       <FileText className="h-5 w-5 text-primary" />
                       <div>
-                        <code className="text-sm font-medium">Theory.tsx</code>
+                        <code className="text-sm font-medium">theory.tsx</code>
                         <p className="text-xs text-muted-foreground">
                           Educational theory and references
                         </p>
@@ -152,7 +152,7 @@ export default function HomePage() {
                       <BarChart3 className="h-5 w-5 text-primary" />
                       <div>
                         <code className="text-sm font-medium">
-                          Visualization.tsx
+                          visualization.tsx
                         </code>
                         <p className="text-xs text-muted-foreground">
                           Interactive visualizations/charts

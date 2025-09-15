@@ -79,8 +79,8 @@ pnpm dev
 │   │   │   ├── page.tsx     # Main tool page
 │   │   │   ├── logic.ts     # Calculation logic
 │   │   │   ├── logic.test.ts # Unit tests
-│   │   │   ├── Theory.tsx   # Explanation of underlying theory
-│   │   │   └── Visualization.tsx # Interactive visualization
+│   │   │   ├── theory.tsx   # Explanation of underlying theory
+│   │   │   └── visualization.tsx # Interactive visualization
 │   │   └── ...
 │   ├── components/          # Shared components
 │   ├── page.tsx             # Home page showing list of tools
@@ -142,8 +142,8 @@ We welcome contributions from the aerospace community! Here's how to add a new t
    - `page.tsx` - Main tool interface and user interaction
    - `logic.ts` - Core calculation functions with proper TypeScript types
    - `logic.test.ts` - Comprehensive unit tests using Vitest
-   - `Theory.tsx` - Educational content explaining the underlying physics/math
-   - `Visualization.tsx` - Interactive charts and visualizations (optional)
+   - `theory.tsx` - Educational content explaining the underlying physics/math
+   - `visualization.tsx` - Interactive charts and visualizations (optional)
 
 4. **Follow our standards**:
    - Use semantic color classes from our design system
