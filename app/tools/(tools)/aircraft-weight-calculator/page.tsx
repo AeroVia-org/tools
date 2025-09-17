@@ -29,6 +29,7 @@ import Theory from "./theory";
 import Navigation from "../../components/Navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -178,7 +179,7 @@ export default function AircraftWeightCalculatorPage() {
 
           {/* Calculation Mode Selection */}
           <div className="mb-6">
-            <label className="text-foreground mb-1 block text-sm font-medium">Calculation Mode</label>
+            <Label className="mb-1">Calculation Mode</Label>
             <div className="bg-muted flex space-x-4 rounded-md p-1">
               {[
                 { id: "fromTakeoffWeight", label: "From Takeoff Weight" },
@@ -207,9 +208,7 @@ export default function AircraftWeightCalculatorPage() {
           {/* Aircraft Type and Mission */}
           <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="aircraft-type" className="text-foreground block text-sm font-medium">
-                Aircraft Type
-              </label>
+              <Label htmlFor="aircraft-type">Aircraft Type</Label>
               <Select value={aircraftType} onValueChange={(value) => setAircraftType(value as AircraftType)}>
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
@@ -225,9 +224,7 @@ export default function AircraftWeightCalculatorPage() {
             </div>
 
             <div>
-              <label htmlFor="mission-type" className="text-foreground block text-sm font-medium">
-                Mission Type
-              </label>
+              <Label htmlFor="mission-type">Mission Type</Label>
               <Select value={missionType} onValueChange={(value) => setMissionType(value as MissionType)}>
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
@@ -251,9 +248,7 @@ export default function AircraftWeightCalculatorPage() {
             {calculationMode === "fromTakeoffWeight" && (
               <div className="grid grid-cols-3 gap-4">
                 <div className="col-span-2">
-                  <label htmlFor="takeoff-weight" className="text-foreground block text-sm font-medium">
-                    Takeoff Weight
-                  </label>
+                  <Label htmlFor="takeoff-weight">Takeoff Weight</Label>
                   <Input
                     type="number"
                     id="takeoff-weight"
@@ -264,9 +259,7 @@ export default function AircraftWeightCalculatorPage() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="weight-unit" className="text-foreground block text-sm font-medium">
-                    Unit
-                  </label>
+                  <Label htmlFor="weight-unit">Unit</Label>
                   <Select value={weightUnit} onValueChange={(value) => setWeightUnit(value as WeightUnit)}>
                     <SelectTrigger className="mt-1 w-full">
                       <SelectValue />
@@ -284,9 +277,7 @@ export default function AircraftWeightCalculatorPage() {
             {calculationMode === "fromEmptyWeight" && (
               <div className="grid grid-cols-3 gap-4">
                 <div className="col-span-2">
-                  <label htmlFor="empty-weight" className="text-foreground block text-sm font-medium">
-                    Empty Weight
-                  </label>
+                  <Label htmlFor="empty-weight">Empty Weight</Label>
                   <Input
                     type="number"
                     id="empty-weight"
@@ -297,9 +288,7 @@ export default function AircraftWeightCalculatorPage() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="weight-unit" className="text-foreground block text-sm font-medium">
-                    Unit
-                  </label>
+                  <Label htmlFor="weight-unit">Unit</Label>
                   <Select value={weightUnit} onValueChange={(value) => setWeightUnit(value as WeightUnit)}>
                     <SelectTrigger className="mt-1 w-full">
                       <SelectValue />
@@ -316,9 +305,7 @@ export default function AircraftWeightCalculatorPage() {
             {/* Optional Weight Inputs */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label htmlFor="fuel-weight" className="text-foreground block text-sm font-medium">
-                  Fuel Weight (Optional)
-                </label>
+                <Label htmlFor="fuel-weight">Fuel Weight (Optional)</Label>
                 <Input
                   type="number"
                   id="fuel-weight"
@@ -330,9 +317,7 @@ export default function AircraftWeightCalculatorPage() {
               </div>
 
               <div>
-                <label htmlFor="payload-weight" className="text-foreground block text-sm font-medium">
-                  Payload Weight (Optional)
-                </label>
+                <Label htmlFor="payload-weight">Payload Weight (Optional)</Label>
                 <Input
                   type="number"
                   id="payload-weight"
@@ -344,9 +329,7 @@ export default function AircraftWeightCalculatorPage() {
               </div>
 
               <div>
-                <label htmlFor="crew-weight" className="text-foreground block text-sm font-medium">
-                  Crew Weight (Optional)
-                </label>
+                <Label htmlFor="crew-weight">Crew Weight (Optional)</Label>
                 <Input
                   type="number"
                   id="crew-weight"
@@ -364,9 +347,7 @@ export default function AircraftWeightCalculatorPage() {
             <h3 className="text-foreground text-lg font-medium">Constraints</h3>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div>
-                <label htmlFor="mtow" className="text-foreground block text-sm font-medium">
-                  MTOW
-                </label>
+                <Label htmlFor="mtow">MTOW</Label>
                 <Input
                   type="number"
                   id="mtow"
@@ -378,9 +359,7 @@ export default function AircraftWeightCalculatorPage() {
                 <div className="text-muted-foreground mt-1 text-xs">Maximum Takeoff Weight ({weightUnit})</div>
               </div>
               <div>
-                <label htmlFor="mzfw" className="text-foreground block text-sm font-medium">
-                  MZFW
-                </label>
+                <Label htmlFor="mzfw">MZFW</Label>
                 <Input
                   type="number"
                   id="mzfw"
@@ -392,9 +371,7 @@ export default function AircraftWeightCalculatorPage() {
                 <div className="text-muted-foreground mt-1 text-xs">Max Zero Fuel Weight ({weightUnit})</div>
               </div>
               <div>
-                <label htmlFor="max-fuel" className="text-foreground block text-sm font-medium">
-                  Max Fuel Capacity
-                </label>
+                <Label htmlFor="max-fuel">Max Fuel Capacity</Label>
                 <Input
                   type="number"
                   id="max-fuel"
@@ -474,9 +451,7 @@ export default function AircraftWeightCalculatorPage() {
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label htmlFor="range" className="text-foreground block text-sm font-medium">
-                  Range
-                </label>
+                <Label htmlFor="range">Range</Label>
                 <div className="flex gap-2">
                   <Input
                     type="number"
@@ -500,9 +475,7 @@ export default function AircraftWeightCalculatorPage() {
               </div>
 
               <div>
-                <label htmlFor="endurance" className="text-foreground block text-sm font-medium">
-                  Endurance (hours)
-                </label>
+                <Label htmlFor="endurance">Endurance (hours)</Label>
                 <Input
                   type="number"
                   id="endurance"
@@ -514,9 +487,7 @@ export default function AircraftWeightCalculatorPage() {
               </div>
 
               <div>
-                <label htmlFor="cruise-speed" className="text-foreground block text-sm font-medium">
-                  Cruise Speed (m/s)
-                </label>
+                <Label htmlFor="cruise-speed">Cruise Speed (m/s)</Label>
                 <Input
                   type="number"
                   id="cruise-speed"
@@ -528,9 +499,7 @@ export default function AircraftWeightCalculatorPage() {
               </div>
 
               <div>
-                <label htmlFor="cruise-altitude" className="text-foreground block text-sm font-medium">
-                  Cruise Altitude (m)
-                </label>
+                <Label htmlFor="cruise-altitude">Cruise Altitude (m)</Label>
                 <Input
                   type="number"
                   id="cruise-altitude"

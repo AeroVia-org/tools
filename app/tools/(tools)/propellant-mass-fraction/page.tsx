@@ -12,6 +12,7 @@ import { calculatePropellantMassFraction, PropellantMassFractionResult } from ".
 import Navigation from "../../components/Navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -123,9 +124,7 @@ export default function PropellantMassFractionPage() {
           <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
             {/* Initial Mass */}
             <div>
-              <label htmlFor="initial-mass" className="text-foreground block text-sm font-medium">
-                Initial Mass (Wet)
-              </label>
+              <Label htmlFor="initial-mass">Initial Mass (Wet)</Label>
               <Input
                 type="number"
                 id="initial-mass"
@@ -138,9 +137,7 @@ export default function PropellantMassFractionPage() {
 
             {/* Final Mass */}
             <div>
-              <label htmlFor="final-mass" className="text-foreground block text-sm font-medium">
-                Final Mass (Dry)
-              </label>
+              <Label htmlFor="final-mass">Final Mass (Dry)</Label>
               <Input
                 type="number"
                 id="final-mass"
@@ -153,9 +150,7 @@ export default function PropellantMassFractionPage() {
 
             {/* Unit Selector */}
             <div>
-              <label htmlFor="unit" className="text-foreground block text-sm font-medium">
-                Unit
-              </label>
+              <Label htmlFor="unit">Unit</Label>
               <Select value={massUnit} onValueChange={(value) => setMassUnit(value as MassUnit)}>
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />

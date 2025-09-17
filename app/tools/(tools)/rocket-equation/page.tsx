@@ -19,6 +19,7 @@ import { calculateDeltaV, calculateInitialMass, calculateRequiredSpecificImpulse
 import Navigation from "../../components/Navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -152,9 +153,7 @@ export default function RocketEquationPage() {
             <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
               {/* Initial Mass Input */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="initial-mass" className="text-foreground block text-sm font-medium">
-                  Initial Mass
-                </label>
+                <Label htmlFor="initial-mass">Initial Mass</Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     id="initial-mass"
@@ -168,9 +167,7 @@ export default function RocketEquationPage() {
 
               {/* Final Mass Input */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="final-mass" className="text-foreground block text-sm font-medium">
-                  Final Mass
-                </label>
+                <Label htmlFor="final-mass">Final Mass</Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     id="final-mass"
@@ -184,9 +181,7 @@ export default function RocketEquationPage() {
 
               {/* Mass Unit Selector */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="mass-unit" className="text-foreground block text-sm font-medium">
-                  Mass Unit
-                </label>
+                <Label htmlFor="mass-unit">Mass Unit</Label>
                 <Select value={massUnit} onValueChange={(value) => setMassUnit(value as MassUnit)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
@@ -202,9 +197,9 @@ export default function RocketEquationPage() {
             <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {/* Specific Impulse Input */}
               <div>
-                <label htmlFor="specific-impulse" className="text-foreground block text-sm font-medium">
+                <Label htmlFor="specific-impulse">
                   Specific Impulse (I<sub>sp</sub>)
-                </label>
+                </Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     id="specific-impulse"
@@ -227,9 +222,7 @@ export default function RocketEquationPage() {
             <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
               {/* Final Mass Input */}
               <div className="col-span-2 sm:col-span-2">
-                <label htmlFor="final-mass" className="text-foreground block text-sm font-medium">
-                  Final Mass
-                </label>
+                <Label htmlFor="final-mass">Final Mass</Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     id="final-mass"
@@ -243,9 +236,7 @@ export default function RocketEquationPage() {
 
               {/* Mass Unit Selector */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="mass-unit" className="text-foreground block text-sm font-medium">
-                  Mass Unit
-                </label>
+                <Label htmlFor="mass-unit">Mass Unit</Label>
                 <Select value={massUnit} onValueChange={(value) => setMassUnit(value as MassUnit)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
@@ -261,9 +252,7 @@ export default function RocketEquationPage() {
             <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
               {/* Delta-V Input */}
               <div className="col-span-2 sm:col-span-2">
-                <label htmlFor="delta-v" className="text-foreground block text-sm font-medium">
-                  Delta-V (Δv)
-                </label>
+                <Label htmlFor="delta-v">Delta-V (Δv)</Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     id="delta-v"
@@ -277,9 +266,7 @@ export default function RocketEquationPage() {
 
               {/* Velocity Unit Selector */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="velocity-unit" className="text-foreground block text-sm font-medium">
-                  Velocity Unit
-                </label>
+                <Label htmlFor="velocity-unit">Velocity Unit</Label>
                 <Select value={velocityUnit} onValueChange={(value) => setVelocityUnit(value as VelocityUnit)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
@@ -296,9 +283,9 @@ export default function RocketEquationPage() {
 
             {/* Specific Impulse Input */}
             <div className="mb-6">
-              <label htmlFor="specific-impulse" className="text-foreground block text-sm font-medium">
+              <Label htmlFor="specific-impulse">
                 Specific Impulse (I<sub>sp</sub>)
-              </label>
+              </Label>
               <div className="relative mt-1 rounded-md shadow-sm">
                 <Input
                   id="specific-impulse"
@@ -320,9 +307,7 @@ export default function RocketEquationPage() {
             <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
               {/* Initial Mass Input */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="initial-mass" className="text-foreground block text-sm font-medium">
-                  Initial Mass
-                </label>
+                <Label htmlFor="initial-mass">Initial Mass</Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     id="initial-mass"
@@ -336,9 +321,7 @@ export default function RocketEquationPage() {
 
               {/* Final Mass Input */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="final-mass" className="text-foreground block text-sm font-medium">
-                  Final Mass
-                </label>
+                <Label htmlFor="final-mass">Final Mass</Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     id="final-mass"
@@ -352,9 +335,7 @@ export default function RocketEquationPage() {
 
               {/* Mass Unit Selector */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="mass-unit" className="text-foreground block text-sm font-medium">
-                  Mass Unit
-                </label>
+                <Label htmlFor="mass-unit">Mass Unit</Label>
                 <Select value={massUnit} onValueChange={(value) => setMassUnit(value as MassUnit)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
@@ -370,9 +351,7 @@ export default function RocketEquationPage() {
             <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
               {/* Delta-V Input */}
               <div className="col-span-2 sm:col-span-2">
-                <label htmlFor="delta-v" className="text-foreground block text-sm font-medium">
-                  Delta-V (Δv)
-                </label>
+                <Label htmlFor="delta-v">Delta-V (Δv)</Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     id="delta-v"
@@ -386,9 +365,7 @@ export default function RocketEquationPage() {
 
               {/* Velocity Unit Selector */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="velocity-unit" className="text-foreground block text-sm font-medium">
-                  Velocity Unit
-                </label>
+                <Label htmlFor="velocity-unit">Velocity Unit</Label>
                 <Select value={velocityUnit} onValueChange={(value) => setVelocityUnit(value as VelocityUnit)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
@@ -426,7 +403,7 @@ export default function RocketEquationPage() {
 
           {/* Calculation Type Selection */}
           <div className="mb-6">
-            <label className="text-foreground mb-1 block text-sm font-medium">Calculation Type</label>
+            <Label className="mb-1">Calculation Type</Label>
             <div className="bg-muted flex space-x-4 rounded-md p-1">
               {[
                 { id: "deltaV", label: "Calculate Δv" },

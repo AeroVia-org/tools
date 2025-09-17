@@ -13,6 +13,7 @@ import Theory from "./theory";
 import Navigation from "../../components/Navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -92,9 +93,7 @@ export default function SpecificImpulseConverterPage() {
 
           {/* Input Section */}
           <div className="mb-6">
-            <label htmlFor="input-value" className="text-foreground block text-sm font-medium">
-              Specific Impulse Value
-            </label>
+            <Label htmlFor="input-value">Specific Impulse Value</Label>
             <div className="mt-1 flex gap-2">
               <Input
                 type="number"

@@ -14,6 +14,7 @@ import Theory from "./theory";
 import Navigation from "../../components/Navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -231,9 +232,7 @@ export default function OrbitalCalculatorPage() {
           <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
             {/* Altitude Input - Takes 1 span */}
             <div>
-              <label htmlFor="input-value" className="text-foreground block text-sm font-medium">
-                {getInputLabel()}
-              </label>
+              <Label htmlFor="input-value">{getInputLabel()}</Label>
               <Input
                 type="number"
                 id="input-value"
@@ -247,9 +246,7 @@ export default function OrbitalCalculatorPage() {
 
             {/* Unit Selector - Takes 1 span */}
             <div>
-              <label htmlFor="unit" className="text-foreground block text-sm font-medium">
-                Unit
-              </label>
+              <Label htmlFor="unit">Unit</Label>
               <Select value={altitudeUnit} onValueChange={(value) => setAltitudeUnit(value as AltitudeUnit)}>
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />

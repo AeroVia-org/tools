@@ -27,6 +27,7 @@ import {
 } from "@/lib/conversions";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 
 import OpenSourceCard from "../../components/OpenSourceCard";
 import Navigation from "../../components/Navigation";
@@ -266,7 +267,7 @@ export default function IsaCalculatorPage() {
 
           {/* Input Type Selection */}
           <div className="mb-6">
-            <label className="text-foreground mb-1 block text-sm font-medium">Input Property</label>
+            <Label className="mb-1">Input Property</Label>
             <div className="bg-muted flex space-x-4 rounded-md p-1">
               {(["altitude", "pressure", "temperature"] as InputType[]).map((type) => (
                 <button
@@ -290,9 +291,7 @@ export default function IsaCalculatorPage() {
           {/* Input Value and Unit */}
           <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="input-value" className="text-foreground block text-sm font-medium">
-                {getInputLabel()} Value
-              </label>
+              <Label htmlFor="input-value">{getInputLabel()} Value</Label>
               <Input
                 type="number"
                 id="input-value"
@@ -303,9 +302,7 @@ export default function IsaCalculatorPage() {
               />
             </div>
             <div>
-              <label htmlFor="unit" className="text-foreground block text-sm font-medium">
-                Unit
-              </label>
+              <Label htmlFor="unit">Unit</Label>
               {renderInputUnitSelector()}
             </div>
           </div>

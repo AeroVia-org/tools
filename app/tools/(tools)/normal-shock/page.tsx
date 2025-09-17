@@ -13,6 +13,7 @@ import Theory from "./theory";
 import Navigation from "../../components/Navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -179,7 +180,7 @@ export default function NormalShockPage() {
 
           {/* Calculation Mode Selection */}
           <div className="mb-4">
-            <label className="text-foreground mb-1 block text-sm font-medium">Calculation Mode</label>
+            <Label className="mb-1">Calculation Mode</Label>
             <div className="bg-muted flex space-x-4 rounded-md p-1">
               {(["mach", "pitot"] as CalculationMode[]).map((mode) => (
                 <button
@@ -201,9 +202,9 @@ export default function NormalShockPage() {
           <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
             {/* Gas Properties Section */}
             <div>
-              <label htmlFor="gas-type" className="text-foreground mb-1 block text-sm font-medium">
+              <Label htmlFor="gas-type" className="mb-1">
                 Gas
-              </label>
+              </Label>
               <div className={gasType === "custom" ? "space-y-2" : ""}>
                 <Select value={gasType} onValueChange={(value) => setGasType(value as GasType)}>
                   <SelectTrigger className="mt-1 w-full">
@@ -220,9 +221,9 @@ export default function NormalShockPage() {
 
                 {gasType === "custom" && (
                   <div>
-                    <label htmlFor="custom-gamma" className="text-foreground mb-1 block text-xs font-medium">
+                    <Label htmlFor="custom-gamma" className="mb-1 text-xs">
                       Specific Heat Ratio (γ)
-                    </label>
+                    </Label>
                     <Input
                       type="number"
                       id="custom-gamma"
@@ -242,9 +243,9 @@ export default function NormalShockPage() {
             <div>
               {calculationMode === "mach" ? (
                 <div>
-                  <label htmlFor="mach-number" className="text-foreground mb-1 block text-sm font-medium">
+                  <Label htmlFor="mach-number" className="mb-1">
                     Upstream Mach Number (M₁)
-                  </label>
+                  </Label>
                   <Input
                     type="number"
                     id="mach-number"
@@ -259,9 +260,9 @@ export default function NormalShockPage() {
                 </div>
               ) : (
                 <div>
-                  <label htmlFor="pitot-ratio" className="text-foreground mb-1 block text-sm font-medium">
+                  <Label htmlFor="pitot-ratio" className="mb-1">
                     Pitot-to-Static Pressure Ratio (p₀₂/p₁)
-                  </label>
+                  </Label>
                   <Input
                     type="number"
                     id="pitot-ratio"

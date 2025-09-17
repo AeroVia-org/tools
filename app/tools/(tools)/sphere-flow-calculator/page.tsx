@@ -17,10 +17,12 @@ import {
 import { calculateSphereFlow, SphereFlowResult, FlowConditions } from "./logic";
 import Theory from "./theory";
 import Navigation from "../../components/Navigation";
+import { Checkbox } from "@packages/ui/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@packages/ui/components/ui/card";
 import { Badge } from "@packages/ui/components/ui/badge";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -183,7 +185,7 @@ export default function SphereFlowCalculatorPage() {
             <CardContent className="space-y-4">
               {/* Sphere Diameter */}
               <div className="space-y-2">
-                <label className="text-foreground text-sm font-medium">Sphere Diameter</label>
+                <Label>Sphere Diameter</Label>
                 <div className="flex gap-2">
                   <Input
                     type="number"
@@ -206,7 +208,7 @@ export default function SphereFlowCalculatorPage() {
 
               {/* Flow Velocity */}
               <div className="space-y-2">
-                <label className="text-foreground text-sm font-medium">Flow Velocity</label>
+                <Label>Flow Velocity</Label>
                 <div className="flex gap-2">
                   <Input
                     type="number"
@@ -230,7 +232,7 @@ export default function SphereFlowCalculatorPage() {
 
               {/* Temperature */}
               <div className="space-y-2">
-                <label className="text-foreground text-sm font-medium">Temperature</label>
+                <Label>Temperature</Label>
                 <div className="flex gap-2">
                   <Input
                     type="number"
@@ -254,7 +256,7 @@ export default function SphereFlowCalculatorPage() {
 
               {/* Fluid Type */}
               <div className="space-y-2">
-                <label className="text-foreground text-sm font-medium">Fluid Type</label>
+                <Label>Fluid Type</Label>
                 <Select value={fluidType} onValueChange={setFluidType}>
                   <SelectTrigger>
                     <SelectValue />
@@ -269,35 +271,29 @@ export default function SphereFlowCalculatorPage() {
 
               {/* Visualization Options */}
               <div className="border-border space-y-3 border-t pt-4">
-                <label className="text-foreground text-sm font-medium">Visualization Options</label>
+                <Label>Visualization Options</Label>
                 <div className="space-y-2">
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
+                  <Label className="flex items-center space-x-2">
+                    <Checkbox
                       checked={showVisualization}
-                      onChange={(e) => setShowVisualization(e.target.checked)}
-                      className="border-border rounded"
+                      onCheckedChange={(checked) => setShowVisualization(checked === true)}
                     />
                     <span className="text-foreground text-sm">Show Flow Visualization</span>
-                  </label>
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
+                  </Label>
+                  <Label className="flex items-center space-x-2">
+                    <Checkbox
                       checked={showPressureDistribution}
-                      onChange={(e) => setShowPressureDistribution(e.target.checked)}
-                      className="border-border rounded"
+                      onCheckedChange={(checked) => setShowPressureDistribution(checked === true)}
                     />
                     <span className="text-foreground text-sm">Show Pressure Distribution</span>
-                  </label>
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
+                  </Label>
+                  <Label className="flex items-center space-x-2">
+                    <Checkbox
                       checked={showStreamlines}
-                      onChange={(e) => setShowStreamlines(e.target.checked)}
-                      className="border-border rounded"
+                      onCheckedChange={(checked) => setShowStreamlines(checked === true)}
                     />
                     <span className="text-foreground text-sm">Show Streamlines</span>
-                  </label>
+                  </Label>
                 </div>
               </div>
             </CardContent>

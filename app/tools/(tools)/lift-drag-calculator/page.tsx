@@ -17,8 +17,10 @@ import { calculateLiftAndDrag, getAirfoilTypes, LiftDragResult, FlightConditions
 import { MStoKMH, MStoKnots, MtoFt, FttoM, Ft2toM2 } from "@/lib/conversions";
 import Theory from "./theory";
 import Navigation from "../../components/Navigation";
+import { Checkbox } from "@packages/ui/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -226,9 +228,7 @@ export default function LiftDragCalculatorPage() {
             {/* Velocity */}
             <div className="grid grid-cols-3 gap-4">
               <div className="col-span-2">
-                <label htmlFor="velocity" className="text-foreground block text-sm font-medium">
-                  Velocity
-                </label>
+                <Label>Velocity</Label>
                 <Input
                   type="number"
                   id="velocity"
@@ -239,9 +239,7 @@ export default function LiftDragCalculatorPage() {
                 />
               </div>
               <div>
-                <label htmlFor="velocity-unit" className="text-foreground block text-sm font-medium">
-                  Unit
-                </label>
+                <Label>Unit</Label>
                 <Select value={velocityUnit} onValueChange={(value) => setVelocityUnit(value as VelocityUnit)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
@@ -258,9 +256,7 @@ export default function LiftDragCalculatorPage() {
             {/* Altitude */}
             <div className="grid grid-cols-3 gap-4">
               <div className="col-span-2">
-                <label htmlFor="altitude" className="text-foreground block text-sm font-medium">
-                  Altitude
-                </label>
+                <Label>Altitude</Label>
                 <Input
                   type="number"
                   id="altitude"
@@ -271,9 +267,7 @@ export default function LiftDragCalculatorPage() {
                 />
               </div>
               <div>
-                <label htmlFor="altitude-unit" className="text-foreground block text-sm font-medium">
-                  Unit
-                </label>
+                <Label>Unit</Label>
                 <Select value={altitudeUnit} onValueChange={(value) => setAltitudeUnit(value as AltitudeUnit)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
@@ -288,9 +282,7 @@ export default function LiftDragCalculatorPage() {
 
             {/* Angle of Attack */}
             <div>
-              <label htmlFor="angle-of-attack" className="text-foreground block text-sm font-medium">
-                Angle of Attack
-              </label>
+              <Label>Angle of Attack</Label>
               <Input
                 type="number"
                 id="angle-of-attack"
@@ -311,9 +303,7 @@ export default function LiftDragCalculatorPage() {
             {/* Wing Area */}
             <div className="grid grid-cols-3 gap-4">
               <div className="col-span-2">
-                <label htmlFor="wing-area" className="text-foreground block text-sm font-medium">
-                  Wing Area
-                </label>
+                <Label>Wing Area</Label>
                 <Input
                   type="number"
                   id="wing-area"
@@ -324,9 +314,7 @@ export default function LiftDragCalculatorPage() {
                 />
               </div>
               <div>
-                <label htmlFor="area-unit" className="text-foreground block text-sm font-medium">
-                  Unit
-                </label>
+                <Label>Unit</Label>
                 <Select value={areaUnit} onValueChange={(value) => setAreaUnit(value as AreaUnit)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
@@ -342,9 +330,7 @@ export default function LiftDragCalculatorPage() {
             {/* Wing Span */}
             <div className="grid grid-cols-3 gap-4">
               <div className="col-span-2">
-                <label htmlFor="wing-span" className="text-foreground block text-sm font-medium">
-                  Wing Span
-                </label>
+                <Label>Wing Span</Label>
                 <Input
                   type="number"
                   id="wing-span"
@@ -355,9 +341,7 @@ export default function LiftDragCalculatorPage() {
                 />
               </div>
               <div>
-                <label htmlFor="length-unit" className="text-foreground block text-sm font-medium">
-                  Unit
-                </label>
+                <Label>Unit</Label>
                 <Select value={lengthUnit} onValueChange={(value) => setLengthUnit(value as LengthUnit)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
@@ -377,9 +361,7 @@ export default function LiftDragCalculatorPage() {
 
             {/* Airfoil Type Selection */}
             <div>
-              <label htmlFor="airfoil-type" className="text-foreground block text-sm font-medium">
-                Airfoil Type
-              </label>
+              <Label>Airfoil Type</Label>
               <Select value={airfoilType} onValueChange={(value) => setAirfoilType(value)} disabled={useCustomAirfoil}>
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
@@ -396,25 +378,19 @@ export default function LiftDragCalculatorPage() {
 
             {/* Custom Airfoil Toggle */}
             <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="custom-airfoil"
                 checked={useCustomAirfoil}
-                onChange={(e) => setUseCustomAirfoil(e.target.checked)}
-                className="rounded border-gray-300"
+                onCheckedChange={(checked) => setUseCustomAirfoil(checked === true)}
               />
-              <label htmlFor="custom-airfoil" className="text-foreground text-sm font-medium">
-                Use Custom Airfoil Parameters
-              </label>
+              <Label>Use Custom Airfoil Parameters</Label>
             </div>
 
             {/* Custom Airfoil Parameters */}
             {useCustomAirfoil && (
               <div className="grid grid-cols-2 gap-4 rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-900/40 dark:bg-blue-900/20">
                 <div>
-                  <label htmlFor="custom-cl-max" className="text-foreground block text-sm font-medium">
-                    CL Max
-                  </label>
+                  <Label>CL Max</Label>
                   <Input
                     type="number"
                     id="custom-cl-max"
@@ -426,9 +402,7 @@ export default function LiftDragCalculatorPage() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="custom-cl0" className="text-foreground block text-sm font-medium">
-                    CL0
-                  </label>
+                  <Label>CL0</Label>
                   <Input
                     type="number"
                     id="custom-cl0"
@@ -440,9 +414,7 @@ export default function LiftDragCalculatorPage() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="custom-cd0" className="text-foreground block text-sm font-medium">
-                    CD0
-                  </label>
+                  <Label>CD0</Label>
                   <Input
                     type="number"
                     id="custom-cd0"
@@ -454,9 +426,7 @@ export default function LiftDragCalculatorPage() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="custom-oswald" className="text-foreground block text-sm font-medium">
-                    Oswald Efficiency
-                  </label>
+                  <Label>Oswald Efficiency</Label>
                   <Input
                     type="number"
                     id="custom-oswald"

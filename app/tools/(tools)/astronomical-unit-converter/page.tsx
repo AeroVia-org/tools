@@ -10,6 +10,7 @@ import { convertDistance, astronomicalUnits, AstronomicalUnit } from "./logic";
 import Navigation from "../../components/Navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -92,9 +93,7 @@ export default function AstronomicalUnitConverterPage() {
         <div className="space-y-6">
           <div className="flex items-end gap-4">
             <div className="flex-1">
-              <label htmlFor="from-unit" className="text-foreground block text-sm font-medium">
-                From
-              </label>
+              <Label htmlFor="from-unit">From</Label>
               <Select value={fromUnit} onValueChange={(v) => setFromUnit(v as AstronomicalUnit)}>
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
@@ -122,9 +121,7 @@ export default function AstronomicalUnitConverterPage() {
             </div>
 
             <div className="flex-1">
-              <label htmlFor="to-unit" className="text-foreground block text-sm font-medium">
-                To
-              </label>
+              <Label htmlFor="to-unit">To</Label>
               <Select value={toUnit} onValueChange={(v) => setToUnit(v as AstronomicalUnit)}>
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
@@ -142,9 +139,7 @@ export default function AstronomicalUnitConverterPage() {
 
           <div className="flex items-end gap-4">
             <div className="flex-1">
-              <label htmlFor="input-value" className="text-foreground block text-sm font-medium">
-                Value
-              </label>
+              <Label htmlFor="input-value">Value</Label>
               <Input
                 type="number"
                 id="input-value"
@@ -160,9 +155,7 @@ export default function AstronomicalUnitConverterPage() {
             </div>
 
             <div className="flex-1">
-              <label htmlFor="result-value" className="text-foreground block text-sm font-medium">
-                Result
-              </label>
+              <Label htmlFor="result-value">Result</Label>
               <div className="border-border bg-card mt-1 flex items-center justify-between rounded-md border px-3 py-2 shadow-sm">
                 <span id="result-value" className="flex-grow sm:text-sm" aria-live="polite">
                   {error && !resultValue ? "---" : formattedResult() || "---"}

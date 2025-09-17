@@ -14,6 +14,7 @@ import Navigation from "../../components/Navigation";
 import Theory from "./theory";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -244,7 +245,7 @@ export default function HohmannTransferPage() {
 
           {/* Input Type Selection */}
           <div className="mb-6">
-            <label className="text-foreground mb-1 block text-sm font-medium">Input Type</label>
+            <Label className="mb-1">Input Type</Label>
             <div className="bg-muted flex space-x-4 rounded-md p-1">
               {(["altitude", "distance"] as InputType[]).map((type) => (
                 <button
@@ -273,9 +274,7 @@ export default function HohmannTransferPage() {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* Initial Input */}
                 <div>
-                  <label htmlFor="initial-value" className="text-foreground block text-sm font-medium">
-                    {getInputLabel("initial")}
-                  </label>
+                  <Label htmlFor="initial-value">{getInputLabel("initial")}</Label>
                   <Input
                     type="number"
                     id="initial-value"
@@ -289,9 +288,7 @@ export default function HohmannTransferPage() {
 
                 {/* Final Input */}
                 <div>
-                  <label htmlFor="final-value" className="text-foreground block text-sm font-medium">
-                    {getInputLabel("final")}
-                  </label>
+                  <Label htmlFor="final-value">{getInputLabel("final")}</Label>
                   <Input
                     type="number"
                     id="final-value"
@@ -307,9 +304,7 @@ export default function HohmannTransferPage() {
 
             {/* Unit Selector */}
             <div className="sm:col-span-1">
-              <label htmlFor="unit" className="text-foreground block text-sm font-medium">
-                Unit
-              </label>
+              <Label htmlFor="unit">Unit</Label>
               <Select value={altitudeUnit} onValueChange={(value) => setAltitudeUnit(value as AltitudeUnit)}>
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />

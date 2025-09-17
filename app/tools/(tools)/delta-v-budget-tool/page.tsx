@@ -12,9 +12,11 @@ import {
 } from "./logic";
 import Theory from "./theory";
 import Navigation from "../../components/Navigation";
+import { Checkbox } from "@packages/ui/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
 import { Button } from "@packages/ui/components/ui/button";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -225,7 +227,7 @@ export default function DeltaVBudgetToolPage() {
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-foreground block text-sm font-medium">Delta-V (m/s)</label>
+                    <Label>Delta-V (m/s)</Label>
                     <Input
                       type="number"
                       value={newPhaseDeltaV}
@@ -239,7 +241,7 @@ export default function DeltaVBudgetToolPage() {
                     />
                   </div>
                   <div>
-                    <label className="text-foreground block text-sm font-medium">Category</label>
+                    <Label>Category</Label>
                     <Select
                       value={newPhaseCategory}
                       onValueChange={(value) => setNewPhaseCategory(value as MissionPhase["category"])}
@@ -258,9 +260,7 @@ export default function DeltaVBudgetToolPage() {
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="phase-name-input" className="text-foreground block text-sm font-medium">
-                    Phase Name
-                  </label>
+                  <Label>Phase Name</Label>
                   <Input
                     value={newPhaseName}
                     onChange={(e) => setNewPhaseName(e.target.value)}
@@ -270,9 +270,7 @@ export default function DeltaVBudgetToolPage() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="phase-description-input" className="text-foreground block text-sm font-medium">
-                    Description (Optional)
-                  </label>
+                  <Label>Description (Optional)</Label>
                   <Input
                     value={newPhaseDescription}
                     onChange={(e) => setNewPhaseDescription(e.target.value)}
@@ -318,12 +316,7 @@ export default function DeltaVBudgetToolPage() {
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <input
-                          type="checkbox"
-                          checked={phase.isEnabled}
-                          onChange={() => handleTogglePhase(phase.id)}
-                          className="border-border rounded"
-                        />
+                        <Checkbox checked={phase.isEnabled} onCheckedChange={() => handleTogglePhase(phase.id)} />
                         <div>
                           <div className="flex items-center gap-2">
                             <span className="text-foreground font-medium">{phase.name}</span>

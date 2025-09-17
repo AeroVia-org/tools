@@ -21,6 +21,7 @@ import Theory from "./theory";
 import Navigation from "../../components/Navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -238,7 +239,7 @@ export default function ReynoldsCalculatorPage() {
 
           {/* Flow Type Selection */}
           <div className="mb-6">
-            <label className="text-foreground mb-1 block text-sm font-medium">Flow Type</label>
+            <Label className="mb-1">Flow Type</Label>
             <div className="bg-muted flex space-x-4 rounded-md p-1">
               {(["external", "internal"] as FlowType[]).map((type) => (
                 <button
@@ -256,7 +257,7 @@ export default function ReynoldsCalculatorPage() {
 
           {/* Calculation Method Selection */}
           <div className="mb-6">
-            <label className="text-foreground mb-1 block text-sm font-medium">Calculation Method</label>
+            <Label className="mb-1">Calculation Method</Label>
             <div className="bg-muted flex space-x-4 rounded-md p-1">
               {(["standard", "kinematic"] as CalculationMethod[]).map((method) => (
                 <button
@@ -288,9 +289,7 @@ export default function ReynoldsCalculatorPage() {
               {/* Velocity Input */}
               <div className="grid grid-cols-5 gap-2">
                 <div className="col-span-3">
-                  <label htmlFor="velocity" className="text-foreground block text-sm font-medium">
-                    Velocity
-                  </label>
+                  <Label htmlFor="velocity">Velocity</Label>
                   <Input
                     type="number"
                     id="velocity"
@@ -301,9 +300,7 @@ export default function ReynoldsCalculatorPage() {
                   />
                 </div>
                 <div className="col-span-2">
-                  <label htmlFor="velocity-unit" className="text-foreground block text-sm font-medium">
-                    Unit
-                  </label>
+                  <Label htmlFor="velocity-unit">Unit</Label>
                   <Select value={velocityUnit} onValueChange={(value) => setVelocityUnit(value as VelocityUnit)}>
                     <SelectTrigger className="mt-1 w-full">
                       <SelectValue />
@@ -321,9 +318,7 @@ export default function ReynoldsCalculatorPage() {
               {/* Characteristic Length Input */}
               <div className="grid grid-cols-5 gap-2">
                 <div className="col-span-3">
-                  <label htmlFor="characteristic-length" className="text-foreground block text-sm font-medium">
-                    {flowType === "external" ? "Length" : "Diameter"}
-                  </label>
+                  <Label htmlFor="characteristic-length">{flowType === "external" ? "Length" : "Diameter"}</Label>
                   <Input
                     type="number"
                     id="characteristic-length"
@@ -334,9 +329,7 @@ export default function ReynoldsCalculatorPage() {
                   />
                 </div>
                 <div className="col-span-2">
-                  <label htmlFor="length-unit" className="text-foreground block text-sm font-medium">
-                    Unit
-                  </label>
+                  <Label htmlFor="length-unit">Unit</Label>
                   <Select value={lengthUnit} onValueChange={(value) => setLengthUnit(value as LengthUnit)}>
                     <SelectTrigger className="mt-1 w-full">
                       <SelectValue />
@@ -360,9 +353,7 @@ export default function ReynoldsCalculatorPage() {
 
             {/* Fluid Selection */}
             <div>
-              <label htmlFor="fluid-type" className="text-foreground block text-sm font-medium">
-                Fluid Type
-              </label>
+              <Label htmlFor="fluid-type">Fluid Type</Label>
               <Select value={fluidType} onValueChange={(value) => handleFluidChange(value)}>
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
@@ -382,9 +373,7 @@ export default function ReynoldsCalculatorPage() {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* Density Input */}
                 <div>
-                  <label htmlFor="density" className="text-foreground block text-sm font-medium">
-                    Density (ρ)
-                  </label>
+                  <Label htmlFor="density">Density (ρ)</Label>
                   <div className="relative mt-1 rounded-md shadow-sm">
                     <Input
                       type="number"
@@ -403,9 +392,7 @@ export default function ReynoldsCalculatorPage() {
 
                 {/* Dynamic Viscosity Input */}
                 <div>
-                  <label htmlFor="dynamic-viscosity" className="text-foreground block text-sm font-medium">
-                    Dynamic Viscosity (μ)
-                  </label>
+                  <Label htmlFor="dynamic-viscosity">Dynamic Viscosity (μ)</Label>
                   <div className="relative mt-1 rounded-md shadow-sm">
                     <Input
                       type="number"
@@ -425,9 +412,7 @@ export default function ReynoldsCalculatorPage() {
             ) : (
               <div>
                 {/* Kinematic Viscosity Input */}
-                <label htmlFor="kinematic-viscosity" className="text-foreground block text-sm font-medium">
-                  Kinematic Viscosity (ν)
-                </label>
+                <Label htmlFor="kinematic-viscosity">Kinematic Viscosity (ν)</Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     type="number"

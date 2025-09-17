@@ -20,6 +20,7 @@ import Theory from "./theory";
 import Navigation from "../../components/Navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -172,9 +173,9 @@ export default function RadarRangePage() {
           <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             {/* Transmit Power */}
             <div>
-              <label htmlFor="power" className="text-foreground mb-1 block text-sm font-medium">
+              <Label htmlFor="power" className="mb-1">
                 Transmit Power (Pt)
-              </label>
+              </Label>
               <div className="flex gap-2">
                 <Input
                   type="number"
@@ -202,9 +203,9 @@ export default function RadarRangePage() {
 
             {/* Antenna Gain */}
             <div>
-              <label htmlFor="gain" className="text-foreground mb-1 block text-sm font-medium">
+              <Label htmlFor="gain" className="mb-1">
                 Antenna Gain (G)
-              </label>
+              </Label>
               <div className="flex gap-2">
                 <Input
                   type="number"
@@ -231,9 +232,9 @@ export default function RadarRangePage() {
 
             {/* Frequency */}
             <div>
-              <label htmlFor="frequency" className="text-foreground mb-1 block text-sm font-medium">
+              <Label htmlFor="frequency" className="mb-1">
                 Frequency (f)
-              </label>
+              </Label>
               <div className="flex gap-2">
                 <Input
                   type="number"
@@ -260,9 +261,9 @@ export default function RadarRangePage() {
 
             {/* Target RCS */}
             <div>
-              <label htmlFor="rcs" className="text-foreground mb-1 block text-sm font-medium">
+              <Label htmlFor="rcs" className="mb-1">
                 Target RCS (σ)
-              </label>
+              </Label>
               <div className="flex gap-2">
                 <Input
                   type="number"
@@ -289,9 +290,9 @@ export default function RadarRangePage() {
 
             {/* Minimum Detectable Signal */}
             <div className="sm:col-span-2">
-              <label htmlFor="minSignal" className="text-foreground mb-1 block text-sm font-medium">
+              <Label htmlFor="minSignal" className="mb-1">
                 Minimum Detectable Signal (Smin)
-              </label>
+              </Label>
               <div className="flex gap-2">
                 <Input
                   type="number"

@@ -12,6 +12,7 @@ import Visualization from "./visualization";
 import Navigation from "../../components/Navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -142,9 +143,7 @@ export default function ObliqueShockPage() {
           <div className="space-y-5">
             {/* Upstream Mach */}
             <div>
-              <label htmlFor="upstream-mach" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                Upstream Mach Number (M₁)
-              </label>
+              <Label htmlFor="upstream-mach">Upstream Mach Number (M₁)</Label>
               <Input
                 type="number"
                 id="upstream-mach"
@@ -160,9 +159,9 @@ export default function ObliqueShockPage() {
 
             {/* Deflection Angle */}
             <div>
-              <label htmlFor="deflection-angle" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+              <Label htmlFor="deflection-angle">
                 Deflection Angle (θ) <span className="text-xs text-gray-500 dark:text-gray-400">[degrees]</span>
-              </label>
+              </Label>
               <Input
                 type="number"
                 id="deflection-angle"
@@ -178,9 +177,7 @@ export default function ObliqueShockPage() {
 
             {/* Gas Properties */}
             <div>
-              <label htmlFor="gas-type" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                Gas Type
-              </label>
+              <Label htmlFor="gas-type">Gas Type</Label>
               <div className="mt-1 grid grid-cols-1 gap-x-2 gap-y-3 sm:grid-cols-3">
                 <div className="sm:col-span-2">
                   <Select value={gasType} onValueChange={(value) => setGasType(value as GasType)}>
@@ -223,7 +220,7 @@ export default function ObliqueShockPage() {
 
             {/* Solution Type (Weak/Strong) */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">Shock Solution Type</label>
+              <Label>Shock Solution Type</Label>
               <div className="mt-1 grid grid-cols-1 gap-2 rounded-md bg-gray-100 p-2 sm:grid-cols-2 md:grid-cols-1 dark:bg-gray-700">
                 {(["weak", "strong"] as ShockSolutionType[]).map((type) => (
                   <button

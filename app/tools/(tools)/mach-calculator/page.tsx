@@ -13,6 +13,7 @@ import Theory from "./theory";
 import Navigation from "../../components/Navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -177,7 +178,7 @@ export default function MachCalculatorPage() {
 
           {/* Calculation Mode Selection */}
           <div className="mb-6">
-            <label className="text-foreground mb-1 block text-sm font-medium">Calculation Mode</label>
+            <Label className="mb-1">Calculation Mode</Label>
             <div className="bg-muted flex space-x-4 rounded-md p-1">
               {(["calculateMach", "calculateAirspeed"] as CalculationMode[]).map((mode) => (
                 <button
@@ -199,9 +200,7 @@ export default function MachCalculatorPage() {
             {calculationMode === "calculateMach" && (
               <div className="grid grid-cols-3 gap-4">
                 <div className="col-span-2">
-                  <label htmlFor="airspeed" className="text-foreground block text-sm font-medium">
-                    Airspeed
-                  </label>
+                  <Label htmlFor="airspeed">Airspeed</Label>
                   <Input
                     type="number"
                     id="airspeed"
@@ -213,9 +212,7 @@ export default function MachCalculatorPage() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="velocity-unit" className="text-foreground block text-sm font-medium">
-                    Unit
-                  </label>
+                  <Label htmlFor="velocity-unit">Unit</Label>
                   <Select value={velocityUnit} onValueChange={(value) => setVelocityUnit(value as VelocityUnit)}>
                     <SelectTrigger className="mt-1 w-full">
                       <SelectValue />
@@ -234,9 +231,7 @@ export default function MachCalculatorPage() {
             {/* Mach Number Input (visible when calculating airspeed) */}
             {calculationMode === "calculateAirspeed" && (
               <div>
-                <label htmlFor="mach" className="text-foreground block text-sm font-medium">
-                  Mach Number
-                </label>
+                <Label htmlFor="mach">Mach Number</Label>
                 <Input
                   type="number"
                   id="mach"
@@ -252,9 +247,7 @@ export default function MachCalculatorPage() {
             {/* Altitude Input (always visible) */}
             <div className="grid grid-cols-3 gap-4">
               <div className="col-span-2">
-                <label htmlFor="altitude" className="text-foreground block text-sm font-medium">
-                  Altitude
-                </label>
+                <Label htmlFor="altitude">Altitude</Label>
                 <Input
                   type="number"
                   id="altitude"
@@ -266,9 +259,7 @@ export default function MachCalculatorPage() {
                 />
               </div>
               <div>
-                <label htmlFor="altitude-unit" className="text-foreground block text-sm font-medium">
-                  Unit
-                </label>
+                <Label htmlFor="altitude-unit">Unit</Label>
                 <Select value={altitudeUnit} onValueChange={(value) => setAltitudeUnit(value as AltitudeUnit)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />

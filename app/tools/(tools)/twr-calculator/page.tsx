@@ -12,6 +12,7 @@ import Theory from "./theory";
 import Navigation from "../../components/Navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -145,9 +146,7 @@ export default function TWRCalculatorPage() {
             <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
               {/* Thrust Input */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="thrust" className="text-foreground block text-sm font-medium">
-                  Thrust
-                </label>
+                <Label htmlFor="thrust">Thrust</Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     id="thrust"
@@ -161,9 +160,7 @@ export default function TWRCalculatorPage() {
 
               {/* Mass Input */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="mass" className="text-foreground block text-sm font-medium">
-                  Mass
-                </label>
+                <Label htmlFor="mass">Mass</Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     id="mass"
@@ -177,9 +174,7 @@ export default function TWRCalculatorPage() {
 
               {/* Thrust Unit Selector */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="thrust-unit" className="text-foreground block text-sm font-medium">
-                  Thrust Unit
-                </label>
+                <Label htmlFor="thrust-unit">Thrust Unit</Label>
                 <Select value={thrustUnit} onValueChange={(value) => setThrustUnit(value as ThrustUnit)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
@@ -196,9 +191,7 @@ export default function TWRCalculatorPage() {
             <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {/* Mass Unit Selector */}
               <div>
-                <label htmlFor="mass-unit" className="text-foreground block text-sm font-medium">
-                  Mass Unit
-                </label>
+                <Label htmlFor="mass-unit">Mass Unit</Label>
                 <Select value={massUnit} onValueChange={(value) => setMassUnit(value as MassUnit)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
@@ -218,9 +211,7 @@ export default function TWRCalculatorPage() {
             <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
               {/* TWR Input */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="twr" className="text-foreground block text-sm font-medium">
-                  Desired TWR
-                </label>
+                <Label htmlFor="twr">Desired TWR</Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     id="twr"
@@ -235,9 +226,7 @@ export default function TWRCalculatorPage() {
 
               {/* Mass Input */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="mass" className="text-foreground block text-sm font-medium">
-                  Mass
-                </label>
+                <Label htmlFor="mass">Mass</Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     id="mass"
@@ -251,9 +240,7 @@ export default function TWRCalculatorPage() {
 
               {/* Mass Unit Selector */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="mass-unit" className="text-foreground block text-sm font-medium">
-                  Mass Unit
-                </label>
+                <Label htmlFor="mass-unit">Mass Unit</Label>
                 <Select value={massUnit} onValueChange={(value) => setMassUnit(value as MassUnit)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
@@ -273,9 +260,7 @@ export default function TWRCalculatorPage() {
             <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
               {/* Thrust Input */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="thrust" className="text-foreground block text-sm font-medium">
-                  Thrust
-                </label>
+                <Label htmlFor="thrust">Thrust</Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     id="thrust"
@@ -289,9 +274,7 @@ export default function TWRCalculatorPage() {
 
               {/* TWR Input */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="twr" className="text-foreground block text-sm font-medium">
-                  Desired TWR
-                </label>
+                <Label htmlFor="twr">Desired TWR</Label>
                 <div className="relative mt-1 rounded-md shadow-sm">
                   <Input
                     id="twr"
@@ -306,9 +289,7 @@ export default function TWRCalculatorPage() {
 
               {/* Thrust Unit Selector */}
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="thrust-unit" className="text-foreground block text-sm font-medium">
-                  Thrust Unit
-                </label>
+                <Label htmlFor="thrust-unit">Thrust Unit</Label>
                 <Select value={thrustUnit} onValueChange={(value) => setThrustUnit(value as ThrustUnit)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
@@ -344,7 +325,7 @@ export default function TWRCalculatorPage() {
 
           {/* Calculation Type Selection */}
           <div className="mb-6">
-            <label className="text-foreground mb-1 block text-sm font-medium">Calculation Type</label>
+            <Label className="mb-1">Calculation Type</Label>
             <div className="bg-muted flex space-x-4 rounded-md p-1">
               {[
                 { id: "twr", label: "Calculate TWR" },

@@ -16,6 +16,7 @@ import {
 } from "./logic";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 
 import OpenSourceCard from "../../components/OpenSourceCard";
 import Navigation from "../../components/Navigation";
@@ -234,7 +235,7 @@ export default function IsentropicFlowPage() {
 
           {/* Calculation Mode Selection */}
           <div className="mb-6">
-            <label className="text-foreground mb-1 block text-sm font-medium">Calculation Mode</label>
+            <Label className="mb-1">Calculation Mode</Label>
             <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
               {(["mach", "pressure", "temperature", "area"] as CalculationMode[]).map((mode) => (
                 <button
@@ -263,7 +264,7 @@ export default function IsentropicFlowPage() {
             <div className="grid grid-cols-2 gap-4">
               {/* Left: Gas selection */}
               <div>
-                <label className="text-foreground mb-1 block text-sm font-medium">Gas</label>
+                <Label className="mb-1">Gas</Label>
                 <Select value={gasType} onValueChange={(value) => setGasType(value as GasType)}>
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
@@ -280,9 +281,9 @@ export default function IsentropicFlowPage() {
 
               {/* Right: Custom gamma (kept on same row, hidden unless custom) */}
               <div className={gasType === "custom" ? "" : "invisible"}>
-                <label htmlFor="custom-gamma" className="text-foreground mb-1 block text-sm font-medium">
+                <Label htmlFor="custom-gamma" className="mb-1">
                   Specific Heat Ratio (γ)
-                </label>
+                </Label>
                 <Input
                   type="number"
                   id="custom-gamma"

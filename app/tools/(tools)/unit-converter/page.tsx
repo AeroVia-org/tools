@@ -10,6 +10,7 @@ import { convertUnit, allCategories, UnitCategory } from "./logic";
 import Navigation from "../../components/Navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
@@ -128,9 +129,9 @@ export default function UnitConverterPage() {
           <div className="flex items-end gap-4">
             {/* Category Selection */}
             <div className="flex-1">
-              <label htmlFor="category-select" className="text-foreground mb-1 block text-sm font-medium">
+              <Label htmlFor="category-select" className="mb-1">
                 Category
-              </label>
+              </Label>
               <Select value={selectedCategory} onValueChange={(value) => setSelectedCategory(value as UnitCategory)}>
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
@@ -146,9 +147,7 @@ export default function UnitConverterPage() {
             </div>
             {/* From Unit */}
             <div className="flex-1">
-              <label htmlFor="from-unit" className="text-foreground block text-sm font-medium">
-                From
-              </label>
+              <Label htmlFor="from-unit">From</Label>
               <Select value={fromUnit} onValueChange={setFromUnit}>
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
@@ -176,9 +175,7 @@ export default function UnitConverterPage() {
             </div>
             {/* To Unit */}
             <div className="flex-1">
-              <label htmlFor="to-unit" className="text-foreground block text-sm font-medium">
-                To
-              </label>
+              <Label htmlFor="to-unit">To</Label>
               <Select value={toUnit} onValueChange={setToUnit}>
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
@@ -198,9 +195,7 @@ export default function UnitConverterPage() {
           <div className="flex items-end gap-4">
             {/* Input Value */}
             <div className="flex-1">
-              <label htmlFor="input-value" className="text-foreground block text-sm font-medium">
-                Value
-              </label>
+              <Label htmlFor="input-value">Value</Label>
               <Input
                 type="number"
                 id="input-value"
@@ -216,9 +211,7 @@ export default function UnitConverterPage() {
             </div>
             {/* Result Display */}
             <div className="flex-1">
-              <label htmlFor="result-value" className="text-foreground block text-sm font-medium">
-                Result
-              </label>
+              <Label htmlFor="result-value">Result</Label>
               <div className="border-border bg-card mt-1 flex items-center justify-between rounded-md border px-3 py-2 shadow-sm">
                 <span id="result-value" className="flex-grow sm:text-sm" aria-live="polite">
                   {/* Error and resultValue */}

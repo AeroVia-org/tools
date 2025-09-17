@@ -13,6 +13,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { FaGlobe, FaArrowRight, FaMapMarkerAlt } from "react-icons/fa";
 import { Input } from "@packages/ui/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
+import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 import Navigation from "../../components/Navigation";
@@ -164,7 +165,7 @@ export default function CoordinateSystemConverterPage() {
 
           {/* Mode toggle */}
           <div className="mb-6">
-            <label className="text-foreground mb-1 block text-sm font-medium">Conversion Mode</label>
+            <Label className="mb-1">Conversion Mode</Label>
             <div className="bg-muted flex space-x-4 rounded-md p-1">
               {(["lla2ecef", "ecef2lla"] as Array<"lla2ecef" | "ecef2lla">).map((m) => (
                 <button
@@ -183,7 +184,7 @@ export default function CoordinateSystemConverterPage() {
           {/* Coordinate format toggle (only for LLA mode) */}
           {mode === "lla2ecef" && (
             <div className="mb-6">
-              <label className="text-foreground mb-1 block text-sm font-medium">Coordinate Format</label>
+              <Label className="mb-1">Coordinate Format</Label>
               <div className="bg-muted flex space-x-4 rounded-md p-1">
                 {(["decimal", "dms"] as Array<CoordinateFormat>).map((format) => (
                   <button
@@ -211,7 +212,7 @@ export default function CoordinateSystemConverterPage() {
                   /* Decimal degrees inputs */
                   <>
                     <div>
-                      <label className="text-foreground block text-sm font-medium">Latitude (°)</label>
+                      <Label>Latitude (°)</Label>
                       <Input
                         type="number"
                         value={latDeg}
@@ -220,7 +221,7 @@ export default function CoordinateSystemConverterPage() {
                       />
                     </div>
                     <div>
-                      <label className="text-foreground block text-sm font-medium">Longitude (°)</label>
+                      <Label>Longitude (°)</Label>
                       <Input
                         type="number"
                         value={lonDeg}
@@ -233,10 +234,10 @@ export default function CoordinateSystemConverterPage() {
                   /* DMS inputs */
                   <>
                     <div>
-                      <label className="text-foreground block text-sm font-medium">Latitude (DMS)</label>
+                      <Label>Latitude (DMS)</Label>
                       <div className="mt-1 grid grid-cols-3 gap-2">
                         <div>
-                          <label className="text-muted-foreground text-xs">Degrees</label>
+                          <Label>Degrees</Label>
                           <Input
                             type="number"
                             value={latDMS.degrees}
@@ -246,7 +247,7 @@ export default function CoordinateSystemConverterPage() {
                           />
                         </div>
                         <div>
-                          <label className="text-muted-foreground text-xs">Minutes</label>
+                          <Label>Minutes</Label>
                           <Input
                             type="number"
                             value={latDMS.minutes}
@@ -256,7 +257,7 @@ export default function CoordinateSystemConverterPage() {
                           />
                         </div>
                         <div>
-                          <label className="text-muted-foreground text-xs">Seconds</label>
+                          <Label>Seconds</Label>
                           <Input
                             type="number"
                             value={latDMS.seconds}
@@ -268,10 +269,10 @@ export default function CoordinateSystemConverterPage() {
                       </div>
                     </div>
                     <div>
-                      <label className="text-foreground block text-sm font-medium">Longitude (DMS)</label>
+                      <Label>Longitude (DMS)</Label>
                       <div className="mt-1 grid grid-cols-3 gap-2">
                         <div>
-                          <label className="text-muted-foreground text-xs">Degrees</label>
+                          <Label>Degrees</Label>
                           <Input
                             type="number"
                             value={lonDMS.degrees}
@@ -281,7 +282,7 @@ export default function CoordinateSystemConverterPage() {
                           />
                         </div>
                         <div>
-                          <label className="text-muted-foreground text-xs">Minutes</label>
+                          <Label>Minutes</Label>
                           <Input
                             type="number"
                             value={lonDMS.minutes}
@@ -291,7 +292,7 @@ export default function CoordinateSystemConverterPage() {
                           />
                         </div>
                         <div>
-                          <label className="text-muted-foreground text-xs">Seconds</label>
+                          <Label>Seconds</Label>
                           <Input
                             type="number"
                             value={lonDMS.seconds}
@@ -307,7 +308,7 @@ export default function CoordinateSystemConverterPage() {
 
                 <div className="grid grid-cols-5 gap-2">
                   <div className="col-span-3">
-                    <label className="text-foreground block text-sm font-medium">Altitude</label>
+                    <Label>Altitude</Label>
                     <Input
                       type="number"
                       value={altInput}
@@ -316,7 +317,7 @@ export default function CoordinateSystemConverterPage() {
                     />
                   </div>
                   <div className="col-span-2">
-                    <label className="text-foreground block text-sm font-medium">Unit</label>
+                    <Label>Unit</Label>
                     <Select value={altUnit} onValueChange={(v) => setAltUnit(v as LlaUnit)}>
                       <SelectTrigger className="mt-1 w-full">
                         <SelectValue />
@@ -335,15 +336,15 @@ export default function CoordinateSystemConverterPage() {
               /* ECEF inputs for ECEF → LLA conversion */
               <div className="space-y-4">
                 <div>
-                  <label className="text-foreground block text-sm font-medium">X</label>
+                  <Label>X</Label>
                   <Input type="number" value={x} onChange={(e) => setX(e.target.value)} className="mt-1" />
                 </div>
                 <div>
-                  <label className="text-foreground block text-sm font-medium">Y</label>
+                  <Label>Y</Label>
                   <Input type="number" value={y} onChange={(e) => setY(e.target.value)} className="mt-1" />
                 </div>
                 <div>
-                  <label className="text-foreground block text-sm font-medium">Z</label>
+                  <Label>Z</Label>
                   <Input type="number" value={z} onChange={(e) => setZ(e.target.value)} className="mt-1" />
                 </div>
               </div>
