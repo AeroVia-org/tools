@@ -29,7 +29,7 @@ function MobileRefWrapperContent({ children }: { children: React.ReactNode }) {
     } else {
       setIsMobileRef(false);
     }
-  }, [searchParams]);
+  }, [searchParams, hasMobileRef]);
 
   if (isMobileRef) {
     return null;

@@ -64,7 +64,8 @@ export const allTools: Tool[] = [
     key: "unit-converter",
     title: "Unit Converter",
     icon: FaRulerCombined,
-    description: "Convert between common units frequently used in aerospace engineering calculations.",
+    description:
+      "Convert between common units frequently used in aerospace engineering calculations.",
     category: "General Utilities",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -73,7 +74,8 @@ export const allTools: Tool[] = [
     key: "astronomical-unit-converter",
     title: "Astronomical Unit Converter",
     icon: FaStar,
-    description: "Convert between AU, km, m, light‑years, parsecs, and lunar distance.",
+    description:
+      "Convert between AU, km, m, light‑years, parsecs, and lunar distance.",
     category: "General Utilities",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -82,7 +84,8 @@ export const allTools: Tool[] = [
     key: "coordinate-system-converter",
     title: "Coordinate System Converter",
     icon: FaRulerCombined,
-    description: "Convert between Geodetic (Lat/Lon/Alt), ECEF, UTM, and MGRS coordinates.",
+    description:
+      "Convert between Geodetic (Lat/Lon/Alt), ECEF, UTM, and MGRS coordinates.",
     category: "General Utilities",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -100,7 +103,8 @@ export const allTools: Tool[] = [
     key: "cost-analysis-calculator",
     title: "Cost Analysis Calculator",
     icon: FaCalculator,
-    description: "Calculate costs vs quantities, tool costs vs production amounts, and economic analysis for aerospace projects.",
+    description:
+      "Calculate costs vs quantities, tool costs vs production amounts, and economic analysis for aerospace projects.",
     category: "General Utilities",
     authors: [],
   },
@@ -111,7 +115,8 @@ export const allTools: Tool[] = [
     key: "isa-calculator",
     title: "ISA Calculator",
     icon: FaCalculator,
-    description: "Calculate atmospheric properties (altitude, pressure, temp, density) using the ISA model.",
+    description:
+      "Calculate atmospheric properties (altitude, pressure, temp, density) using the ISA model.",
     category: "Atmospheric & Flight",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -170,7 +175,8 @@ export const allTools: Tool[] = [
     key: "takeoff-landing-distance",
     title: "Takeoff & Landing Distance",
     icon: FaTachometerAlt,
-    description: "Compute balanced field length and runway distance requirements.",
+    description:
+      "Compute balanced field length and runway distance requirements.",
     category: "Atmospheric & Flight",
     authors: [],
   },
@@ -179,7 +185,8 @@ export const allTools: Tool[] = [
     key: "coordinated-turn-calculator",
     title: "Coordinated Turn Calculator",
     icon: FaCompass,
-    description: "Turn radius, bank angle, and load factor for specified speed and rate.",
+    description:
+      "Turn radius, bank angle, and load factor for specified speed and rate.",
     category: "Atmospheric & Flight",
     authors: [],
   },
@@ -188,7 +195,8 @@ export const allTools: Tool[] = [
     key: "e6b-flight-computer",
     title: "E6B Flight Computer",
     icon: FaCalculator,
-    description: "Digital E6B: wind correction, TAS, density altitude, and more.",
+    description:
+      "Digital E6B: wind correction, TAS, density altitude, and more.",
     category: "Atmospheric & Flight",
     authors: [],
   },
@@ -199,7 +207,8 @@ export const allTools: Tool[] = [
     key: "mach-calculator",
     title: "Mach Number Calculator",
     icon: FaPlaneDeparture,
-    description: "Calculate Mach number and local speed of sound based on airspeed and altitude.",
+    description:
+      "Calculate Mach number and local speed of sound based on airspeed and altitude.",
     category: "Aerodynamics",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -208,7 +217,8 @@ export const allTools: Tool[] = [
     key: "reynolds-calculator",
     title: "Reynolds Number Calculator",
     icon: FaDraftingCompass,
-    description: "Determine the Reynolds number for various fluid flow scenarios and conditions.",
+    description:
+      "Determine the Reynolds number for various fluid flow scenarios and conditions.",
     category: "Aerodynamics",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -217,7 +227,8 @@ export const allTools: Tool[] = [
     key: "normal-shock",
     title: "Normal Shock Calculator",
     icon: FaBolt,
-    description: "Calculate property changes across a normal shock wave in supersonic flow conditions.",
+    description:
+      "Calculate property changes across a normal shock wave in supersonic flow conditions.",
     category: "Aerodynamics",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -226,7 +237,8 @@ export const allTools: Tool[] = [
     key: "isentropic-flow",
     title: "Isentropic Flow Calculator",
     icon: FaBolt,
-    description: "Calculate pressure, temperature, and density ratios across an isentropic flow.",
+    description:
+      "Calculate pressure, temperature, and density ratios across an isentropic flow.",
     category: "Aerodynamics",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -245,7 +257,8 @@ export const allTools: Tool[] = [
     key: "oblique-shock",
     title: "Oblique Shock Calculator",
     icon: FaBolt,
-    description: "Calculate properties across oblique shock waves based on upstream conditions.",
+    description:
+      "Calculate properties across oblique shock waves based on upstream conditions.",
     category: "Aerodynamics",
     authors: [],
   },
@@ -254,7 +267,8 @@ export const allTools: Tool[] = [
     key: "airfoil-data-tool",
     title: "Airfoil Data Tool",
     icon: FaDraftingCompass,
-    description: "Explore properties and performance data for standard airfoil shapes (e.g., NACA series).",
+    description:
+      "Explore properties and performance data for standard airfoil shapes (e.g., NACA series).",
     category: "Aerodynamics",
     authors: [],
   },
@@ -263,7 +277,8 @@ export const allTools: Tool[] = [
     key: "prandtl-meyer-expansion",
     title: "Prandtl-Meyer Expansion",
     icon: FaDraftingCompass,
-    description: "Determine flow turning and property changes through an expansion fan.",
+    description:
+      "Determine flow turning and property changes through an expansion fan.",
     category: "Aerodynamics",
     authors: [],
   },
@@ -272,7 +287,8 @@ export const allTools: Tool[] = [
     key: "drag-polar-estimator",
     title: "Drag Polar Estimator",
     icon: FaExchangeAlt,
-    description: "Estimate CD vs CL curve from geometry and flight test points.",
+    description:
+      "Estimate CD vs CL curve from geometry and flight test points.",
     category: "Aerodynamics",
     authors: [],
   },
@@ -281,7 +297,8 @@ export const allTools: Tool[] = [
     key: "airfoil-generator-naca",
     title: "Airfoil Generator (NACA)",
     icon: FaDraftingCompass,
-    description: "Generate NACA 4/5-digit coordinates and basic aerodynamic metrics.",
+    description:
+      "Generate NACA 4/5-digit coordinates and basic aerodynamic metrics.",
     category: "Aerodynamics",
     authors: [],
   },
@@ -302,7 +319,8 @@ export const allTools: Tool[] = [
     key: "rocket-equation",
     title: "Rocket Equation Calculator",
     icon: FaRocket,
-    description: "Estimate rocket delta-v performance using the Tsiolkovsky rocket equation.",
+    description:
+      "Estimate rocket delta-v performance using the Tsiolkovsky rocket equation.",
     category: "Propulsion",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -311,7 +329,8 @@ export const allTools: Tool[] = [
     key: "propellant-mass-fraction",
     title: "Propellant Mass Fraction",
     icon: FaGasPump,
-    description: "Calculate propellant mass fraction based on initial and final masses.",
+    description:
+      "Calculate propellant mass fraction based on initial and final masses.",
     category: "Propulsion",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -329,7 +348,8 @@ export const allTools: Tool[] = [
     key: "specific-impulse-converter",
     title: "Specific Impulse Converter",
     icon: FaRocket,
-    description: "Convert specific impulse values between seconds and velocity units.",
+    description:
+      "Convert specific impulse values between seconds and velocity units.",
     category: "Propulsion",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -347,7 +367,8 @@ export const allTools: Tool[] = [
     key: "nozzle-design-cd",
     title: "Nozzle Design (C–D)",
     icon: FaRocket,
-    description: "Area ratios, expansion, and performance for converging–diverging nozzles.",
+    description:
+      "Area ratios, expansion, and performance for converging–diverging nozzles.",
     category: "Propulsion",
     authors: [],
   },
@@ -356,7 +377,8 @@ export const allTools: Tool[] = [
     key: "brayton-cycle-analyzer",
     title: "Brayton Cycle Analyzer",
     icon: FaCogs,
-    description: "Ideal/real cycle performance for gas turbines with component maps.",
+    description:
+      "Ideal/real cycle performance for gas turbines with component maps.",
     category: "Propulsion",
     authors: [],
   },
@@ -365,7 +387,8 @@ export const allTools: Tool[] = [
     key: "rocket-engine-performance-cea",
     title: "Rocket Engine Performance (CEA)",
     icon: FaRocket,
-    description: "Estimate chamber/exit conditions and Isp via propellant thermochemistry.",
+    description:
+      "Estimate chamber/exit conditions and Isp via propellant thermochemistry.",
     category: "Propulsion",
     authors: [],
   },
@@ -374,7 +397,8 @@ export const allTools: Tool[] = [
     key: "electric-propulsion-sizing",
     title: "Electric Propulsion Sizing",
     icon: FaRocket,
-    description: "Hall/Ion thruster power, thrust, Isp, and propellant mass estimates.",
+    description:
+      "Hall/Ion thruster power, thrust, Isp, and propellant mass estimates.",
     category: "Propulsion",
     authors: [],
   },
@@ -394,7 +418,8 @@ export const allTools: Tool[] = [
     key: "orbital-calculator",
     title: "Orbital Period & Velocity",
     icon: FaSatellite,
-    description: "Calculate orbital period and velocity characteristics for satellites in circular orbits.",
+    description:
+      "Calculate orbital period and velocity characteristics for satellites in circular orbits.",
     category: "Orbital Mechanics",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -403,7 +428,8 @@ export const allTools: Tool[] = [
     key: "hohmann-transfer",
     title: "Hohmann Transfer Calculator",
     icon: FaSatellite,
-    description: "Calculate the required delta-v for efficient Hohmann transfer orbital maneuvers.",
+    description:
+      "Calculate the required delta-v for efficient Hohmann transfer orbital maneuvers.",
     category: "Orbital Mechanics",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -412,7 +438,8 @@ export const allTools: Tool[] = [
     key: "delta-v-budget-tool",
     title: "Delta-V Budget Tool",
     icon: FaSatellite,
-    description: "Input delta-v values for mission phases to calculate total requirements.",
+    description:
+      "Input delta-v values for mission phases to calculate total requirements.",
     category: "Orbital Mechanics",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -421,7 +448,8 @@ export const allTools: Tool[] = [
     key: "satellite-pass-planner",
     title: "Satellite Pass Planner",
     icon: FaEye,
-    description: "Calculate satellite pass times, visibility windows, and ground tracks for any location.",
+    description:
+      "Calculate satellite pass times, visibility windows, and ground tracks for any location.",
     category: "Orbital Mechanics",
     authors: [],
   },
@@ -430,7 +458,8 @@ export const allTools: Tool[] = [
     key: "launch-window-planner",
     title: "Launch Window Planner",
     icon: FaSun,
-    description: "Phase angle, lighting, and geometry constraints for mission departure windows.",
+    description:
+      "Phase angle, lighting, and geometry constraints for mission departure windows.",
     category: "Orbital Mechanics",
     authors: [],
   },
@@ -439,7 +468,8 @@ export const allTools: Tool[] = [
     key: "porkchop-plotter",
     title: "Porkchop Plotter",
     icon: FaProjectDiagram,
-    description: "Visualize launch/arrival date trade-offs and delta‑v for interplanetary transfers.",
+    description:
+      "Visualize launch/arrival date trade-offs and delta‑v for interplanetary transfers.",
     category: "Orbital Mechanics",
     authors: [],
   },
@@ -466,7 +496,8 @@ export const allTools: Tool[] = [
     key: "sun-synchronous-orbit-designer",
     title: "Sun-Synchronous Orbit Designer",
     icon: FaCompass,
-    description: "Design SSO altitude and inclination for desired local time of ascending node.",
+    description:
+      "Design SSO altitude and inclination for desired local time of ascending node.",
     category: "Orbital Mechanics",
     authors: [],
   },
@@ -475,7 +506,8 @@ export const allTools: Tool[] = [
     key: "raan-drift-calculator",
     title: "RAAN Drift Calculator",
     icon: FaExchangeAlt,
-    description: "Compute nodal precession due to J2 for sun-synchronous and other LEO orbits.",
+    description:
+      "Compute nodal precession due to J2 for sun-synchronous and other LEO orbits.",
     category: "Orbital Mechanics",
     authors: [],
   },
@@ -484,7 +516,8 @@ export const allTools: Tool[] = [
     key: "plane-change-optimizer",
     title: "Plane Change Optimizer",
     icon: FaArrowsAlt,
-    description: "Minimize delta‑v for inclination/RAAN changes and combined maneuvers.",
+    description:
+      "Minimize delta‑v for inclination/RAAN changes and combined maneuvers.",
     category: "Orbital Mechanics",
     authors: [],
   },
@@ -493,7 +526,8 @@ export const allTools: Tool[] = [
     key: "reentry-heating-corridor",
     title: "Reentry Heating & Corridor",
     icon: FaRadiation,
-    description: "Estimate peak heating, g-loads, and corridor constraints for entry profiles.",
+    description:
+      "Estimate peak heating, g-loads, and corridor constraints for entry profiles.",
     category: "Orbital Mechanics",
     authors: [],
   },
@@ -502,7 +536,8 @@ export const allTools: Tool[] = [
     key: "aerobraking-planner",
     title: "Aerobraking Planner",
     icon: FaExchangeAlt,
-    description: "Periapsis targeting and pass-by-pass delta‑v savings for aerobraking campaigns.",
+    description:
+      "Periapsis targeting and pass-by-pass delta‑v savings for aerobraking campaigns.",
     category: "Orbital Mechanics",
     authors: [],
   },
@@ -521,7 +556,8 @@ export const allTools: Tool[] = [
     key: "keplers-equation-solver",
     title: "Kepler's Equation Solver",
     icon: FaCalculator,
-    description: "Solve Kepler's equation for elliptical orbits and convert between mean, eccentric, and true anomaly.",
+    description:
+      "Solve Kepler's equation for elliptical orbits and convert between mean, eccentric, and true anomaly.",
     category: "Orbital Mechanics",
     authors: [],
   },
@@ -530,7 +566,8 @@ export const allTools: Tool[] = [
     key: "hyperbolic-trajectory-calculator",
     title: "Hyperbolic Trajectory Calculator",
     icon: FaRocket,
-    description: "Analyze hyperbolic orbits, escape trajectories, and flyby missions with hyperbolic excess velocity.",
+    description:
+      "Analyze hyperbolic orbits, escape trajectories, and flyby missions with hyperbolic excess velocity.",
     category: "Orbital Mechanics",
     authors: [],
   },
@@ -549,7 +586,8 @@ export const allTools: Tool[] = [
     key: "orbit-propagation-tool",
     title: "Orbit Propagation Tool",
     icon: FaClock,
-    description: "Predict orbital position over time using Keplerian and SGP4 propagation methods.",
+    description:
+      "Predict orbital position over time using Keplerian and SGP4 propagation methods.",
     category: "Orbital Mechanics",
     authors: [],
   },
@@ -560,7 +598,8 @@ export const allTools: Tool[] = [
     key: "structural-analysis-tool",
     title: "Structural Analysis Tool",
     icon: FaTools,
-    description: "Comprehensive structural analysis for beams, plates, cylinders, and rods with material properties and stress calculations.",
+    description:
+      "Comprehensive structural analysis for beams, plates, cylinders, and rods with material properties and stress calculations.",
     category: "Structures",
     authors: [],
   },
@@ -569,7 +608,8 @@ export const allTools: Tool[] = [
     key: "beam-bending-deflection",
     title: "Beam Bending & Deflection",
     icon: FaTools,
-    description: "Deflection, slope, shear, and moment for common beam load cases.",
+    description:
+      "Deflection, slope, shear, and moment for common beam load cases.",
     category: "Structures",
     authors: [],
   },
@@ -578,7 +618,8 @@ export const allTools: Tool[] = [
     key: "column-buckling-calculator",
     title: "Column Buckling Calculator",
     icon: FaTools,
-    description: "Euler buckling and effective length factors for structural members.",
+    description:
+      "Euler buckling and effective length factors for structural members.",
     category: "Structures",
     authors: [],
   },
@@ -587,7 +628,8 @@ export const allTools: Tool[] = [
     key: "fastener-shear-bearing",
     title: "Fastener Shear/Bearing",
     icon: FaTools,
-    description: "Allowables and margins for rivets/bolts in single- and double-shear.",
+    description:
+      "Allowables and margins for rivets/bolts in single- and double-shear.",
     category: "Structures",
     authors: [],
   },
@@ -596,7 +638,8 @@ export const allTools: Tool[] = [
     key: "composite-laminate-analyzer",
     title: "Composite Laminate Analyzer",
     icon: FaCogs,
-    description: "Classical laminate theory (ABD matrices), ply strains, and failure indices.",
+    description:
+      "Classical laminate theory (ABD matrices), ply strains, and failure indices.",
     category: "Structures",
     authors: [],
   },
@@ -605,7 +648,8 @@ export const allTools: Tool[] = [
     key: "pressure-vessel-stress",
     title: "Pressure Vessel Stress",
     icon: FaTools,
-    description: "Hoop and longitudinal stresses for thin/thick-walled cylinders and spheres.",
+    description:
+      "Hoop and longitudinal stresses for thin/thick-walled cylinders and spheres.",
     category: "Structures",
     authors: [],
   },
@@ -614,7 +658,8 @@ export const allTools: Tool[] = [
     key: "stress-concentration-factor",
     title: "Stress Concentration Factor",
     icon: FaBalanceScale,
-    description: "Kt values for common geometric features like holes, fillets, and notches.",
+    description:
+      "Kt values for common geometric features like holes, fillets, and notches.",
     category: "Structures",
     authors: [],
   },
@@ -623,7 +668,8 @@ export const allTools: Tool[] = [
     key: "fatigue-life-estimator",
     title: "Fatigue Life Estimator",
     icon: FaTools,
-    description: "S-N curves and fatigue life calculations for cyclic loading conditions.",
+    description:
+      "S-N curves and fatigue life calculations for cyclic loading conditions.",
     category: "Structures",
     authors: [],
   },
@@ -632,7 +678,8 @@ export const allTools: Tool[] = [
     key: "torsion-calculator",
     title: "Torsion Calculator",
     icon: FaCogs,
-    description: "Shear stress and angle of twist for circular and non-circular cross-sections.",
+    description:
+      "Shear stress and angle of twist for circular and non-circular cross-sections.",
     category: "Structures",
     authors: [],
   },
@@ -641,7 +688,8 @@ export const allTools: Tool[] = [
     key: "plate-bending-calculator",
     title: "Plate Bending Calculator",
     icon: FaTools,
-    description: "Deflection and stress in thin plates under various loading conditions.",
+    description:
+      "Deflection and stress in thin plates under various loading conditions.",
     category: "Structures",
     authors: [],
   },
@@ -650,7 +698,8 @@ export const allTools: Tool[] = [
     key: "safety-factor-calculator",
     title: "Safety Factor Calculator",
     icon: FaBalanceScale,
-    description: "Calculate safety factors and margins of safety for structural designs.",
+    description:
+      "Calculate safety factors and margins of safety for structural designs.",
     category: "Structures",
     authors: [],
   },
@@ -668,7 +717,8 @@ export const allTools: Tool[] = [
     key: "natural-frequency-calculator",
     title: "Natural Frequency Calculator",
     icon: FaCogs,
-    description: "First mode natural frequency for beams, plates, and simple structures.",
+    description:
+      "First mode natural frequency for beams, plates, and simple structures.",
     category: "Structures",
     authors: [],
   },
@@ -679,7 +729,8 @@ export const allTools: Tool[] = [
     key: "radar-range",
     title: "Radar Range Equation",
     icon: FaSatelliteDish,
-    description: "Estimate maximum radar detection range based on system parameters.",
+    description:
+      "Estimate maximum radar detection range based on system parameters.",
     category: "Communications",
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
@@ -688,7 +739,8 @@ export const allTools: Tool[] = [
     key: "rf-link-budget",
     title: "RF Link Budget",
     icon: FaBroadcastTower,
-    description: "Uplink/downlink SNR, data rate, and margin for ground–space links.",
+    description:
+      "Uplink/downlink SNR, data rate, and margin for ground–space links.",
     category: "Communications",
     authors: [],
   },
@@ -697,7 +749,8 @@ export const allTools: Tool[] = [
     key: "antenna-gain-calculator",
     title: "Antenna Gain Calculator",
     icon: FaSatelliteDish,
-    description: "Calculate antenna gain, beamwidth, and directivity for parabolic and horn antennas.",
+    description:
+      "Calculate antenna gain, beamwidth, and directivity for parabolic and horn antennas.",
     category: "Communications",
     authors: [],
   },
@@ -706,7 +759,8 @@ export const allTools: Tool[] = [
     key: "free-space-path-loss",
     title: "Free Space Path Loss",
     icon: FaBroadcastTower,
-    description: "Calculate signal attenuation in free space for various frequencies and distances.",
+    description:
+      "Calculate signal attenuation in free space for various frequencies and distances.",
     category: "Communications",
     authors: [],
   },
@@ -715,7 +769,8 @@ export const allTools: Tool[] = [
     key: "doppler-shift-calculator",
     title: "Doppler Shift Calculator",
     icon: FaSatelliteDish,
-    description: "Calculate frequency shifts due to relative motion between transmitter and receiver.",
+    description:
+      "Calculate frequency shifts due to relative motion between transmitter and receiver.",
     category: "Communications",
     authors: [],
   },
@@ -724,7 +779,8 @@ export const allTools: Tool[] = [
     key: "noise-figure-calculator",
     title: "Noise Figure Calculator",
     icon: FaBroadcastTower,
-    description: "Calculate system noise figure and noise temperature for cascaded amplifiers.",
+    description:
+      "Calculate system noise figure and noise temperature for cascaded amplifiers.",
     category: "Communications",
     authors: [],
   },
@@ -733,7 +789,8 @@ export const allTools: Tool[] = [
     key: "modulation-index-calculator",
     title: "Modulation Index Calculator",
     icon: FaSatelliteDish,
-    description: "Calculate modulation index and bandwidth for AM, FM, and PM signals.",
+    description:
+      "Calculate modulation index and bandwidth for AM, FM, and PM signals.",
     category: "Communications",
     authors: [],
   },
@@ -742,7 +799,8 @@ export const allTools: Tool[] = [
     key: "bit-error-rate-calculator",
     title: "Bit Error Rate (BER) Calculator",
     icon: FaBroadcastTower,
-    description: "Calculate BER for various modulation schemes and signal-to-noise ratios.",
+    description:
+      "Calculate BER for various modulation schemes and signal-to-noise ratios.",
     category: "Communications",
     authors: [],
   },
@@ -751,7 +809,8 @@ export const allTools: Tool[] = [
     key: "polarization-loss-calculator",
     title: "Polarization Loss Calculator",
     icon: FaSatelliteDish,
-    description: "Calculate signal loss due to polarization mismatch between antennas.",
+    description:
+      "Calculate signal loss due to polarization mismatch between antennas.",
     category: "Communications",
     authors: [],
   },
@@ -760,7 +819,8 @@ export const allTools: Tool[] = [
     key: "atmospheric-attenuation",
     title: "Atmospheric Attenuation",
     icon: FaBroadcastTower,
-    description: "Calculate signal attenuation due to atmospheric gases and precipitation.",
+    description:
+      "Calculate signal attenuation due to atmospheric gases and precipitation.",
     category: "Communications",
     authors: [],
   },
@@ -769,7 +829,8 @@ export const allTools: Tool[] = [
     key: "antenna-array-calculator",
     title: "Antenna Array Calculator",
     icon: FaSatelliteDish,
-    description: "Calculate gain, beamwidth, and sidelobes for linear and planar antenna arrays.",
+    description:
+      "Calculate gain, beamwidth, and sidelobes for linear and planar antenna arrays.",
     category: "Communications",
     authors: [],
   },
@@ -778,7 +839,8 @@ export const allTools: Tool[] = [
     key: "shannon-capacity-calculator",
     title: "Shannon Capacity Calculator",
     icon: FaBroadcastTower,
-    description: "Calculate theoretical channel capacity using Shannon's theorem.",
+    description:
+      "Calculate theoretical channel capacity using Shannon's theorem.",
     category: "Communications",
     authors: [],
   },
@@ -789,7 +851,8 @@ export const allTools: Tool[] = [
     key: "delta-v-tree-builder",
     title: "Delta‑V Tree Builder",
     icon: FaProjectDiagram,
-    description: "Build staged mission delta‑v trees with margins and staging losses.",
+    description:
+      "Build staged mission delta‑v trees with margins and staging losses.",
     category: "Mission Planning",
     authors: [],
   },
@@ -798,7 +861,8 @@ export const allTools: Tool[] = [
     key: "payload-mass-budget",
     title: "Payload Mass Budget",
     icon: FaBalanceScale,
-    description: "Budget payload, structures, tanks, and margins across mission phases.",
+    description:
+      "Budget payload, structures, tanks, and margins across mission phases.",
     category: "Mission Planning",
     authors: [],
   },
@@ -807,7 +871,8 @@ export const allTools: Tool[] = [
     key: "power-energy-budget",
     title: "Power & Energy Budget",
     icon: FaBatteryFull,
-    description: "Generate orbital power profiles with eclipse margins and battery sizing.",
+    description:
+      "Generate orbital power profiles with eclipse margins and battery sizing.",
     category: "Mission Planning",
     authors: [],
   },
@@ -816,7 +881,8 @@ export const allTools: Tool[] = [
     key: "eclipse-duration-calculator",
     title: "Eclipse Duration Calculator",
     icon: FaClock,
-    description: "Predict eclipse entry/exit and durations for LEO/GEO and interplanetary arcs.",
+    description:
+      "Predict eclipse entry/exit and durations for LEO/GEO and interplanetary arcs.",
     category: "Mission Planning",
     authors: [],
   },
@@ -825,7 +891,8 @@ export const allTools: Tool[] = [
     key: "radiation-exposure-estimator",
     title: "Radiation Exposure Estimator",
     icon: FaRadiation,
-    description: "Dose estimates through belts and deep space with shielding assumptions.",
+    description:
+      "Dose estimates through belts and deep space with shielding assumptions.",
     category: "Mission Planning",
     authors: [],
   },
@@ -833,10 +900,31 @@ export const allTools: Tool[] = [
   // Astronomy
   {
     type: "coming-soon",
-    key: "lunar-phase-calculator",
-    title: "Lunar Phase Calculator",
+    key: "sunrise-sunset-calculator",
+    title: "Sunrise/Sunset & Moonrise/Moonset Calculator",
+    icon: FaSun,
+    description:
+      "Calculate sunrise, sunset, moonrise, and moonset times for any specific location and date.",
+    category: "Astronomy",
+    authors: [],
+  },
+  {
+    type: "coming-soon",
+    key: "moon-phases-calculator",
+    title: "Moon Phases Calculator",
     icon: FaMoon,
-    description: "Calculate lunar phases, rise/set times, and illumination percentages for any date and location.",
+    description:
+      "Calculate lunar phases, illumination percentage, and phase dates for any specific location.",
+    category: "Astronomy",
+    authors: [],
+  },
+  {
+    type: "coming-soon",
+    key: "eclipse-calculator",
+    title: "Eclipse Calculator",
+    icon: FaStar,
+    description:
+      "Calculate solar and lunar eclipses visible from any specific location with timing and visibility details.",
     category: "Astronomy",
     authors: [],
   },
@@ -855,7 +943,8 @@ export const allTools: Tool[] = [
     key: "field-of-view-calculator",
     title: "Field of View Calculator",
     icon: FaCamera,
-    description: "Compute FOV for any camera + telescope/lens combination and object framing.",
+    description:
+      "Compute FOV for any camera + telescope/lens combination and object framing.",
     category: "Astronomy",
     authors: [],
   },
@@ -864,7 +953,8 @@ export const allTools: Tool[] = [
     key: "pixel-scale-sampling",
     title: "Pixel Scale & Sampling",
     icon: FaCamera,
-    description: "Arcsec/pixel, Nyquist sampling, and seeing-limited resolution guidance.",
+    description:
+      "Arcsec/pixel, Nyquist sampling, and seeing-limited resolution guidance.",
     category: "Astronomy",
     authors: [],
   },
@@ -873,7 +963,8 @@ export const allTools: Tool[] = [
     key: "milky-way-core-planner",
     title: "Milky Way Core Planner",
     icon: FaSun,
-    description: "Best dates/times and azimuth/elevation for core visibility at your location.",
+    description:
+      "Best dates/times and azimuth/elevation for core visibility at your location.",
     category: "Astronomy",
     authors: [],
   },
@@ -882,7 +973,8 @@ export const allTools: Tool[] = [
     key: "meteor-shower-tracker",
     title: "Meteor Shower Tracker",
     icon: FaStar,
-    description: "Peak rates, radiant altitude, and timing for major meteor showers.",
+    description:
+      "Peak rates, radiant altitude, and timing for major meteor showers.",
     category: "Astronomy",
     authors: [],
   },
@@ -891,7 +983,8 @@ export const allTools: Tool[] = [
     key: "planetary-visibility-planner",
     title: "Planetary Visibility Planner",
     icon: FaMoon,
-    description: "Apparitions, elongations, and altitude windows for planets and bright asteroids.",
+    description:
+      "Apparitions, elongations, and altitude windows for planets and bright asteroids.",
     category: "Astronomy",
     authors: [],
   },
@@ -900,7 +993,8 @@ export const allTools: Tool[] = [
     key: "conjunction-occultation-finder",
     title: "Conjunction & Occultation Finder",
     icon: FaStar,
-    description: "Predict close approaches and occultations for selected targets.",
+    description:
+      "Predict close approaches and occultations for selected targets.",
     category: "Astronomy",
     authors: [],
   },
@@ -909,7 +1003,8 @@ export const allTools: Tool[] = [
     key: "polar-alignment-helper",
     title: "Polar Alignment Helper",
     icon: FaCompass,
-    description: "Altitude/azimuth offsets and reticle overlays for quick polar alignment.",
+    description:
+      "Altitude/azimuth offsets and reticle overlays for quick polar alignment.",
     category: "Astronomy",
     authors: [],
   },
@@ -920,7 +1015,8 @@ export const allTools: Tool[] = [
     key: "great-circle-route-planner",
     title: "Great-Circle Route Planner",
     icon: FaRoute,
-    description: "Plan and visualize shortest air routes with ETAs and waypoints.",
+    description:
+      "Plan and visualize shortest air routes with ETAs and waypoints.",
     category: "Navigation",
     authors: [],
   },
@@ -929,7 +1025,8 @@ export const allTools: Tool[] = [
     key: "geodesic-distance-bearings",
     title: "Geodesic Distance & Bearings",
     icon: FaCompass,
-    description: "Compute distance, initial/final bearings, and intermediate points on ellipsoid.",
+    description:
+      "Compute distance, initial/final bearings, and intermediate points on ellipsoid.",
     category: "Navigation",
     authors: [],
   },
@@ -949,7 +1046,8 @@ export const allTools: Tool[] = [
     key: "drone-flight-time-estimator",
     title: "Drone Flight Time Estimator",
     icon: FaBatteryFull,
-    description: "Estimate endurance from battery capacity, payload, and environment.",
+    description:
+      "Estimate endurance from battery capacity, payload, and environment.",
     category: "UAV Operations",
     authors: [],
   },
@@ -958,7 +1056,8 @@ export const allTools: Tool[] = [
     key: "survey-grid-mapping-planner",
     title: "Survey Grid/Mapping Planner",
     icon: FaRoute,
-    description: "Generate lawnmower patterns and overlaps for area mapping missions.",
+    description:
+      "Generate lawnmower patterns and overlaps for area mapping missions.",
     category: "UAV Operations",
     authors: [],
   },
@@ -967,7 +1066,8 @@ export const allTools: Tool[] = [
     key: "battery-sizing-uav",
     title: "Battery Sizing for UAV",
     icon: FaBatteryFull,
-    description: "Estimate pack voltage, capacity, and C‑rating for mission profiles.",
+    description:
+      "Estimate pack voltage, capacity, and C‑rating for mission profiles.",
     category: "UAV Operations",
     authors: [],
   },
@@ -978,7 +1078,8 @@ export const allTools: Tool[] = [
     key: "golden-hour-sun-moon-planner",
     title: "Golden Hour & Sun/Moon Planner",
     icon: FaCloudSun,
-    description: "Sunrise/sunset, blue hour, moonrise/set, and illumination guidance.",
+    description:
+      "Sunrise/sunset, blue hour, moonrise/set, and illumination guidance.",
     category: "Photography / Imaging",
     authors: [],
   },
@@ -987,7 +1088,8 @@ export const allTools: Tool[] = [
     key: "sun-moon-az-el-shadows",
     title: "Sun/Moon Az-El & Shadows",
     icon: FaCompass,
-    description: "Azimuth/elevation, shadow lengths, and subject alignment planning.",
+    description:
+      "Azimuth/elevation, shadow lengths, and subject alignment planning.",
     category: "Photography / Imaging",
     authors: [],
   },
@@ -996,7 +1098,8 @@ export const allTools: Tool[] = [
     key: "ground-sample-distance-calculator",
     title: "Ground Sample Distance Calculator",
     icon: FaCamera,
-    description: "Calculate pixel resolution, coverage area, and footprint for aerial/satellite photography missions.",
+    description:
+      "Calculate pixel resolution, coverage area, and footprint for aerial/satellite photography missions.",
     category: "Photography / Imaging",
     authors: [],
   },
@@ -1005,7 +1108,8 @@ export const allTools: Tool[] = [
     key: "aircraft-tracking-calculator",
     title: "Aircraft Tracking Calculator",
     icon: FaPlaneDeparture,
-    description: "Calculate panning speed and exposure time for photographing moving aircraft.",
+    description:
+      "Calculate panning speed and exposure time for photographing moving aircraft.",
     category: "Photography / Imaging",
     authors: [],
   },
@@ -1014,7 +1118,8 @@ export const allTools: Tool[] = [
     key: "satellite-streak-calculator",
     title: "Satellite Streak Calculator",
     icon: FaSatellite,
-    description: "Calculate exposure time and ISO for capturing satellite trails and streaks.",
+    description:
+      "Calculate exposure time and ISO for capturing satellite trails and streaks.",
     category: "Photography / Imaging",
     authors: [],
   },
@@ -1023,7 +1128,8 @@ export const allTools: Tool[] = [
     key: "telescope-focal-length-calculator",
     title: "Telescope Focal Length Calculator",
     icon: FaEye,
-    description: "Calculate effective focal length, magnification, and field of view for telescope photography.",
+    description:
+      "Calculate effective focal length, magnification, and field of view for telescope photography.",
     category: "Photography / Imaging",
     authors: [],
   },
@@ -1032,7 +1138,8 @@ export const allTools: Tool[] = [
     key: "rocket-exhaust-exposure-calculator",
     title: "Rocket Exhaust Exposure Calculator",
     icon: FaRocket,
-    description: "Calculate exposure settings for capturing rocket exhaust plumes and ignition sequences.",
+    description:
+      "Calculate exposure settings for capturing rocket exhaust plumes and ignition sequences.",
     category: "Photography / Imaging",
     authors: [],
   },
@@ -1041,7 +1148,8 @@ export const allTools: Tool[] = [
     key: "aurora-exposure-calculator",
     title: "Aurora Exposure Calculator",
     icon: FaBroadcastTower,
-    description: "Calculate optimal shutter speed and ISO for capturing aurora based on intensity and movement.",
+    description:
+      "Calculate optimal shutter speed and ISO for capturing aurora based on intensity and movement.",
     category: "Photography / Imaging",
     authors: [],
   },
@@ -1050,7 +1158,8 @@ export const allTools: Tool[] = [
     key: "orbital-photography-planner",
     title: "Orbital Photography Planner",
     icon: FaGlobe,
-    description: "Calculate optimal imaging times and sun angles for Earth observation photography.",
+    description:
+      "Calculate optimal imaging times and sun angles for Earth observation photography.",
     category: "Photography / Imaging",
     authors: [],
   },
@@ -1059,7 +1168,8 @@ export const allTools: Tool[] = [
     key: "meteor-trail-calculator",
     title: "Meteor Trail Calculator",
     icon: FaSatelliteDish,
-    description: "Calculate exposure settings and field of view for capturing meteor trails and fireballs.",
+    description:
+      "Calculate exposure settings and field of view for capturing meteor trails and fireballs.",
     category: "Photography / Imaging",
     authors: [],
   },
