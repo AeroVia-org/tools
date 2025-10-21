@@ -39,8 +39,8 @@ _And many more tools across Structures, Mission Planning, Astronomy, Navigation,
 
 ### Prerequisites
 
-- Node.js 18+
-- pnpm 10+
+- Node.js (v20 or higher)
+- bun (v1.3 or higher)
 
 ### Installation
 
@@ -54,21 +54,21 @@ cd aerovia-tools
 2. Install dependencies:
 
 ```bash
-pnpm install
+bun install
 ```
 
 3. Run the development server:
 
 ```bash
-pnpm dev
+bun run dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Available Scripts
 
-- `pnpm dev` - Start development server
-- `pnpm build` - Build for production
+- `bun run dev` - Start development server
+- `bun run build` - Build for production
 
 ## 🏗️ Project Structure
 

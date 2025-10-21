@@ -109,14 +109,12 @@
 // TODO: Add 3D visualization capabilities
 
 import { FaTools, FaCalculator, FaDraftingCompass } from "react-icons/fa";
-import Navigation from "../../components/Navigation";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
 export default function StructuralAnalysisToolPage() {
   return (
-    <div className="mx-auto my-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-      <Navigation />
+    <div className="mx-auto pt-0 md:pt-8 pb-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
 
       {/* Title */}
       <ToolTitle toolKey="structural-analysis-tool" />

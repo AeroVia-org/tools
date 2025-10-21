@@ -31,7 +31,7 @@ export const PillAvatar = ({
   className,
   ...props
 }: PillAvatarProps) => (
-  <Avatar className={cn("-ml-1 h-4 w-4", className)}>
+  <Avatar className={cn("-ml-1 h-8 w-8", className)}> {/* Custom - made size bigger to show avatar image better */}
     <AvatarImage {...props} />
     <AvatarFallback>{fallback}</AvatarFallback>
   </Avatar>

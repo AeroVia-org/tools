@@ -41,7 +41,7 @@ export default function ToolsPage() {
   }, [searchQuery, selectedCategory]);
 
   return (
-    <div className="mx-auto my-8 flex w-full max-w-7xl flex-col gap-8 px-4 sm:px-6 md:my-16 lg:px-8">
+    <div className="mx-auto my-8 flex w-full max-w-7xl flex-col gap-8 px-4 lg:px-8">
       <PageHeader
         title="Aerospace Tools"
         description="Explore our open-source aerospace tools, calculators, and simulators"

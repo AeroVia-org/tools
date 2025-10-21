@@ -10,7 +10,6 @@ import {
   SpecificImpulseUnit,
 } from "./logic";
 import Theory from "./theory";
-import Navigation from "../../components/Navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
 import { Label } from "@packages/ui/components/ui/label";
@@ -77,8 +76,7 @@ export default function SpecificImpulseConverterPage() {
   };
 
   return (
-    <div className="mx-auto my-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-      <Navigation />
+    <div className="mx-auto pt-0 md:pt-8 pb-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
 
       {/* Title */}
       <ToolTitle toolKey="specific-impulse-converter" />

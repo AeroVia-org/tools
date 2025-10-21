@@ -1,5 +1,8 @@
-import Link from "next/link";
-import { Pill, PillAvatar, PillIcon } from "@packages/ui/components/ui/kibo-ui/pill";
+import {
+  Pill,
+  PillAvatar,
+  PillIcon,
+} from "@packages/ui/components/kibo-ui/pill";
 import { LucideUserCircle } from "lucide-react";
 import { getAuthorById } from "../tools";
 
@@ -11,8 +14,8 @@ export default function AuthorBadge({ authorId }: { authorId: string }) {
   }
 
   return (
-    <Link href={`/contributors/${authorId}`} target="_blank" rel="noopener noreferrer" className="inline-block">
-      <Pill className="border-border/50 bg-foreground/5 transition-opacity hover:opacity-80">
+    <div className="inline-block">
+      <Pill className="border-border/50 bg-foreground/5">
         {author.profilePictureUrl ? (
           <PillAvatar
             fallback={author.name}
@@ -23,8 +26,10 @@ export default function AuthorBadge({ authorId }: { authorId: string }) {
         ) : (
           <PillIcon icon={LucideUserCircle} className="h-4 w-4" />
         )}
-        <span className={`text-muted-foreground text-sm italic`}>{author.name}</span>
+        <span className={`text-muted-foreground text-sm italic`}>
+          {author.name}
+        </span>
       </Pill>
-    </Link>
+    </div>
   );
 }

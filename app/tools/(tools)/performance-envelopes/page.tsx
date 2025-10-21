@@ -114,14 +114,12 @@
 // TODO: Implement export functionality for envelope reports
 
 import { FaProjectDiagram, FaCalculator } from "react-icons/fa";
-import Navigation from "../../components/Navigation";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
 export default function PerformanceEnvelopesPage() {
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
 
       {/* Title */}
       <ToolTitle toolKey="performance-envelopes" />

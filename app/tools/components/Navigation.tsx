@@ -1,13 +1,10 @@
 import { HiArrowLeft } from "react-icons/hi";
 import Link from "next/link";
-import { useMobileRef } from "@/lib/mobileRef";
+import MobileRefWrapper from "@/components/MobileRefWrapper";
 
 export default function Navigation() {
-  const isMobileRef = useMobileRef();
-  if (isMobileRef) return null;
-
   return (
-    <>
+    <MobileRefWrapper>
       {/* Mobile navigation */}
       <div className="bg-card border-border/50 rounded-lg border md:hidden">
         <Link
@@ -29,6 +26,6 @@ export default function Navigation() {
           Back to Tools
         </Link>
       </div>
-    </>
+    </MobileRefWrapper>
   );
 }

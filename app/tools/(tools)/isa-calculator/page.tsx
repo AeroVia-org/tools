@@ -30,7 +30,6 @@ import { Input } from "@packages/ui/components/ui/input";
 import { Label } from "@packages/ui/components/ui/label";
 
 import OpenSourceCard from "../../components/OpenSourceCard";
-import Navigation from "../../components/Navigation";
 import ToolTitle from "../../components/ToolTitle";
 import Visualization from "./visualization";
 import Theory from "./theory";
@@ -252,8 +251,7 @@ export default function IsaCalculatorPage() {
   };
 
   return (
-    <div className="mx-auto my-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-      <Navigation />
+    <div className="mx-auto pt-0 md:pt-8 pb-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
 
       {/* Title */}
       <ToolTitle toolKey="isa-calculator" />

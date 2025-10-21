@@ -111,14 +111,12 @@
 // TODO: Implement export functionality for trajectory data
 
 import { FaRocket, FaCalculator } from "react-icons/fa";
-import Navigation from "../../components/Navigation";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
 export default function HyperbolicTrajectoryCalculatorPage() {
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
 
       {/* Title */}
       <ToolTitle toolKey="hyperbolic-trajectory-calculator" />

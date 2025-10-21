@@ -110,14 +110,12 @@
 // TODO: Implement export functionality for orbital data
 
 import { FaSatellite, FaCalculator } from "react-icons/fa";
-import Navigation from "../../components/Navigation";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
 export default function OrbitalElementsCalculatorPage() {
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
 
       {/* Title */}
       <ToolTitle toolKey="orbital-elements-calculator" />

@@ -6,7 +6,6 @@ import { Badge } from "@packages/ui/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
-import Navigation from "../../components/Navigation";
 import Script from "next/script";
 
 const API_KEY = "c2f88fc251d4459699e9e1f526ac3e8b";
@@ -142,7 +141,6 @@ export default function DesmosScientificCalculatorPage() {
 
   return (
     <div className="container mx-auto space-y-6 p-6">
-      <Navigation />
 
       {/* Title */}
       <ToolTitle toolKey="scientific-calculator" />

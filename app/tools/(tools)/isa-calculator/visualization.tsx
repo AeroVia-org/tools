@@ -233,10 +233,10 @@ const InteractiveAtmosphere = ({
         {/* Data Tooltip */}
         {hoverData && mouseY !== null && (
           <div
-            className="absolute right-0 z-50 mr-2 -translate-y-1/2 transform rounded-md border border-gray-300 bg-white p-2 text-xs whitespace-nowrap shadow-lg dark:border-gray-600 dark:bg-gray-800"
+            className="border-border bg-card text-card-foreground absolute right-0 z-50 mr-2 -translate-y-1/2 transform rounded-md border p-2 text-xs whitespace-nowrap shadow-lg"
             style={{ top: `${mouseY}px` }}
           >
-            <p className="mb-1 border-b pb-1 font-medium">{hoverData.layer}</p>
+            <p className="border-border mb-1 border-b pb-1 font-medium">{hoverData.layer}</p>
             <p>
               <strong>Alt:</strong> {hoverData.altitude.toFixed(0)} m / {MtoFt(hoverData.altitude).toFixed(0)} ft
             </p>
@@ -253,7 +253,7 @@ const InteractiveAtmosphere = ({
                 </p>
               </>
             ) : (
-              <p className="italic">ISA data not available above 86km</p>
+              <p className="text-muted-foreground italic">ISA data not available above 86km</p>
             )}
           </div>
         )}

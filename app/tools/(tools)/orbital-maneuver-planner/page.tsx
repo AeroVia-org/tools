@@ -114,14 +114,12 @@
 // TODO: Implement export functionality for maneuver plans
 
 import { FaArrowsAlt, FaCalculator } from "react-icons/fa";
-import Navigation from "../../components/Navigation";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
 
 export default function OrbitalManeuverPlannerPage() {
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
 
       {/* Title */}
       <ToolTitle toolKey="orbital-maneuver-planner" />
