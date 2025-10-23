@@ -12,20 +12,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@packages/ui/components/ui/select";
-import { allTools, categories } from "./tools";
+import {
+  allTools,
+  CATEGORY_OPTIONS,
+  STATUS_OPTIONS,
+  ToolCategoryOption,
+  ToolStatusOption,
+} from "./tools";
 
 export default function ToolsPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [selectedCategory, setSelectedCategory] =
+    useState<ToolCategoryOption>("All");
+  const [selectedStatus, setSelectedStatus] =
+    useState<ToolStatusOption>("Active");
 
-  // Filter and group tools based on search query and category
+  // Filter and group tools based on search query, category, and status
   const groupedTools = useMemo(() => {
     const filtered = allTools.filter(
       (tool) =>
-        tool.type !== "hidden" && // Hide tools marked as hidden
+        tool.status !== "Hidden" && // Hide tools marked as hidden
         (tool.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
           tool.description.toLowerCase().includes(searchQuery.toLowerCase())) &&
-        (selectedCategory === "All" || tool.category === selectedCategory)
+        (selectedCategory === "All" || tool.category === selectedCategory) &&
+        (selectedStatus === "All" || tool.status === selectedStatus)
     );
 
     // Group tools by category
@@ -38,7 +48,7 @@ export default function ToolsPage() {
     );
 
     return grouped;
-  }, [searchQuery, selectedCategory]);
+  }, [searchQuery, selectedCategory, selectedStatus]);
 
   return (
     <div className="mx-auto my-8 flex w-full max-w-7xl flex-col gap-8 px-4 lg:px-8">
@@ -57,15 +67,36 @@ export default function ToolsPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="flex-1"
           />
-          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-28 sm:w-40 md:w-50">
+          <Select
+            value={selectedCategory}
+            onValueChange={(value) =>
+              setSelectedCategory(value as ToolCategoryOption)
+            }
+          >
+            <SelectTrigger className="w-auto min-w-32">
               <SelectValue placeholder="Category" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="All">All</SelectItem>
-              {categories.map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category}
+              {CATEGORY_OPTIONS.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select
+            value={selectedStatus}
+            onValueChange={(value) =>
+              setSelectedStatus(value as ToolStatusOption)
+            }
+          >
+            <SelectTrigger className="w-auto min-w-24">
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent>
+              {STATUS_OPTIONS.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -76,8 +107,8 @@ export default function ToolsPage() {
       {/* Tools Grid */}
       {Object.keys(groupedTools).length > 0 ? (
         <div className="space-y-8">
-          {categories
-            .filter((category) => groupedTools[category])
+          {Object.keys(groupedTools)
+            .sort()
             .map((category) => (
               <div key={category}>
                 {/* Category Divider */}
@@ -90,7 +121,7 @@ export default function ToolsPage() {
                 {/* Tools Grid for this category */}
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
                   {groupedTools[category].map((tool) => {
-                    if (tool.type === "active") {
+                    if (tool.status === "Active") {
                       return <ToolCard key={tool.key} toolKey={tool.key} />;
                     } else {
                       return (

@@ -31,7 +31,13 @@ import {
 } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
 
-export const categories = [
+// ---------------------------------------------------------
+// Tool types - COPIED FROM MONOREPO BACKEND PACKAGE
+// COULD BE REPLACED WITH A SHARED PACKAGE IN THE FUTURE
+// ---------------------------------------------------------
+
+// Tool categories
+const TOOL_CATEGORIES = [
   "General Utilities",
   "Atmospheric & Flight",
   "Aerodynamics",
@@ -46,21 +52,60 @@ export const categories = [
   "Photography / Imaging",
 ] as const;
 
-type Tool = {
-  type: "active" | "coming-soon" | "hidden";
-  key: string; // Unique key for the tool
+// Tool status
+const TOOL_STATUSES = ["Active", "Coming Soon", "Hidden"] as const; // eslint-disable-line @typescript-eslint/no-unused-vars
+
+// Derived types
+type ToolCategory = (typeof TOOL_CATEGORIES)[number];
+type ToolStatus = (typeof TOOL_STATUSES)[number];
+
+// Base tool interface (without icon, as icons differ between React and React Native)
+export type BaseTool = {
+  status: ToolStatus;
+  key: string;
   title: string;
-  icon: IconType;
   description: string;
-  category: (typeof categories)[number];
-  authors: string[]; // Array of author IDs
+  category: ToolCategory;
+  authors?: string[];
+};
+
+// ---------------------------------------------------------
+// Filter types
+// ---------------------------------------------------------
+
+export type ToolCategoryOption = ToolCategory | "All";
+export type ToolStatusOption = ToolStatus | "All";
+
+// Category options for filters
+export const CATEGORY_OPTIONS: { value: ToolCategoryOption; label: string }[] =
+  [
+    { value: "All", label: "All Categories" },
+    ...TOOL_CATEGORIES.map((category) => ({
+      value: category,
+      label: category,
+    })),
+  ];
+
+// Status options for filters (excluding 'hidden' from user-facing filters)
+export const STATUS_OPTIONS: { value: ToolStatusOption; label: string }[] = [
+  { value: "Active", label: "Active Tools" },
+  { value: "Coming Soon", label: "Coming Soon" },
+  { value: "All", label: "All Tools" },
+];
+
+// ---------------------------------------------------------
+// Tool list
+// ---------------------------------------------------------
+
+type Tool = BaseTool & {
+  icon: IconType; // Web uses React Icons
 };
 
 // Define all tools data for filtering
 export const allTools: Tool[] = [
   // General Utilities
   {
-    type: "active",
+    status: "Active",
     key: "unit-converter",
     title: "Unit Converter",
     icon: FaRulerCombined,
@@ -70,7 +115,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "active",
+    status: "Active",
     key: "astronomical-unit-converter",
     title: "Astronomical Unit Converter",
     icon: FaStar,
@@ -80,7 +125,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "active",
+    status: "Active",
     key: "coordinate-system-converter",
     title: "Coordinate System Converter",
     icon: FaRulerCombined,
@@ -90,7 +135,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "active",
+    status: "Active",
     key: "scientific-calculator",
     title: "Scientific Calculator",
     icon: FaCalculator,
@@ -99,7 +144,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "cost-analysis-calculator",
     title: "Cost Analysis Calculator",
     icon: FaCalculator,
@@ -111,7 +156,7 @@ export const allTools: Tool[] = [
 
   // Atmospheric & Flight
   {
-    type: "active",
+    status: "Active",
     key: "isa-calculator",
     title: "ISA Calculator",
     icon: FaCalculator,
@@ -121,7 +166,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "coming-soon", // Work in progress, should be active soon
+    status: "Coming Soon", // Work in progress, should be active soon
     key: "aircraft-weight-calculator",
     title: "Aircraft Weight Calculator",
     icon: FaBalanceScale,
@@ -131,7 +176,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "aircraft-performance-basics",
     title: "Aircraft Performance Basics",
     icon: FaPlaneDeparture,
@@ -141,7 +186,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "climb-descent-performance",
     title: "Climb & Descent Performance",
     icon: FaTachometerAlt,
@@ -151,7 +196,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "performance-envelopes",
     title: "Performance Envelopes",
     icon: FaProjectDiagram,
@@ -161,7 +206,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "range-endurance-analysis",
     title: "Range & Endurance Analysis",
     icon: FaRoute,
@@ -171,7 +216,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "takeoff-landing-distance",
     title: "Takeoff & Landing Distance",
     icon: FaTachometerAlt,
@@ -181,7 +226,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "coordinated-turn-calculator",
     title: "Coordinated Turn Calculator",
     icon: FaCompass,
@@ -191,7 +236,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "e6b-flight-computer",
     title: "E6B Flight Computer",
     icon: FaCalculator,
@@ -203,7 +248,7 @@ export const allTools: Tool[] = [
 
   // Aerodynamics
   {
-    type: "active",
+    status: "Active",
     key: "mach-calculator",
     title: "Mach Number Calculator",
     icon: FaPlaneDeparture,
@@ -213,7 +258,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "active",
+    status: "Active",
     key: "reynolds-calculator",
     title: "Reynolds Number Calculator",
     icon: FaDraftingCompass,
@@ -223,7 +268,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "active",
+    status: "Active",
     key: "normal-shock",
     title: "Normal Shock Calculator",
     icon: FaBolt,
@@ -233,7 +278,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "active",
+    status: "Active",
     key: "isentropic-flow",
     title: "Isentropic Flow Calculator",
     icon: FaBolt,
@@ -243,7 +288,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "active",
+    status: "Active",
     key: "lift-drag-calculator",
     title: "Lift & Drag Calculator",
     icon: FaPlaneDeparture,
@@ -253,7 +298,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "coming-soon", // Work in progress, should be active soon
+    status: "Coming Soon", // Work in progress, should be active soon
     key: "oblique-shock",
     title: "Oblique Shock Calculator",
     icon: FaBolt,
@@ -263,7 +308,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "airfoil-data-tool",
     title: "Airfoil Data Tool",
     icon: FaDraftingCompass,
@@ -273,7 +318,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "prandtl-meyer-expansion",
     title: "Prandtl-Meyer Expansion",
     icon: FaDraftingCompass,
@@ -283,7 +328,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "drag-polar-estimator",
     title: "Drag Polar Estimator",
     icon: FaExchangeAlt,
@@ -293,7 +338,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "airfoil-generator-naca",
     title: "Airfoil Generator (NACA)",
     icon: FaDraftingCompass,
@@ -303,7 +348,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "sphere-flow-calculator",
     title: "Sphere Flow Calculator",
     icon: FaGlobe,
@@ -315,7 +360,7 @@ export const allTools: Tool[] = [
 
   // Propulsion
   {
-    type: "active",
+    status: "Active",
     key: "rocket-equation",
     title: "Rocket Equation Calculator",
     icon: FaRocket,
@@ -325,7 +370,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "active",
+    status: "Active",
     key: "propellant-mass-fraction",
     title: "Propellant Mass Fraction",
     icon: FaGasPump,
@@ -335,7 +380,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "active",
+    status: "Active",
     key: "twr-calculator",
     title: "TWR Calculator",
     icon: FaRocket,
@@ -344,7 +389,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "active",
+    status: "Active",
     key: "specific-impulse-converter",
     title: "Specific Impulse Converter",
     icon: FaRocket,
@@ -354,7 +399,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "propeller-performance-estimator",
     title: "Propeller Performance Estimator",
     icon: FaCogs,
@@ -363,7 +408,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "nozzle-design-cd",
     title: "Nozzle Design (C–D)",
     icon: FaRocket,
@@ -373,7 +418,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "brayton-cycle-analyzer",
     title: "Brayton Cycle Analyzer",
     icon: FaCogs,
@@ -383,7 +428,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "rocket-engine-performance-cea",
     title: "Rocket Engine Performance (CEA)",
     icon: FaRocket,
@@ -393,7 +438,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "electric-propulsion-sizing",
     title: "Electric Propulsion Sizing",
     icon: FaRocket,
@@ -403,7 +448,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "mixture-ratio-optimizer",
     title: "Mixture Ratio Optimizer",
     icon: FaExchangeAlt,
@@ -414,7 +459,7 @@ export const allTools: Tool[] = [
 
   // Orbital Mechanics
   {
-    type: "active",
+    status: "Active",
     key: "orbital-calculator",
     title: "Orbital Period & Velocity",
     icon: FaSatellite,
@@ -424,7 +469,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "active",
+    status: "Active",
     key: "hohmann-transfer",
     title: "Hohmann Transfer Calculator",
     icon: FaSatellite,
@@ -434,7 +479,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "active",
+    status: "Active",
     key: "delta-v-budget-tool",
     title: "Delta-V Budget Tool",
     icon: FaSatellite,
@@ -444,7 +489,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "satellite-pass-planner",
     title: "Satellite Pass Planner",
     icon: FaEye,
@@ -454,7 +499,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "launch-window-planner",
     title: "Launch Window Planner",
     icon: FaSun,
@@ -464,7 +509,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "porkchop-plotter",
     title: "Porkchop Plotter",
     icon: FaProjectDiagram,
@@ -474,7 +519,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "lambert-solver",
     title: "Lambert Solver",
     icon: FaArrowsAlt,
@@ -483,7 +528,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "ground-track-visualizer",
     title: "Ground Track Visualizer",
     icon: FaGlobe,
@@ -492,7 +537,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "sun-synchronous-orbit-designer",
     title: "Sun-Synchronous Orbit Designer",
     icon: FaCompass,
@@ -502,7 +547,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "raan-drift-calculator",
     title: "RAAN Drift Calculator",
     icon: FaExchangeAlt,
@@ -512,7 +557,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "plane-change-optimizer",
     title: "Plane Change Optimizer",
     icon: FaArrowsAlt,
@@ -522,7 +567,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "reentry-heating-corridor",
     title: "Reentry Heating & Corridor",
     icon: FaRadiation,
@@ -532,7 +577,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "aerobraking-planner",
     title: "Aerobraking Planner",
     icon: FaExchangeAlt,
@@ -542,7 +587,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "orbital-elements-calculator",
     title: "Orbital Elements Calculator",
     icon: FaSatellite,
@@ -552,7 +597,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "keplers-equation-solver",
     title: "Kepler's Equation Solver",
     icon: FaCalculator,
@@ -562,7 +607,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "hyperbolic-trajectory-calculator",
     title: "Hyperbolic Trajectory Calculator",
     icon: FaRocket,
@@ -572,7 +617,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "orbital-maneuver-planner",
     title: "Orbital Maneuver Planner",
     icon: FaArrowsAlt,
@@ -582,7 +627,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "orbit-propagation-tool",
     title: "Orbit Propagation Tool",
     icon: FaClock,
@@ -594,7 +639,7 @@ export const allTools: Tool[] = [
 
   // Structures
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "structural-analysis-tool",
     title: "Structural Analysis Tool",
     icon: FaTools,
@@ -604,7 +649,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "beam-bending-deflection",
     title: "Beam Bending & Deflection",
     icon: FaTools,
@@ -614,7 +659,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "column-buckling-calculator",
     title: "Column Buckling Calculator",
     icon: FaTools,
@@ -624,7 +669,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "fastener-shear-bearing",
     title: "Fastener Shear/Bearing",
     icon: FaTools,
@@ -634,7 +679,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "composite-laminate-analyzer",
     title: "Composite Laminate Analyzer",
     icon: FaCogs,
@@ -644,7 +689,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "pressure-vessel-stress",
     title: "Pressure Vessel Stress",
     icon: FaTools,
@@ -654,7 +699,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "stress-concentration-factor",
     title: "Stress Concentration Factor",
     icon: FaBalanceScale,
@@ -664,7 +709,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "fatigue-life-estimator",
     title: "Fatigue Life Estimator",
     icon: FaTools,
@@ -674,7 +719,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "torsion-calculator",
     title: "Torsion Calculator",
     icon: FaCogs,
@@ -684,7 +729,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "plate-bending-calculator",
     title: "Plate Bending Calculator",
     icon: FaTools,
@@ -694,7 +739,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "safety-factor-calculator",
     title: "Safety Factor Calculator",
     icon: FaBalanceScale,
@@ -704,7 +749,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "weld-strength-calculator",
     title: "Weld Strength Calculator",
     icon: FaTools,
@@ -713,7 +758,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "natural-frequency-calculator",
     title: "Natural Frequency Calculator",
     icon: FaCogs,
@@ -725,7 +770,7 @@ export const allTools: Tool[] = [
 
   // Communications
   {
-    type: "active",
+    status: "Active",
     key: "radar-range",
     title: "Radar Range Equation",
     icon: FaSatelliteDish,
@@ -735,7 +780,7 @@ export const allTools: Tool[] = [
     authors: ["ss7akccnt3fr227zrvk5vae5ks7kqrah"],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "rf-link-budget",
     title: "RF Link Budget",
     icon: FaBroadcastTower,
@@ -745,7 +790,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "antenna-gain-calculator",
     title: "Antenna Gain Calculator",
     icon: FaSatelliteDish,
@@ -755,7 +800,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "free-space-path-loss",
     title: "Free Space Path Loss",
     icon: FaBroadcastTower,
@@ -765,7 +810,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "doppler-shift-calculator",
     title: "Doppler Shift Calculator",
     icon: FaSatelliteDish,
@@ -775,7 +820,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "noise-figure-calculator",
     title: "Noise Figure Calculator",
     icon: FaBroadcastTower,
@@ -785,7 +830,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "modulation-index-calculator",
     title: "Modulation Index Calculator",
     icon: FaSatelliteDish,
@@ -795,7 +840,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "bit-error-rate-calculator",
     title: "Bit Error Rate (BER) Calculator",
     icon: FaBroadcastTower,
@@ -805,7 +850,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "polarization-loss-calculator",
     title: "Polarization Loss Calculator",
     icon: FaSatelliteDish,
@@ -815,7 +860,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "atmospheric-attenuation",
     title: "Atmospheric Attenuation",
     icon: FaBroadcastTower,
@@ -825,7 +870,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "antenna-array-calculator",
     title: "Antenna Array Calculator",
     icon: FaSatelliteDish,
@@ -835,7 +880,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "shannon-capacity-calculator",
     title: "Shannon Capacity Calculator",
     icon: FaBroadcastTower,
@@ -847,7 +892,7 @@ export const allTools: Tool[] = [
 
   // Mission Planning
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "delta-v-tree-builder",
     title: "Delta‑V Tree Builder",
     icon: FaProjectDiagram,
@@ -857,7 +902,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "payload-mass-budget",
     title: "Payload Mass Budget",
     icon: FaBalanceScale,
@@ -867,7 +912,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "power-energy-budget",
     title: "Power & Energy Budget",
     icon: FaBatteryFull,
@@ -877,7 +922,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "eclipse-duration-calculator",
     title: "Eclipse Duration Calculator",
     icon: FaClock,
@@ -887,7 +932,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "radiation-exposure-estimator",
     title: "Radiation Exposure Estimator",
     icon: FaRadiation,
@@ -899,7 +944,7 @@ export const allTools: Tool[] = [
 
   // Astronomy
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "sunrise-sunset-calculator",
     title: "Sunrise/Sunset & Moonrise/Moonset Calculator",
     icon: FaSun,
@@ -909,7 +954,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "moon-phases-calculator",
     title: "Moon Phases Calculator",
     icon: FaMoon,
@@ -919,7 +964,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "eclipse-calculator",
     title: "Eclipse Calculator",
     icon: FaStar,
@@ -929,7 +974,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "redshift-calculator",
     title: "Redshift Calculator",
     icon: FaGlobe,
@@ -939,7 +984,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "field-of-view-calculator",
     title: "Field of View Calculator",
     icon: FaCamera,
@@ -949,7 +994,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "pixel-scale-sampling",
     title: "Pixel Scale & Sampling",
     icon: FaCamera,
@@ -959,7 +1004,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "milky-way-core-planner",
     title: "Milky Way Core Planner",
     icon: FaSun,
@@ -969,7 +1014,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "meteor-shower-tracker",
     title: "Meteor Shower Tracker",
     icon: FaStar,
@@ -979,7 +1024,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "planetary-visibility-planner",
     title: "Planetary Visibility Planner",
     icon: FaMoon,
@@ -989,7 +1034,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "conjunction-occultation-finder",
     title: "Conjunction & Occultation Finder",
     icon: FaStar,
@@ -999,7 +1044,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "polar-alignment-helper",
     title: "Polar Alignment Helper",
     icon: FaCompass,
@@ -1011,7 +1056,7 @@ export const allTools: Tool[] = [
 
   // Navigation
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "great-circle-route-planner",
     title: "Great-Circle Route Planner",
     icon: FaRoute,
@@ -1021,7 +1066,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "geodesic-distance-bearings",
     title: "Geodesic Distance & Bearings",
     icon: FaCompass,
@@ -1031,7 +1076,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "geoid-height-estimator",
     title: "Geoid Height (EGM96) Estimator",
     icon: FaGlobe,
@@ -1042,7 +1087,7 @@ export const allTools: Tool[] = [
 
   // UAV Operations
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "drone-flight-time-estimator",
     title: "Drone Flight Time Estimator",
     icon: FaBatteryFull,
@@ -1052,7 +1097,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "survey-grid-mapping-planner",
     title: "Survey Grid/Mapping Planner",
     icon: FaRoute,
@@ -1062,7 +1107,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "battery-sizing-uav",
     title: "Battery Sizing for UAV",
     icon: FaBatteryFull,
@@ -1074,7 +1119,7 @@ export const allTools: Tool[] = [
 
   // Photography / Imaging
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "golden-hour-sun-moon-planner",
     title: "Golden Hour & Sun/Moon Planner",
     icon: FaCloudSun,
@@ -1084,7 +1129,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "sun-moon-az-el-shadows",
     title: "Sun/Moon Az-El & Shadows",
     icon: FaCompass,
@@ -1094,7 +1139,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "ground-sample-distance-calculator",
     title: "Ground Sample Distance Calculator",
     icon: FaCamera,
@@ -1104,7 +1149,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "aircraft-tracking-calculator",
     title: "Aircraft Tracking Calculator",
     icon: FaPlaneDeparture,
@@ -1114,7 +1159,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "satellite-streak-calculator",
     title: "Satellite Streak Calculator",
     icon: FaSatellite,
@@ -1124,7 +1169,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "telescope-focal-length-calculator",
     title: "Telescope Focal Length Calculator",
     icon: FaEye,
@@ -1134,7 +1179,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "rocket-exhaust-exposure-calculator",
     title: "Rocket Exhaust Exposure Calculator",
     icon: FaRocket,
@@ -1144,7 +1189,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "aurora-exposure-calculator",
     title: "Aurora Exposure Calculator",
     icon: FaBroadcastTower,
@@ -1154,7 +1199,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "orbital-photography-planner",
     title: "Orbital Photography Planner",
     icon: FaGlobe,
@@ -1164,7 +1209,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    type: "coming-soon",
+    status: "Coming Soon",
     key: "meteor-trail-calculator",
     title: "Meteor Trail Calculator",
     icon: FaSatelliteDish,
