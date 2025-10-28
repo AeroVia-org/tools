@@ -126,7 +126,7 @@ export default function ObliqueShockPage() {
   }, [handleCalculate]);
 
   return (
-    <div className="mx-auto pt-0 md:pt-8 pb-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
 
       {/* Title */}
       <ToolTitle toolKey="oblique-shock" />

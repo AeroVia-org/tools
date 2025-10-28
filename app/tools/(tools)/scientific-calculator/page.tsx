@@ -140,7 +140,7 @@ export default function DesmosScientificCalculatorPage() {
     selectedCategory === "All" ? FORMULAS : FORMULAS.filter((f) => f.category === selectedCategory);
 
   return (
-    <div className="container mx-auto space-y-6 p-6">
+    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
 
       {/* Title */}
       <ToolTitle toolKey="scientific-calculator" />

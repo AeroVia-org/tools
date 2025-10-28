@@ -119,12 +119,12 @@ import OpenSourceCard from "../../components/OpenSourceCard";
 
 export default function RangeEnduranceAnalysisPage() {
   return (
-    <div className="bg-background min-h-screen">
+    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
 
       {/* Title */}
       <ToolTitle toolKey="range-endurance-analysis" />
 
-      <div className="container mx-auto max-w-7xl px-4 py-8">
+      <div className="container mx-auto">
         <div className="mt-8 py-16 text-center">
           <FaRoute className="text-muted-foreground mx-auto mb-6 text-6xl" />
           <h2 className="text-foreground mb-4 text-2xl font-bold">Range & Endurance Analysis</h2>
