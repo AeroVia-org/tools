@@ -4,7 +4,7 @@
 // All mathematical formulas and conversion factors used in this tool must be clearly
 // explained with proper derivations so users understand the underlying calculations.
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { FaGasPump, FaBox, FaWeightHanging } from "react-icons/fa";
 import Theory from "./theory";
 import Visualization from "./visualization";
@@ -36,43 +36,26 @@ export default function PropellantMassFractionPage() {
   const [finalMassValue, setFinalMassValue] = useState<string>("2000");
   const [massUnit, setMassUnit] = useState<MassUnit>("kg");
 
-  // Results state
-  const [results, setResults] = useState<PropellantMassFractionResult | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleCalculate = useCallback(() => {
-    setError(null);
-    setResults(null);
-
+  // Derived calculation from inputs (no effect-driven state)
+  const { results, error }: { results: PropellantMassFractionResult | null; error: string | null } = (() => {
     const initialMassInput = parseFloat(initialMassValue);
     const finalMassInput = parseFloat(finalMassValue);
-
     if (isNaN(initialMassInput) || isNaN(finalMassInput)) {
-      setError("Please enter valid numbers for both masses.");
-      return;
+      return { results: null, error: "Please enter valid numbers for both masses." };
     }
-
     // Convert inputs to kg for calculation
     const initialMassKg = massUnit === "lb" ? initialMassInput * LB_TO_KG : initialMassInput;
     const finalMassKg = massUnit === "lb" ? finalMassInput * LB_TO_KG : finalMassInput;
-
     try {
       const calculatedResults = calculatePropellantMassFraction(initialMassKg, finalMassKg);
-      setResults(calculatedResults);
+      return { results: calculatedResults, error: null };
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("An unknown error occurred during calculation.");
+        return { results: null, error: err.message };
       }
-      setResults(null);
+      return { results: null, error: "An unknown error occurred during calculation." };
     }
-  }, [initialMassValue, finalMassValue, massUnit]);
-
-  // Trigger calculation on initial load and when inputs change
-  useEffect(() => {
-    handleCalculate();
-  }, [handleCalculate]);
+  })();
 
   const formattedResults = (() => {
     if (!results) return null;
@@ -105,8 +88,7 @@ export default function PropellantMassFractionPage() {
   })();
 
   return (
-    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
       {/* Title */}
       <ToolTitle toolKey="propellant-mass-fraction" />
 

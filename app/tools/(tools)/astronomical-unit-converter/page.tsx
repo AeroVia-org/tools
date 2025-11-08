@@ -4,7 +4,7 @@
 // All mathematical formulas and conversion factors used in this tool must be clearly
 // explained with proper derivations so users understand the underlying calculations.
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaExchangeAlt, FaArrowRight, FaCopy, FaCheck } from "react-icons/fa";
 import { convertDistance, astronomicalUnits, AstronomicalUnit } from "./logic";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
@@ -20,34 +20,27 @@ export default function AstronomicalUnitConverterPage() {
   const [fromUnit, setFromUnit] = useState<AstronomicalUnit>(astronomicalUnits[0]);
   const [toUnit, setToUnit] = useState<AstronomicalUnit>(astronomicalUnits[1]);
 
-  const [resultValue, setResultValue] = useState<ResultValue>(null);
-  const [error, setError] = useState<string | null>(null);
   const [isCopied, setIsCopied] = useState(false);
 
-  useEffect(() => {
-    setError(null);
+  // Derived conversion from current inputs and units (no effect-driven state)
+  const { resultValue, error }: { resultValue: ResultValue; error: string | null } = (() => {
     const numeric = parseFloat(inputValue);
     if (inputValue.trim() === "") {
-      setResultValue(null);
-      return;
+      return { resultValue: null, error: null };
     }
     if (isNaN(numeric)) {
-      setError("Invalid number");
-      setResultValue(null);
-      return;
+      return { resultValue: null, error: "Invalid number" };
     }
     if (fromUnit === toUnit) {
-      setResultValue(numeric);
-      return;
+      return { resultValue: numeric, error: null };
     }
     try {
       const converted = convertDistance(numeric, fromUnit, toUnit);
-      setResultValue(converted);
+      return { resultValue: converted, error: null };
     } catch (e) {
-      setResultValue(null);
-      setError(e instanceof Error ? e.message : "Conversion error");
+      return { resultValue: null, error: e instanceof Error ? e.message : "Conversion error" };
     }
-  }, [inputValue, fromUnit, toUnit]);
+  })();
 
   const handleSwapUnits = () => {
     const f = fromUnit;
@@ -77,8 +70,7 @@ export default function AstronomicalUnitConverterPage() {
   };
 
   return (
-    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
       {/* Title */}
       <ToolTitle toolKey="astronomical-unit-converter" />
 

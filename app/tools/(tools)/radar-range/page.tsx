@@ -4,7 +4,7 @@
 // All mathematical formulas and conversion factors used in this tool must be clearly
 // explained with proper derivations so users understand the underlying calculations.
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { FaBullseye } from "react-icons/fa";
 import {
   calculateRadarRange,
@@ -79,26 +79,16 @@ export default function RadarRangePage() {
     range: "km",
   });
 
-  // Results state
-  const [results, setResults] = useState<RadarRangeResult | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleCalculate = useCallback(() => {
-    setError(null);
-    setResults(null);
-
-    // Basic validation
+  // Derived calculation from inputs (no effect-driven state)
+  const { results, error }: { results: RadarRangeResult | null; error: string | null } = (() => {
     const powerNum = parseFloat(transmitPower);
     const gainNum = parseFloat(antennaGain);
     const freqNum = parseFloat(frequency);
     const rcsNum = parseFloat(rcs);
     const signalNum = parseFloat(minDetectableSignal);
-
     if (isNaN(powerNum) || isNaN(gainNum) || isNaN(freqNum) || isNaN(rcsNum) || isNaN(signalNum)) {
-      setError("Please enter valid numbers for all inputs.");
-      return;
+      return { results: null, error: "Please enter valid numbers for all inputs." };
     }
-
     try {
       // Convert inputs to SI units using helpers from logic.ts
       const powerW = convertPowerToW(powerNum, units.power);
@@ -106,23 +96,15 @@ export default function RadarRangePage() {
       const frequencyHz = convertFrequencyToHz(freqNum, units.frequency);
       const rcsM2 = convertRcsToM2(rcsNum, units.rcs);
       const minSignalW = convertSignalToW(signalNum, units.minSignal);
-
-      // Perform calculation
       const calculatedResult = calculateRadarRange(powerW, gainLinear, frequencyHz, rcsM2, minSignalW);
-      setResults(calculatedResult);
+      return { results: calculatedResult, error: null };
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("An unknown error occurred during calculation.");
+        return { results: null, error: err.message };
       }
-      setResults(null);
+      return { results: null, error: "An unknown error occurred during calculation." };
     }
-  }, [transmitPower, antennaGain, frequency, rcs, minDetectableSignal, units]); // Now includes units
-
-  useEffect(() => {
-    handleCalculate();
-  }, [handleCalculate]);
+  })();
 
   const formattedResults = (() => {
     if (!results) return null;
@@ -154,8 +136,7 @@ export default function RadarRangePage() {
   })();
 
   return (
-    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
       {/* Title */}
       <ToolTitle toolKey="radar-range" />
 

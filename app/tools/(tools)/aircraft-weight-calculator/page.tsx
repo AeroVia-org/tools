@@ -161,8 +161,7 @@ export default function AircraftWeightCalculatorPage() {
   };
 
   return (
-    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
       {/* Title */}
       <ToolTitle toolKey="aircraft-weight-calculator" />
 
@@ -180,19 +179,19 @@ export default function AircraftWeightCalculatorPage() {
             <Label className="mb-1">Calculation Mode</Label>
             <div className="bg-muted flex space-x-4 rounded-md p-1">
               {[
-                { id: "fromTakeoffWeight", label: "From Takeoff Weight" },
-                { id: "fromEmptyWeight", label: "From Empty Weight" },
-                { id: "fromMission", label: "From Mission Requirements" },
+                { value: "fromTakeoffWeight", label: "From Takeoff Weight" },
+                { value: "fromEmptyWeight", label: "From Empty Weight" },
+                { value: "fromMission", label: "From Mission Requirements" },
               ].map((mode) => (
                 <button
-                  key={mode.id}
+                  key={mode.value}
                   onClick={() => {
-                    setCalculationMode(mode.id as CalculationMode);
+                    setCalculationMode(mode.value as CalculationMode);
                     setError(null);
                     setResults(null);
                   }}
                   className={`w-full rounded-md px-3 py-2 text-center text-sm font-medium transition-colors ${
-                    calculationMode === mode.id
+                    calculationMode === mode.value
                       ? "bg-card text-primary shadow"
                       : "text-muted-foreground hover:bg-accent"
                   }`}

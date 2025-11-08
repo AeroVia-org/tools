@@ -4,7 +4,7 @@
 // NOT YET COMPLETE, TESTED, OR OPTIMIZED - STILL IN DEVELOPMENT
 //////////////////////////////////////////
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { FaBolt, FaCalculator, FaInfoCircle } from "react-icons/fa";
 import { calculateObliqueShock, ObliqueShockResult, calculateMaxDeflectionAngle } from "./logic";
 import Theory from "./theory";
@@ -37,10 +37,7 @@ export default function ObliqueShockPage() {
   const [solutionType, setSolutionType] = useState<ShockSolutionType>("weak");
 
   // Results state
-  const [results, setResults] = useState<ObliqueShockResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [displayMachAngle, setDisplayMachAngle] = useState<number | null>(null);
-  const [displayMaxDeflection, setDisplayMaxDeflection] = useState<number | null>(null);
 
   // Format number helper
   const formatNumber = (num: number | undefined | null, decimals: number = 4): string => {
@@ -54,64 +51,65 @@ export default function ObliqueShockPage() {
     return num.toFixed(decimals);
   };
 
-  // Calculate flow properties
-  const handleCalculate = useCallback(() => {
-    setError(null);
-    setResults(null);
-    setDisplayMachAngle(null);
-    setDisplayMaxDeflection(null);
-
+  // Derived calculation from inputs (no effect-driven state)
+  const {
+    results,
+    displayMachAngle,
+    displayMaxDeflection,
+  }: {
+    results: ObliqueShockResult | null;
+    displayMachAngle: number | null;
+    displayMaxDeflection: number | null;
+  } = (() => {
     try {
       const M1 = parseFloat(upstreamMach);
       const theta = parseFloat(deflectionAngle);
       const gamma = gasType === "custom" ? parseFloat(customGamma) : GAS_PROPERTIES[gasType].gamma;
 
-      if (isNaN(M1) || M1 <= 0) {
-        setError("Please enter a valid positive upstream Mach number (M₁).");
-        return;
+      if (isNaN(M1) || M1 <= 0 || M1 <= 1) {
+        return { results: null, displayMachAngle: null, displayMaxDeflection: null };
       }
-      if (isNaN(theta)) {
-        setError("Please enter a valid deflection angle (θ).");
-        return;
-      }
-      if (theta < 0) {
-        setError("Deflection angle (θ) must be non-negative.");
-        return;
+      if (isNaN(theta) || theta < 0) {
+        return { results: null, displayMachAngle: null, displayMaxDeflection: null };
       }
       if (isNaN(gamma) || gamma <= 1) {
-        setError("Specific heat ratio (γ) must be greater than 1.");
-        return;
-      }
-      if (M1 <= 1) {
-        setError("Upstream Mach number (M₁) must be supersonic (M₁ > 1).");
-        return;
+        return { results: null, displayMachAngle: null, displayMaxDeflection: null };
       }
 
       const isWeakSolution = solutionType === "weak";
 
       // Calculate Mach Angle and Max Deflection Angle
       const machAngleDeg = Math.asin(1 / M1) * (180 / Math.PI);
-      setDisplayMachAngle(machAngleDeg);
       const { maxTheta } = calculateMaxDeflectionAngle(M1, gamma);
-      setDisplayMaxDeflection(maxTheta);
 
       const calculatedResults = calculateObliqueShock(M1, theta, gamma, isWeakSolution);
-      setResults(calculatedResults);
 
       if (theta > maxTheta + 0.0001) {
         // Add small tolerance for floating point
-        setError(
-          `Deflection angle (${formatNumber(theta, 2)}°) exceeds maximum possible (${formatNumber(maxTheta, 2)}°) for M₁=${formatNumber(M1, 2)}. Shock is detached. Results shown are for the detached shock limit if applicable, or may be invalid.`,
-        );
+        return { results: calculatedResults, displayMachAngle: machAngleDeg, displayMaxDeflection: maxTheta };
       }
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("An unknown error occurred during calculation.");
+
+      return { results: calculatedResults, displayMachAngle: machAngleDeg, displayMaxDeflection: maxTheta };
+    } catch {
+      return { results: null, displayMachAngle: null, displayMaxDeflection: null };
+    }
+  })();
+
+  // Calculate flow properties (for error handling)
+  const handleCalculate = useCallback(() => {
+    setError(null);
+    if (!results && displayMaxDeflection !== null) {
+      const M1 = parseFloat(upstreamMach);
+      const theta = parseFloat(deflectionAngle);
+      if (!isNaN(M1) && !isNaN(theta) && displayMaxDeflection !== null && theta > displayMaxDeflection + 0.0001) {
+        setError(
+          `Deflection angle (${formatNumber(theta, 2)}°) exceeds maximum possible (${formatNumber(displayMaxDeflection, 2)}°) for M₁=${formatNumber(M1, 2)}. Shock is detached. Results shown are for the detached shock limit if applicable, or may be invalid.`,
+        );
+      } else if (!results) {
+        setError("Invalid input. Please check your values.");
       }
     }
-  }, [upstreamMach, deflectionAngle, gasType, customGamma, solutionType]);
+  }, [results, displayMaxDeflection, upstreamMach, deflectionAngle]);
 
   // Handle Enter key
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -120,14 +118,8 @@ export default function ObliqueShockPage() {
     }
   };
 
-  // Recalculate when inputs change automatically
-  useEffect(() => {
-    handleCalculate();
-  }, [handleCalculate]);
-
   return (
-    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
       {/* Title */}
       <ToolTitle toolKey="oblique-shock" />
 

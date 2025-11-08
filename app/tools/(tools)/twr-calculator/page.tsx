@@ -309,8 +309,7 @@ export default function TWRCalculatorPage() {
   };
 
   return (
-    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
       {/* Title */}
       <ToolTitle toolKey="twr-calculator" />
 
@@ -326,19 +325,19 @@ export default function TWRCalculatorPage() {
             <Label className="mb-1">Calculation Type</Label>
             <div className="bg-muted flex space-x-4 rounded-md p-1">
               {[
-                { id: "twr", label: "Calculate TWR" },
-                { id: "thrust", label: "Calculate Required Thrust" },
-                { id: "mass", label: "Calculate Maximum Mass" },
+                { value: "twr", label: "Calculate TWR" },
+                { value: "thrust", label: "Calculate Required Thrust" },
+                { value: "mass", label: "Calculate Maximum Mass" },
               ].map((type) => (
                 <button
-                  key={type.id}
+                  key={type.value}
                   onClick={() => {
-                    setCalculationType(type.id as CalculationType);
+                    setCalculationType(type.value as CalculationType);
                     setError(null);
                     setResults(null);
                   }}
                   className={`w-full rounded-md px-3 py-2 text-center text-sm font-medium transition-colors ${
-                    calculationType === type.id
+                    calculationType === type.value
                       ? "bg-card text-primary shadow"
                       : "text-muted-foreground hover:bg-accent"
                   }`}

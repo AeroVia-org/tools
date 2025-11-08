@@ -4,7 +4,7 @@
 // All mathematical formulas and conversion factors used in this tool must be clearly
 // explained with proper derivations so users understand the underlying calculations.
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FaExchangeAlt, FaArrowRight, FaCopy, FaCheck } from "react-icons/fa";
 import { convertUnit, allCategories, UnitCategory } from "./logic";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
@@ -30,59 +30,33 @@ export default function UnitConverterPage() {
   const [fromUnit, setFromUnit] = useState<string>(initialFromUnit);
   const [toUnit, setToUnit] = useState<string>(initialToUnit);
 
-  // Results state
-  const [resultValue, setResultValue] = useState<ResultValue>(null);
-  const [error, setError] = useState<string | null>(null);
+  // Results derived (computed below)
 
   // UI state
   const [isCopied, setIsCopied] = useState(false);
 
-  // Update units and reset input/result/error when category changes
-  useEffect(() => {
-    const units = allCategories[selectedCategory];
-    const firstUnit = units[0] || "";
-    const secondUnit = units[1] || firstUnit;
-    setFromUnit(firstUnit);
-    setToUnit(secondUnit);
-    setInputValue("");
-    setResultValue(null);
-    setError(null);
-  }, [selectedCategory]);
-
-  // useEffect for conversion calculation
-  useEffect(() => {
-    setError(null); // Reset error at the start of each calculation
+  // Derived conversion from current inputs and units (no effect-driven state)
+  const { computedResult, computedError }: { computedResult: ResultValue; computedError: string | null } = (() => {
     const valueNum = parseFloat(inputValue);
-
-    // Don't calculate if input is empty
     if (inputValue.trim() === "") {
-      setResultValue(null);
-      return;
+      return { computedResult: null, computedError: null };
     }
-
     if (isNaN(valueNum)) {
-      setError("Invalid number");
-      setResultValue(null);
-      return;
+      return { computedResult: null, computedError: "Invalid number" };
     }
-
     if (fromUnit === toUnit) {
-      setResultValue(valueNum); // No conversion needed
-      return;
+      return { computedResult: valueNum, computedError: null };
     }
-
     try {
       const convertedValue = convertUnit(valueNum, fromUnit, toUnit, selectedCategory);
-      setResultValue(convertedValue);
+      return { computedResult: convertedValue, computedError: null };
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Conversion error");
+        return { computedResult: null, computedError: err.message };
       }
-      setResultValue(null); // Set result to null on error
+      return { computedResult: null, computedError: "Conversion error" };
     }
-  }, [inputValue, fromUnit, toUnit, selectedCategory]);
+  })();
 
   // Handlers
   const handleSwapUnits = () => {
@@ -93,7 +67,7 @@ export default function UnitConverterPage() {
   };
 
   const handleCopyResult = async () => {
-    if (resultValue === null || error) return;
+    if (computedResult === null || computedError) return;
 
     try {
       await navigator.clipboard.writeText(formattedResult());
@@ -106,8 +80,8 @@ export default function UnitConverterPage() {
 
   // Formats the result to 6 decimal places
   const formattedResult = () => {
-    if (resultValue === null) return "";
-    return Number.isInteger(resultValue) ? resultValue.toString() : resultValue.toFixed(6);
+    if (computedResult === null) return "";
+    return Number.isInteger(computedResult) ? computedResult.toString() : computedResult.toFixed(6);
   };
 
   return (
@@ -129,7 +103,19 @@ export default function UnitConverterPage() {
               <Label htmlFor="category-select" className="mb-1">
                 Category
               </Label>
-              <Select value={selectedCategory} onValueChange={(value) => setSelectedCategory(value as UnitCategory)}>
+              <Select
+                value={selectedCategory}
+                onValueChange={(value) => {
+                  const v = value as UnitCategory;
+                  setSelectedCategory(v);
+                  const units = allCategories[v];
+                  const firstUnit = units[0] || "";
+                  const secondUnit = units[1] || firstUnit;
+                  setFromUnit(firstUnit);
+                  setToUnit(secondUnit);
+                  setInputValue("");
+                }}
+              >
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
                 </SelectTrigger>
@@ -211,17 +197,17 @@ export default function UnitConverterPage() {
               <Label htmlFor="result-value">Result</Label>
               <div className="border-border bg-card mt-1 flex items-center justify-between rounded-md border px-3 py-2 shadow-sm">
                 <span id="result-value" className="flex-grow sm:text-sm" aria-live="polite">
-                  {/* Error and resultValue */}
-                  {error && !resultValue ? "---" : formattedResult() || "---"}
+                  {/* Error and result */}
+                  {computedError && !computedResult ? "---" : formattedResult() || "---"}
                 </span>
                 {/* Copy Button */}
                 <button
                   onClick={handleCopyResult}
                   title={isCopied ? "Copied!" : "Copy result"}
-                  disabled={resultValue === null || !!error}
+                  disabled={computedResult === null || !!computedError}
                   className="text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground ml-2 flex-shrink-0 cursor-pointer rounded p-1 transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                   aria-label={isCopied ? "Result copied to clipboard" : "Copy result to clipboard"}
-                  aria-disabled={resultValue === null || !!error}
+                  aria-disabled={computedResult === null || !!computedError}
                 >
                   {isCopied ? <FaCheck className="text-success h-4 w-4" /> : <FaCopy className="h-4 w-4" />}
                 </button>
@@ -231,9 +217,9 @@ export default function UnitConverterPage() {
         </div>
 
         {/* Error Display */}
-        {error && (
+        {computedError && (
           <div className="bg-destructive/10 mt-4 rounded-md p-3">
-            <p className="text-destructive text-xs font-medium">{error}</p>
+            <p className="text-destructive text-xs font-medium">{computedError}</p>
           </div>
         )}
       </div>

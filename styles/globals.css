@@ -62,12 +62,12 @@ Indiviual classnames
 /////////////////////////////////////////
 */
 
-.highlight-last-course {
+.highlight-course {
   /* Like the ResumeButton pulse: 1 s duration, 5 iterations */
   animation: highlight-pulse 1s ease-in-out 5;
 }
 
-[class*="dark"] .highlight-last-course {
+[class*="dark"] .highlight-course {
   outline-color: rgb(96, 165, 250);
 }
 

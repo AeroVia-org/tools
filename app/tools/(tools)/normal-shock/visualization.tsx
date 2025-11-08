@@ -75,6 +75,35 @@ export default function ShockVisualization({
     [canvasWidth], // Depends on canvasWidth for scaling
   );
 
+  // Draw an arrow for flow direction
+  const drawArrow = (
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    size: number,
+    angle: number,
+    color: string,
+  ) => {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    // Arrow body
+    ctx.moveTo(-size, -size / 3);
+    ctx.lineTo(size * 0.7, -size / 3);
+    ctx.lineTo(size * 0.7, -size / 1.5);
+    ctx.lineTo(size, 0);
+    ctx.lineTo(size * 0.7, size / 1.5);
+    ctx.lineTo(size * 0.7, size / 3);
+    ctx.lineTo(-size, size / 3);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.restore();
+  };
+
   // Render the canvas
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -222,35 +251,6 @@ export default function ShockVisualization({
       ctx.globalAlpha = 1.0;
     }
   }, [results, canvasWidth, canvasHeight, hoverPosition, getArrowProperties]);
-
-  // Draw an arrow for flow direction
-  const drawArrow = (
-    ctx: CanvasRenderingContext2D,
-    x: number,
-    y: number,
-    size: number,
-    angle: number,
-    color: string,
-  ) => {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.rotate(angle);
-
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    // Arrow body
-    ctx.moveTo(-size, -size / 3);
-    ctx.lineTo(size * 0.7, -size / 3);
-    ctx.lineTo(size * 0.7, -size / 1.5);
-    ctx.lineTo(size, 0);
-    ctx.lineTo(size * 0.7, size / 1.5);
-    ctx.lineTo(size * 0.7, size / 3);
-    ctx.lineTo(-size, size / 3);
-    ctx.closePath();
-    ctx.fill();
-
-    ctx.restore();
-  };
 
   // Handle mouse events for interactive highlighting
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {

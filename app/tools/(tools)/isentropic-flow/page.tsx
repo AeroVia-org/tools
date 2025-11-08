@@ -4,7 +4,7 @@
 // All mathematical formulas and conversion factors used in this tool must be clearly
 // explained with proper derivations so users understand the underlying calculations.
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { FaWind, FaTable } from "react-icons/fa";
 import {
   calculateIsentropicFlow,
@@ -47,13 +47,8 @@ export default function IsentropicFlowPage() {
   const [gasType, setGasType] = useState<GasType>("air");
   const [customGamma, setCustomGamma] = useState<string>("1.4");
 
-  // Results state
-  const [results, setResults] = useState<IsentropicFlowResult | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
   // UI state
   const [showTable, setShowTable] = useState<boolean>(false);
-  const [tableData, setTableData] = useState<IsentropicFlowResult[]>([]);
 
   // Format number with proper rounding
   const formatNumber = (num: number, decimals: number = 4): string => {
@@ -69,17 +64,16 @@ export default function IsentropicFlowPage() {
     return num.toFixed(decimals);
   };
 
-  // Calculate flow properties based on inputs
-  const handleCalculate = useCallback(() => {
-    setError(null);
-    setResults(null);
-
+  // Derived calculation from inputs (no effect-driven state)
+  const { results, error }: { results: IsentropicFlowResult | null; error: string | null } = ((): {
+    results: IsentropicFlowResult | null;
+    error: string | null;
+  } => {
     try {
       const gamma = gasType === "custom" ? parseFloat(customGamma) : GAS_PROPERTIES[gasType].gamma;
 
       if (isNaN(gamma) || gamma <= 1) {
-        setError("Specific heat ratio must be greater than 1");
-        return;
+        return { results: null, error: "Specific heat ratio must be greater than 1" };
       }
 
       let calculatedMach: number;
@@ -88,138 +82,82 @@ export default function IsentropicFlowPage() {
       switch (calculationMode) {
         case "mach":
           calculatedMach = parseFloat(mach);
-
           if (isNaN(calculatedMach)) {
-            setError("Please enter a valid Mach number");
-            return;
+            return { results: null, error: "Please enter a valid Mach number" };
           }
-
           if (calculatedMach < 0) {
-            setError("Mach number must be positive");
-            return;
+            return { results: null, error: "Mach number must be positive" };
           }
           break;
 
         case "pressure":
           const pressureValue = parseFloat(pressureRatio);
-
           if (isNaN(pressureValue)) {
-            setError("Please enter a valid pressure ratio");
-            return;
+            return { results: null, error: "Please enter a valid pressure ratio" };
           }
-
           if (pressureValue <= 0 || pressureValue > 1) {
-            setError("Pressure ratio must be between 0 and 1");
-            return;
+            return { results: null, error: "Pressure ratio must be between 0 and 1" };
           }
-
           calculatedMach = findMachFromPressureRatio(pressureValue, gamma);
-          setMach(formatNumber(calculatedMach, 3));
           break;
 
         case "temperature":
           const temperatureValue = parseFloat(temperatureRatio);
-
           if (isNaN(temperatureValue)) {
-            setError("Please enter a valid temperature ratio");
-            return;
+            return { results: null, error: "Please enter a valid temperature ratio" };
           }
-
           if (temperatureValue <= 0 || temperatureValue > 1) {
-            setError("Temperature ratio must be between 0 and 1");
-            return;
+            return { results: null, error: "Temperature ratio must be between 0 and 1" };
           }
-
           calculatedMach = findMachFromTemperatureRatio(temperatureValue, gamma);
-          setMach(formatNumber(calculatedMach, 3));
           break;
 
         case "area":
           const areaValue = parseFloat(areaRatio);
-
           if (isNaN(areaValue)) {
-            setError("Please enter a valid area ratio");
-            return;
+            return { results: null, error: "Please enter a valid area ratio" };
           }
-
           if (areaValue < 1) {
-            setError("Area ratio must be greater than or equal to 1");
-            return;
+            return { results: null, error: "Area ratio must be greater than or equal to 1" };
           }
-
           const isSupersonic = flowRegime === "supersonic";
           calculatedMach = findMachFromAreaRatio(areaValue, gamma, isSupersonic);
-          setMach(formatNumber(calculatedMach, 3));
           break;
 
         default:
-          calculatedMach = 0;
+          return { results: null, error: "Invalid calculation mode" };
       }
 
       // Calculate all isentropic flow properties
-      const result = calculateIsentropicFlow(calculatedMach, gamma);
-      setResults(result);
-
-      // Update input fields with calculated values for consistency
-      setPressureRatio(formatNumber(result.pressureRatio, 6));
-      setTemperatureRatio(formatNumber(result.temperatureRatio, 6));
-      setAreaRatio(formatNumber(result.areaRatio, 3));
-    } catch {
-      setError("Invalid input. Please check your values.");
+      const calculatedResults = calculateIsentropicFlow(calculatedMach, gamma);
+      return { results: calculatedResults, error: null };
+    } catch (err) {
+      if (err instanceof Error) {
+        return { results: null, error: err.message };
+      }
+      return { results: null, error: "Invalid input. Please check your values." };
     }
-  }, [calculationMode, mach, pressureRatio, temperatureRatio, areaRatio, flowRegime, gasType, customGamma]);
+  })();
 
   // Generate table data
-  const handleToggleTable = useCallback(() => {
-    try {
-      if (!showTable) {
-        const gamma = gasType === "custom" ? parseFloat(customGamma) : GAS_PROPERTIES[gasType].gamma;
-
-        if (isNaN(gamma) || gamma <= 1) {
-          setError("Specific heat ratio must be greater than 1");
-          return;
-        }
-
-        // Generate table with appropriate ranges
-        const table = generateIsentropicTable(0.1, 5.0, 25, gamma);
-        setTableData(table);
-      }
-
-      setShowTable(!showTable);
-    } catch {
-      // Silently fail for table updates
-    }
-  }, [gasType, customGamma, showTable]);
-
-  // Handle Enter key for calculation
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleCalculate();
-    }
+  const handleToggleTable = () => {
+    setShowTable(!showTable);
   };
 
-  // Calculate on mount and when inputs change
-  useEffect(() => {
-    handleCalculate();
-
-    // Update table if visible
-    if (showTable) {
-      try {
-        const gamma = gasType === "custom" ? parseFloat(customGamma) : GAS_PROPERTIES[gasType].gamma;
-
-        if (!isNaN(gamma) && gamma > 1) {
-          const table = generateIsentropicTable(0.1, 5.0, 25, gamma);
-          setTableData(table);
-        }
-      } catch {
-        // Silently fail for table updates
-      }
+  // Update table data when visible and inputs change
+  const tableDataDerived: IsentropicFlowResult[] = (() => {
+    if (!showTable) return [];
+    try {
+      const gamma = gasType === "custom" ? parseFloat(customGamma) : GAS_PROPERTIES[gasType].gamma;
+      if (isNaN(gamma) || gamma <= 1) return [];
+      return generateIsentropicTable(0.1, 5.0, 25, gamma);
+    } catch {
+      return [];
     }
-  }, [handleCalculate, showTable, gasType, customGamma]);
+  })();
 
   return (
-    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
       {/* Title */}
       <ToolTitle toolKey="isentropic-flow" />
 
@@ -287,7 +225,6 @@ export default function IsentropicFlowPage() {
                   id="custom-gamma"
                   value={customGamma}
                   onChange={(e) => setCustomGamma(e.target.value)}
-                  onKeyDown={handleKeyDown}
                   min="1.001"
                   step="0.001"
                   className="mt-1"
@@ -313,7 +250,6 @@ export default function IsentropicFlowPage() {
                 id="mach-number"
                 value={mach}
                 onChange={(e) => setMach(e.target.value)}
-                onKeyDown={handleKeyDown}
                 disabled={calculationMode !== "mach"}
                 className={`mt-1 ${calculationMode === "mach" ? "border-primary bg-primary/10" : ""}`}
                 placeholder="e.g., 2.0"
@@ -335,7 +271,6 @@ export default function IsentropicFlowPage() {
                 id="pressure-ratio"
                 value={pressureRatio}
                 onChange={(e) => setPressureRatio(e.target.value)}
-                onKeyDown={handleKeyDown}
                 disabled={calculationMode !== "pressure"}
                 min="0.0001"
                 max="1"
@@ -360,7 +295,6 @@ export default function IsentropicFlowPage() {
                 id="temperature-ratio"
                 value={temperatureRatio}
                 onChange={(e) => setTemperatureRatio(e.target.value)}
-                onKeyDown={handleKeyDown}
                 disabled={calculationMode !== "temperature"}
                 min="0.0001"
                 max="1"
@@ -387,7 +321,6 @@ export default function IsentropicFlowPage() {
                     id="area-ratio"
                     value={areaRatio}
                     onChange={(e) => setAreaRatio(e.target.value)}
-                    onKeyDown={handleKeyDown}
                     disabled={calculationMode !== "area"}
                     min="1"
                     step="0.01"
@@ -537,7 +470,7 @@ export default function IsentropicFlowPage() {
           )}
 
           {/* Mach Number Table */}
-          {showTable && tableData.length > 0 && (
+          {showTable && tableDataDerived.length > 0 && (
             <div className="mt-8">
               <h3 className="text-foreground mb-4 text-lg font-medium">Isentropic Flow Properties Table</h3>
               <div className="border-border overflow-x-auto rounded-lg border">
@@ -562,7 +495,7 @@ export default function IsentropicFlowPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-border bg-card divide-y">
-                    {tableData.map((row, index) => (
+                    {tableDataDerived.map((row, index) => (
                       <tr key={index} className={index % 2 === 0 ? "bg-card" : "bg-muted"}>
                         <td className="text-foreground px-6 py-4 text-sm whitespace-nowrap">
                           {formatNumber(row.mach, 2)}

@@ -4,7 +4,7 @@
 // All mathematical formulas and conversion factors used in this tool must be clearly
 // explained with proper derivations so users understand the underlying calculations.
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { calculateNormalShock, calculateFromPitotRatio, NormalShockResult, generateShockTable } from "./logic";
 import { FaBolt, FaTable, FaArrowRight } from "react-icons/fa";
 import Visualization from "./visualization";
@@ -37,13 +37,8 @@ export default function NormalShockPage() {
   const [gasType, setGasType] = useState<GasType>("air");
   const [customGamma, setCustomGamma] = useState<string>("1.4");
 
-  // Results state
-  const [results, setResults] = useState<NormalShockResult | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
   // UI state
   const [showTable, setShowTable] = useState<boolean>(false);
-  const [tableData, setTableData] = useState<NormalShockResult[]>([]);
   const [hoverPosition, setHoverPosition] = useState<"upstream" | "downstream" | "shock" | null>(null);
 
   // Format number to fixed decimal places with proper rounding
@@ -58,104 +53,68 @@ export default function NormalShockPage() {
     return num.toFixed(decimals);
   };
 
-  // Calculate the shock parameters based on inputs
-  const handleCalculate = useCallback(() => {
-    setError(null);
-    setResults(null);
+  // Generate table data for a range of Mach numbers
+  const handleGenerateTable = () => {
+    setShowTable(!showTable);
+  };
 
+  // Derived calculation from inputs (no effect-driven state)
+  const { results, error }: { results: NormalShockResult | null; error: string | null } = ((): {
+    results: NormalShockResult | null;
+    error: string | null;
+  } => {
     try {
       const gamma = gasType === "custom" ? parseFloat(customGamma) : GAS_PROPERTIES[gasType].gamma;
 
       if (isNaN(gamma) || gamma <= 1) {
-        setError("Specific heat ratio must be greater than 1");
-        return;
+        return { results: null, error: "Specific heat ratio must be greater than 1" };
       }
 
       if (calculationMode === "mach") {
         const machNumber = parseFloat(mach1);
 
         if (isNaN(machNumber)) {
-          setError("Please enter a valid Mach number");
-          return;
+          return { results: null, error: "Please enter a valid Mach number" };
         }
-
         if (machNumber <= 1) {
-          setError("Mach number must be greater than 1 (supersonic)");
-          return;
+          return { results: null, error: "Mach number must be greater than 1 for normal shock" };
         }
 
-        const result = calculateNormalShock(machNumber, gamma);
-        setResults(result);
+        const calculatedResults = calculateNormalShock(machNumber, gamma);
+        return { results: calculatedResults, error: null };
       } else {
         // Pitot ratio calculation
         const ratio = parseFloat(pitotRatio);
 
         if (isNaN(ratio)) {
-          setError("Please enter a valid pressure ratio");
-          return;
+          return { results: null, error: "Please enter a valid pitot pressure ratio" };
         }
-
         if (ratio <= 1) {
-          setError("Pitot pressure ratio must be greater than 1");
-          return;
+          return { results: null, error: "Pitot pressure ratio must be greater than 1" };
         }
 
-        const result = calculateFromPitotRatio(ratio, gamma);
-        setResults(result);
+        const calculatedResults = calculateFromPitotRatio(ratio, gamma);
+        return { results: calculatedResults, error: null };
       }
-    } catch {
-      setError("Invalid input. Please ensure Mach number is > 1.");
-    }
-  }, [calculationMode, mach1, pitotRatio, gasType, customGamma]);
-
-  // Generate table data for a range of Mach numbers
-  const handleGenerateTable = useCallback(() => {
-    try {
-      const gamma = gasType === "custom" ? parseFloat(customGamma) : GAS_PROPERTIES[gasType].gamma;
-
-      if (isNaN(gamma) || gamma <= 1) {
-        setError("Specific heat ratio must be greater than 1");
-        return;
-      }
-
-      // Generate table data for Mach numbers 1.1 to 10
-      const table = generateShockTable(1.1, 10, 20, gamma);
-      setTableData(table);
-      setShowTable(!showTable);
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("An unknown error occurred");
+        return { results: null, error: err.message };
       }
+      return { results: null, error: "Invalid input. Please ensure Mach number is > 1." };
     }
-  }, [gasType, customGamma, showTable]);
+  })();
 
-  // Handle Enter key for calculation
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleCalculate();
+  // Update table data when visible and inputs change
+  const tableDataDerived: NormalShockResult[] = (() => {
+    if (!showTable) return [];
+    try {
+      const gamma = gasType === "custom" ? parseFloat(customGamma) : GAS_PROPERTIES[gasType].gamma;
+      if (isNaN(gamma) || gamma <= 1) return [];
+      return generateShockTable(1.1, 10, 20, gamma);
+    } catch {
+      return [];
     }
-  };
-
-  // Calculate on mount and when inputs change
-  useEffect(() => {
-    handleCalculate();
-
-    // Also update table if it's visible
-    if (showTable) {
-      try {
-        const gamma = gasType === "custom" ? parseFloat(customGamma) : GAS_PROPERTIES[gasType].gamma;
-
-        if (!isNaN(gamma) && gamma > 1) {
-          const table = generateShockTable(1.1, 10, 20, gamma);
-          setTableData(table);
-        }
-      } catch {
-        // Silently fail - table will use previous values
-      }
-    }
-  }, [handleCalculate, showTable, gasType, customGamma]);
+  })();
 
   // Handle visualization hover
   const handleVisualizationHover = (position: "upstream" | "downstream" | "shock" | null) => {
@@ -163,7 +122,7 @@ export default function NormalShockPage() {
   };
 
   return (
-    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
       {/* Title */}
       <ToolTitle toolKey="normal-shock" />
 
@@ -226,7 +185,6 @@ export default function NormalShockPage() {
                       id="custom-gamma"
                       value={customGamma}
                       onChange={(e) => setCustomGamma(e.target.value)}
-                      onKeyDown={handleKeyDown}
                       min="1.001"
                       step="0.001"
                       className="mt-1"
@@ -248,7 +206,6 @@ export default function NormalShockPage() {
                     id="mach-number"
                     value={mach1}
                     onChange={(e) => setMach1(e.target.value)}
-                    onKeyDown={handleKeyDown}
                     min="1.001"
                     step="0.01"
                     placeholder="e.g., 2.0"
@@ -265,7 +222,6 @@ export default function NormalShockPage() {
                     id="pitot-ratio"
                     value={pitotRatio}
                     onChange={(e) => setPitotRatio(e.target.value)}
-                    onKeyDown={handleKeyDown}
                     min="1.001"
                     step="0.1"
                     placeholder="e.g., 7.0"
@@ -400,7 +356,7 @@ export default function NormalShockPage() {
       </div>
 
       {/* Mach Number Table */}
-      {showTable && tableData.length > 0 && (
+      {showTable && tableDataDerived.length > 0 && (
         <div className="border-border bg-card mt-6 rounded-lg border p-4 shadow-lg sm:p-6">
           <h3 className="text-foreground mb-4 text-lg font-medium">Normal Shock Properties Table</h3>
           <div className="border-border overflow-x-auto rounded-lg border">
@@ -428,7 +384,7 @@ export default function NormalShockPage() {
                 </tr>
               </thead>
               <tbody className="divide-border bg-card divide-y">
-                {tableData.map((row, index) => (
+                {tableDataDerived.map((row, index) => (
                   <tr key={index} className={index % 2 === 0 ? "bg-card" : "bg-muted"}>
                     <td className="text-foreground px-4 py-3 text-sm whitespace-nowrap">
                       {formatNumber(row.mach1, 2)}

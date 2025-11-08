@@ -43,20 +43,18 @@ const InteractiveTransfer = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width, height });
-  const [results, setResults] = useState<HohmannResult | null>(null);
   const [dragAngle, setDragAngle] = useState<number | null>(null);
   const [activeOrbit, setActiveOrbit] = useState<"initial" | "transfer" | "final" | null>(null);
 
-  // Calculate Hohmann transfer details
-  useEffect(() => {
+  // Derived calculation from inputs (no effect-driven state)
+  const results: HohmannResult | null = (() => {
     try {
-      const calculatedResults = calculateHohmannTransfer(initialAltitudeKm, finalAltitudeKm);
-      setResults(calculatedResults);
+      return calculateHohmannTransfer(initialAltitudeKm, finalAltitudeKm);
     } catch (err) {
       console.error("Error calculating Hohmann transfer:", err);
-      setResults(null);
+      return null;
     }
-  }, [initialAltitudeKm, finalAltitudeKm]);
+  })();
 
   // Handle resize
   useEffect(() => {

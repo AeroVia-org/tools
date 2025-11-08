@@ -1,15 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { FaSatellite, FaPlus, FaTrash, FaEdit, FaChartPie } from "react-icons/fa";
 
-import {
-  calculateDeltaVBudget,
-  createMissionPhase,
-  getCommonDeltaVValues,
-  MissionPhase,
-  DeltaVBudgetResult,
-} from "./logic";
+import { calculateDeltaVBudget, createMissionPhase, getCommonDeltaVValues, MissionPhase } from "./logic";
 import Theory from "./theory";
 import { Checkbox } from "@packages/ui/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
@@ -41,17 +35,11 @@ export default function DeltaVBudgetToolPage() {
   const [newPhaseDescription, setNewPhaseDescription] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
 
-  // Results state
-  const [results, setResults] = useState<DeltaVBudgetResult | null>(null);
-
   // Get common values for quick reference
   const commonValues = getCommonDeltaVValues();
 
-  // Calculate budget when phases change
-  useEffect(() => {
-    const calculatedResults = calculateDeltaVBudget(phases);
-    setResults(calculatedResults);
-  }, [phases]);
+  // Derived calculation from phases (no effect-driven state)
+  const results = calculateDeltaVBudget(phases);
 
   // Add a new phase
   const handleAddPhase = useCallback(() => {
@@ -198,8 +186,7 @@ export default function DeltaVBudgetToolPage() {
   };
 
   return (
-    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
       {/* Title */}
       <ToolTitle toolKey="delta-v-budget-tool" />
 
