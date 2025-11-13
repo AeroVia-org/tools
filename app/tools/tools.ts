@@ -974,7 +974,7 @@ export const allTools: Tool[] = [
     authors: [],
   },
   {
-    status: "Coming Soon",
+    status: "Active",
     key: "redshift-calculator",
     title: "Redshift Calculator",
     icon: FaGlobe,
