@@ -5,7 +5,8 @@ import { calculateDefault } from "./logic";
 import { Input } from "@packages/ui/components/ui/input";
 import { Label } from "@packages/ui/components/ui/label";
 import OpenSourceCard from "../../../components/OpenSourceCard";
-import Theory from "../../../components/Theory";
+// import ToolTitle from "../../../components/ToolTitle"; // TODO: Uncomment
+// import Theory from "../../../components/Theory"; // TODO: Uncomment
 
 export default function DefaultCalculatorPage() {
   // Input state
@@ -46,8 +47,7 @@ export default function DefaultCalculatorPage() {
   return (
     <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
       {/* Title */}
-      {/* <ToolTitle toolKey="default" /> */} {/* TODO: Comment out */}
-
+      {/* <ToolTitle toolKey="default" /> */} {/* TODO: Uncomment */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <div className="border-border bg-card rounded-lg border p-6 shadow-lg">
           <p className="text-muted-foreground mb-6">Add one to a number</p>
@@ -90,10 +90,8 @@ export default function DefaultCalculatorPage() {
           <p className="text-muted-foreground text-center">Visualization area (optional)</p>
         </div>
       </div>
-
       {/* Theory Section */}
-      {/* <Theory toolKey="default" /> */} {/* TODO: Comment out */}
-
+      {/* <Theory toolKey="default" /> */} {/* TODO: Uncomment */}
       {/* Open Source Card */}
       <OpenSourceCard />
     </div>

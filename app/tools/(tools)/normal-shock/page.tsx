@@ -364,7 +364,7 @@ export default function NormalShockPage() {
             <Visualization results={results} onHoverPosition={handleVisualizationHover} />
           </div>
 
-          <div className="mt-2 flex-grow">
+          <div className="mt-2 grow">
             <Details results={results} hoverPosition={hoverPosition} />
           </div>
         </div>

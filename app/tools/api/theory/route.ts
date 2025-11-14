@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
 
     const content = readFileSync(theoryPath, "utf-8");
     return NextResponse.json({ content });
-  } catch (error) {
+  } catch {
     // If theory.md doesn't exist, return empty content
     return NextResponse.json({ content: "" });
   }
