@@ -5,27 +5,13 @@ import PageHeader from "@/components/PageHeader";
 import ToolCard from "./components/ToolCard";
 import ComingSoonCard from "./components/ComingSoonCard";
 import { Input } from "@packages/ui/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@packages/ui/components/ui/select";
-import {
-  allTools,
-  CATEGORY_OPTIONS,
-  STATUS_OPTIONS,
-  ToolCategoryOption,
-  ToolStatusOption,
-} from "./tools";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
+import { allTools, CATEGORY_OPTIONS, STATUS_OPTIONS, ToolCategoryOption, ToolStatusOption } from "./tools";
 
 export default function ToolsPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] =
-    useState<ToolCategoryOption>("All");
-  const [selectedStatus, setSelectedStatus] =
-    useState<ToolStatusOption>("Active");
+  const [selectedCategory, setSelectedCategory] = useState<ToolCategoryOption>("All");
+  const [selectedStatus, setSelectedStatus] = useState<ToolStatusOption>("Active");
 
   // Filter and group tools based on search query, category, and status
   const groupedTools = useMemo(() => {
@@ -35,7 +21,7 @@ export default function ToolsPage() {
         (tool.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
           tool.description.toLowerCase().includes(searchQuery.toLowerCase())) &&
         (selectedCategory === "All" || tool.category === selectedCategory) &&
-        (selectedStatus === "All" || tool.status === selectedStatus)
+        (selectedStatus === "All" || tool.status === selectedStatus),
     );
 
     // Group tools by category
@@ -44,7 +30,7 @@ export default function ToolsPage() {
         (acc[cur.category] ??= []).push(cur);
         return acc;
       },
-      {} as Record<string, typeof allTools>
+      {} as Record<string, typeof allTools>,
     );
 
     return grouped;
@@ -67,12 +53,7 @@ export default function ToolsPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="flex-1"
           />
-          <Select
-            value={selectedCategory}
-            onValueChange={(value) =>
-              setSelectedCategory(value as ToolCategoryOption)
-            }
-          >
+          <Select value={selectedCategory} onValueChange={(value) => setSelectedCategory(value as ToolCategoryOption)}>
             <SelectTrigger className="w-auto min-w-32">
               <SelectValue placeholder="Category" />
             </SelectTrigger>
@@ -84,12 +65,7 @@ export default function ToolsPage() {
               ))}
             </SelectContent>
           </Select>
-          <Select
-            value={selectedStatus}
-            onValueChange={(value) =>
-              setSelectedStatus(value as ToolStatusOption)
-            }
-          >
+          <Select value={selectedStatus} onValueChange={(value) => setSelectedStatus(value as ToolStatusOption)}>
             <SelectTrigger className="w-auto min-w-24">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
@@ -124,9 +100,7 @@ export default function ToolsPage() {
                     if (tool.status === "Active") {
                       return <ToolCard key={tool.key} toolKey={tool.key} />;
                     } else {
-                      return (
-                        <ComingSoonCard key={tool.key} toolKey={tool.key} />
-                      );
+                      return <ComingSoonCard key={tool.key} toolKey={tool.key} />;
                     }
                   })}
                 </div>
@@ -135,9 +109,7 @@ export default function ToolsPage() {
         </div>
       ) : (
         <div className="py-12 text-center">
-          <p className="text-muted-foreground text-lg">
-            No tools found matching your search.
-          </p>
+          <p className="text-muted-foreground text-lg">No tools found matching your search.</p>
         </div>
       )}
     </div>

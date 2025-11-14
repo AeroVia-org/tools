@@ -6,10 +6,19 @@
 
 import { useState } from "react";
 import { FaGasPump, FaBox, FaWeightHanging } from "react-icons/fa";
-import Theory from "./theory";
+import Theory from "../../components/Theory";
 import Visualization from "./visualization";
-import { calculatePropellantMassFraction, PropellantMassFractionResult } from "./logic";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
+import {
+  calculatePropellantMassFraction,
+  PropellantMassFractionResult,
+} from "./logic";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
 import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
@@ -37,25 +46,40 @@ export default function PropellantMassFractionPage() {
   const [massUnit, setMassUnit] = useState<MassUnit>("kg");
 
   // Derived calculation from inputs (no effect-driven state)
-  const { results, error }: { results: PropellantMassFractionResult | null; error: string | null } = (() => {
-    const initialMassInput = parseFloat(initialMassValue);
-    const finalMassInput = parseFloat(finalMassValue);
-    if (isNaN(initialMassInput) || isNaN(finalMassInput)) {
-      return { results: null, error: "Please enter valid numbers for both masses." };
-    }
-    // Convert inputs to kg for calculation
-    const initialMassKg = massUnit === "lb" ? initialMassInput * LB_TO_KG : initialMassInput;
-    const finalMassKg = massUnit === "lb" ? finalMassInput * LB_TO_KG : finalMassInput;
-    try {
-      const calculatedResults = calculatePropellantMassFraction(initialMassKg, finalMassKg);
-      return { results: calculatedResults, error: null };
-    } catch (err) {
-      if (err instanceof Error) {
-        return { results: null, error: err.message };
+  const {
+    results,
+    error,
+  }: { results: PropellantMassFractionResult | null; error: string | null } =
+    (() => {
+      const initialMassInput = parseFloat(initialMassValue);
+      const finalMassInput = parseFloat(finalMassValue);
+      if (isNaN(initialMassInput) || isNaN(finalMassInput)) {
+        return {
+          results: null,
+          error: "Please enter valid numbers for both masses.",
+        };
       }
-      return { results: null, error: "An unknown error occurred during calculation." };
-    }
-  })();
+      // Convert inputs to kg for calculation
+      const initialMassKg =
+        massUnit === "lb" ? initialMassInput * LB_TO_KG : initialMassInput;
+      const finalMassKg =
+        massUnit === "lb" ? finalMassInput * LB_TO_KG : finalMassInput;
+      try {
+        const calculatedResults = calculatePropellantMassFraction(
+          initialMassKg,
+          finalMassKg
+        );
+        return { results: calculatedResults, error: null };
+      } catch (err) {
+        if (err instanceof Error) {
+          return { results: null, error: err.message };
+        }
+        return {
+          results: null,
+          error: "An unknown error occurred during calculation.",
+        };
+      }
+    })();
 
   const formattedResults = (() => {
     if (!results) return null;
@@ -64,9 +88,15 @@ export default function PropellantMassFractionPage() {
 
     return {
       propellantMassFraction: formatNumber(results.propellantMassFraction, 3),
-      propellantMassFractionPercent: formatNumber(results.propellantMassFraction * 100, 1),
+      propellantMassFractionPercent: formatNumber(
+        results.propellantMassFraction * 100,
+        1
+      ),
       structuralMassFraction: formatNumber(results.structuralMassFraction, 3),
-      structuralMassFractionPercent: formatNumber(results.structuralMassFraction * 100, 1),
+      structuralMassFractionPercent: formatNumber(
+        results.structuralMassFraction * 100,
+        1
+      ),
       initialMass: formatNumber(convert(results.initialMass), 1),
       propellantMass: formatNumber(convert(results.propellantMass), 1),
       structuralMass: formatNumber(convert(results.structuralMass), 1),
@@ -96,8 +126,9 @@ export default function PropellantMassFractionPage() {
         {/* Column 1: Inputs and Results */}
         <div className="border-border bg-card rounded-lg border p-6 shadow-lg">
           <p className="text-muted-foreground mb-6">
-            Calculate the propellant mass fraction (PMF), a key performance metric for rockets and spacecraft, based on
-            initial (wet) and final (dry) mass.
+            Calculate the propellant mass fraction (PMF), a key performance
+            metric for rockets and spacecraft, based on initial (wet) and final
+            (dry) mass.
           </p>
 
           {/* Input Section */}
@@ -131,7 +162,10 @@ export default function PropellantMassFractionPage() {
             {/* Unit Selector */}
             <div>
               <Label htmlFor="unit">Unit</Label>
-              <Select value={massUnit} onValueChange={(value) => setMassUnit(value as MassUnit)}>
+              <Select
+                value={massUnit}
+                onValueChange={(value) => setMassUnit(value as MassUnit)}
+              >
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
                 </SelectTrigger>
@@ -154,15 +188,20 @@ export default function PropellantMassFractionPage() {
           {/* Results Section */}
           {formattedResults && (
             <div>
-              <h2 className="text-foreground mb-4 text-xl font-semibold">Results:</h2>
+              <h2 className="text-foreground mb-4 text-xl font-semibold">
+                Results:
+              </h2>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 {/* Propellant Mass Fraction */}
                 <div className="border-border flex items-start gap-4 rounded-lg border p-4">
                   <FaGasPump className="mt-1 h-6 w-6 shrink-0 text-green-600" />
                   <div>
-                    <div className="text-foreground font-medium">Propellant Mass Fraction</div>
+                    <div className="text-foreground font-medium">
+                      Propellant Mass Fraction
+                    </div>
                     <div className="text-muted-foreground text-sm">
-                      {formattedResults.propellantMassFraction} ({formattedResults.propellantMassFractionPercent}%)
+                      {formattedResults.propellantMassFraction} (
+                      {formattedResults.propellantMassFractionPercent}%)
                     </div>
                   </div>
                 </div>
@@ -171,9 +210,12 @@ export default function PropellantMassFractionPage() {
                 <div className="border-border flex items-start gap-4 rounded-lg border p-4">
                   <FaBox className="mt-1 h-6 w-6 shrink-0 text-orange-600" />
                   <div>
-                    <div className="text-foreground font-medium">Structural Mass Fraction</div>
+                    <div className="text-foreground font-medium">
+                      Structural Mass Fraction
+                    </div>
                     <div className="text-muted-foreground text-sm">
-                      {formattedResults.structuralMassFraction} ({formattedResults.structuralMassFractionPercent}%)
+                      {formattedResults.structuralMassFraction} (
+                      {formattedResults.structuralMassFractionPercent}%)
                     </div>
                   </div>
                 </div>
@@ -182,7 +224,9 @@ export default function PropellantMassFractionPage() {
                 <div className="border-border flex items-start gap-4 rounded-lg border p-4">
                   <FaWeightHanging className="mt-1 h-6 w-6 shrink-0 text-blue-500" />
                   <div>
-                    <div className="text-foreground font-medium">Initial Mass</div>
+                    <div className="text-foreground font-medium">
+                      Initial Mass
+                    </div>
                     <div className="text-muted-foreground text-sm">
                       {formattedResults.initialMass} {massUnit}
                     </div>
@@ -192,7 +236,9 @@ export default function PropellantMassFractionPage() {
                 <div className="border-border flex items-start gap-4 rounded-lg border p-4">
                   <FaGasPump className="mt-1 h-6 w-6 shrink-0 text-green-500" />
                   <div>
-                    <div className="text-foreground font-medium">Propellant Mass</div>
+                    <div className="text-foreground font-medium">
+                      Propellant Mass
+                    </div>
                     <div className="text-muted-foreground text-sm">
                       {formattedResults.propellantMass} {massUnit}
                     </div>
@@ -210,15 +256,19 @@ export default function PropellantMassFractionPage() {
           ) : (
             <div className="text-muted-foreground text-center">
               <FaGasPump className="mx-auto mb-4 h-16 w-16 opacity-50" />
-              <p className="text-lg font-medium">Enter values to see visualization</p>
-              <p className="text-sm">The chart will show mass distribution and fractions</p>
+              <p className="text-lg font-medium">
+                Enter values to see visualization
+              </p>
+              <p className="text-sm">
+                The chart will show mass distribution and fractions
+              </p>
             </div>
           )}
         </div>
       </div>
 
       {/* Theory Section */}
-      <Theory />
+      <Theory toolKey="propellant-mass-fraction" />
 
       {/* Open Source Card */}
       <OpenSourceCard />

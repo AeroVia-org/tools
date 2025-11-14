@@ -16,8 +16,15 @@ Global Styles
 
 html,
 body {
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji,
-    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    sans-serif,
+    Apple Color Emoji,
+    Segoe UI Emoji,
+    Segoe UI Symbol,
+    Noto Color Emoji;
 }
 
 @layer base {
@@ -209,14 +216,10 @@ Semantic colors (shadcn setup)
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
-  --primary-muted: oklch(
-    0.45 0 0
-  ); /* Lighter, more muted version of primary (custom) */
+  --primary-muted: oklch(0.45 0 0); /* Lighter, more muted version of primary (custom) */
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
-  --secondary-muted: oklch(
-    0.85 0 0
-  ); /* Lighter, more muted version of secondary (custom) */
+  --secondary-muted: oklch(0.85 0 0); /* Lighter, more muted version of secondary (custom) */
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
@@ -259,14 +262,10 @@ Semantic colors (shadcn setup)
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
-  --primary-muted: oklch(
-    0.55 0 0
-  ); /* Darker, more muted version of primary (custom) */
+  --primary-muted: oklch(0.55 0 0); /* Darker, more muted version of primary (custom) */
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
-  --secondary-muted: oklch(
-    0.35 0 0
-  ); /* Darker, more muted version of secondary (custom) */
+  --secondary-muted: oklch(0.35 0 0); /* Darker, more muted version of secondary (custom) */
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);

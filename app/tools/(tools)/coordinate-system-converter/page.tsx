@@ -16,7 +16,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
 import OpenSourceCard from "../../components/OpenSourceCard";
-import Theory from "./theory";
+import Theory from "../../components/Theory";
 import Visualization from "./visualization";
 import {
   feetToMeters,
@@ -149,8 +149,7 @@ export default function CoordinateSystemConverterPage() {
   }, [handleCalculate]);
 
   return (
-    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
       {/* Title */}
       <ToolTitle toolKey="coordinate-system-converter" />
 
@@ -464,7 +463,7 @@ export default function CoordinateSystemConverterPage() {
       </div>
 
       {/* Theory Section */}
-      <Theory />
+      <Theory toolKey="coordinate-system-converter" />
 
       {/* Open Source Card */}
       <OpenSourceCard />

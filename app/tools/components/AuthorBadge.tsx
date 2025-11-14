@@ -1,8 +1,4 @@
-import {
-  Pill,
-  PillAvatar,
-  PillIcon,
-} from "@packages/ui/components/kibo-ui/pill";
+import { Pill, PillAvatar, PillIcon } from "@packages/ui/components/kibo-ui/pill";
 import { LucideUserCircle } from "lucide-react";
 import { getAuthorById } from "../tools";
 
@@ -26,9 +22,7 @@ export default function AuthorBadge({ authorId }: { authorId: string }) {
         ) : (
           <PillIcon icon={LucideUserCircle} className="h-4 w-4" />
         )}
-        <span className={`text-muted-foreground text-sm italic`}>
-          {author.name}
-        </span>
+        <span className={`text-muted-foreground text-sm italic`}>{author.name}</span>
       </Pill>
     </div>
   );

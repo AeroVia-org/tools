@@ -114,8 +114,7 @@ import OpenSourceCard from "../../components/OpenSourceCard";
 
 export default function StructuralAnalysisToolPage() {
   return (
-    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
       {/* Title */}
       <ToolTitle toolKey="structural-analysis-tool" />
 
@@ -123,8 +122,8 @@ export default function StructuralAnalysisToolPage() {
         <FaTools className="text-muted-foreground mx-auto mb-6 text-6xl" />
         <h2 className="text-foreground mb-4 text-2xl font-bold">Structural Analysis Tool</h2>
         <p className="text-muted-foreground mx-auto mb-8 max-w-2xl text-lg">
-          Comprehensive structural analysis for beams, plates, cylinders, and rods with material properties,
-          stress calculations, and safety factor analysis.
+          Comprehensive structural analysis for beams, plates, cylinders, and rods with material properties, stress
+          calculations, and safety factor analysis.
         </p>
 
         <div className="border-border bg-card mx-auto max-w-4xl rounded-lg border p-6 text-left shadow-lg">
@@ -220,49 +219,49 @@ export default function StructuralAnalysisToolPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border">
-                  <th className="text-left py-2 font-semibold">Material</th>
-                  <th className="text-right py-2 font-semibold">E (GPa)</th>
-                  <th className="text-right py-2 font-semibold">ρ (kg/m³)</th>
-                  <th className="text-right py-2 font-semibold">E/ρ (MJ/kg)</th>
-                  <th className="text-right py-2 font-semibold">σ_yield (MPa)</th>
+                <tr className="border-border border-b">
+                  <th className="py-2 text-left font-semibold">Material</th>
+                  <th className="py-2 text-right font-semibold">E (GPa)</th>
+                  <th className="py-2 text-right font-semibold">ρ (kg/m³)</th>
+                  <th className="py-2 text-right font-semibold">E/ρ (MJ/kg)</th>
+                  <th className="py-2 text-right font-semibold">σ_yield (MPa)</th>
                 </tr>
               </thead>
               <tbody className="text-muted-foreground">
-                <tr className="border-b border-border">
+                <tr className="border-border border-b">
                   <td className="py-2">Aluminum 7075-T6</td>
-                  <td className="text-right py-2">71</td>
-                  <td className="text-right py-2">2,810</td>
-                  <td className="text-right py-2">25.3</td>
-                  <td className="text-right py-2">503</td>
+                  <td className="py-2 text-right">71</td>
+                  <td className="py-2 text-right">2,810</td>
+                  <td className="py-2 text-right">25.3</td>
+                  <td className="py-2 text-right">503</td>
                 </tr>
-                <tr className="border-b border-border">
+                <tr className="border-border border-b">
                   <td className="py-2">Steel 4340</td>
-                  <td className="text-right py-2">200</td>
-                  <td className="text-right py-2">7,850</td>
-                  <td className="text-right py-2">25.5</td>
-                  <td className="text-right py-2">1,170</td>
+                  <td className="py-2 text-right">200</td>
+                  <td className="py-2 text-right">7,850</td>
+                  <td className="py-2 text-right">25.5</td>
+                  <td className="py-2 text-right">1,170</td>
                 </tr>
-                <tr className="border-b border-border">
+                <tr className="border-border border-b">
                   <td className="py-2">Titanium Ti-6Al-4V</td>
-                  <td className="text-right py-2">114</td>
-                  <td className="text-right py-2">4,430</td>
-                  <td className="text-right py-2">25.7</td>
-                  <td className="text-right py-2">880</td>
+                  <td className="py-2 text-right">114</td>
+                  <td className="py-2 text-right">4,430</td>
+                  <td className="py-2 text-right">25.7</td>
+                  <td className="py-2 text-right">880</td>
                 </tr>
-                <tr className="border-b border-border">
+                <tr className="border-border border-b">
                   <td className="py-2">Carbon Fiber (CFRP)</td>
-                  <td className="text-right py-2">150</td>
-                  <td className="text-right py-2">1,600</td>
-                  <td className="text-right py-2">93.8</td>
-                  <td className="text-right py-2">1,500</td>
+                  <td className="py-2 text-right">150</td>
+                  <td className="py-2 text-right">1,600</td>
+                  <td className="py-2 text-right">93.8</td>
+                  <td className="py-2 text-right">1,500</td>
                 </tr>
                 <tr>
                   <td className="py-2">Magnesium AZ91D</td>
-                  <td className="text-right py-2">45</td>
-                  <td className="text-right py-2">1,810</td>
-                  <td className="text-right py-2">24.9</td>
-                  <td className="text-right py-2">160</td>
+                  <td className="py-2 text-right">45</td>
+                  <td className="py-2 text-right">1,810</td>
+                  <td className="py-2 text-right">24.9</td>
+                  <td className="py-2 text-right">160</td>
                 </tr>
               </tbody>
             </table>

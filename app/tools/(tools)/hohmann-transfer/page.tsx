@@ -10,8 +10,14 @@ import { calculateHohmannTransfer, HohmannResult } from "./logic";
 import Visualization from "./visualization";
 import Details from "./details";
 import { MtoMi, MitoM, KmtoM, MtoKm, MStoKMS } from "@/lib/conversions";
-import Theory from "./theory";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
+import Theory from "../../components/Theory";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
 import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
@@ -53,7 +59,10 @@ const formatPeriod = (seconds: number): string => {
   if (days > 0) {
     result += `${days}d `;
   }
-  result += `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+  result += `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+    2,
+    "0"
+  )}:${String(secs).padStart(2, "0")}`;
   if (days > 0) {
     result += " (H:M:S)";
   } else {
@@ -78,7 +87,8 @@ export default function HohmannTransferPage() {
   const [error, setError] = useState<string | null>(null);
 
   // UI state
-  const [interactiveHoverPoint, setInteractiveHoverPoint] = useState<HohmannDetailPoint | null>(null);
+  const [interactiveHoverPoint, setInteractiveHoverPoint] =
+    useState<HohmannDetailPoint | null>(null);
 
   const handleCalculate = useCallback(() => {
     setError(null);
@@ -97,14 +107,26 @@ export default function HohmannTransferPage() {
 
       if (inputType === "altitude") {
         // If input is altitude, convert from miles if needed
-        initialAltitudeKm = altitudeUnit === "mi" ? MtoKm(MitoM(initialValueNum)) : initialValueNum;
-        finalAltitudeKm = altitudeUnit === "mi" ? MtoKm(MitoM(finalValueNum)) : finalValueNum;
-        initialAltitudeKm = altitudeUnit === "mi" ? MtoKm(MitoM(initialValueNum)) : initialValueNum;
-        finalAltitudeKm = altitudeUnit === "mi" ? MtoKm(MitoM(finalValueNum)) : finalValueNum;
+        initialAltitudeKm =
+          altitudeUnit === "mi"
+            ? MtoKm(MitoM(initialValueNum))
+            : initialValueNum;
+        finalAltitudeKm =
+          altitudeUnit === "mi" ? MtoKm(MitoM(finalValueNum)) : finalValueNum;
+        initialAltitudeKm =
+          altitudeUnit === "mi"
+            ? MtoKm(MitoM(initialValueNum))
+            : initialValueNum;
+        finalAltitudeKm =
+          altitudeUnit === "mi" ? MtoKm(MitoM(finalValueNum)) : finalValueNum;
       } else {
         // If input is distance from center, subtract Earth radius to get altitude
-        const initialDistanceKm = altitudeUnit === "mi" ? MtoKm(MitoM(initialValueNum)) : initialValueNum;
-        const finalDistanceKm = altitudeUnit === "mi" ? MtoKm(MitoM(finalValueNum)) : finalValueNum;
+        const initialDistanceKm =
+          altitudeUnit === "mi"
+            ? MtoKm(MitoM(initialValueNum))
+            : initialValueNum;
+        const finalDistanceKm =
+          altitudeUnit === "mi" ? MtoKm(MitoM(finalValueNum)) : finalValueNum;
 
         initialAltitudeKm = initialDistanceKm - EARTH_RADIUS_KM;
         finalAltitudeKm = finalDistanceKm - EARTH_RADIUS_KM;
@@ -112,14 +134,19 @@ export default function HohmannTransferPage() {
 
       // Ensure altitudes are not negative (below Earth's surface)
       if (initialAltitudeKm < 0 || finalAltitudeKm < 0) {
-        throw new Error("Input values result in an orbit below Earth's surface.");
+        throw new Error(
+          "Input values result in an orbit below Earth's surface."
+        );
       }
       // Ensure orbits are different
       if (initialAltitudeKm === finalAltitudeKm) {
         throw new Error("Initial and final orbits cannot be the same.");
       }
 
-      const calculatedResults = calculateHohmannTransfer(initialAltitudeKm, finalAltitudeKm);
+      const calculatedResults = calculateHohmannTransfer(
+        initialAltitudeKm,
+        finalAltitudeKm
+      );
       setResults(calculatedResults);
     } catch (err) {
       if (err instanceof Error) {
@@ -148,28 +175,48 @@ export default function HohmannTransferPage() {
     if (!isNaN(initialNum)) {
       if (newType === "distance" && inputType === "altitude") {
         // Convert from altitude to distance
-        const valueInKm = altitudeUnit === "mi" ? MtoKm(MitoM(initialNum)) : initialNum;
+        const valueInKm =
+          altitudeUnit === "mi" ? MtoKm(MitoM(initialNum)) : initialNum;
         const distanceInKm = valueInKm + EARTH_RADIUS_KM;
-        setInitialInputValue(altitudeUnit === "mi" ? MtoMi(KmtoM(distanceInKm)).toFixed(1) : distanceInKm.toFixed(1));
+        setInitialInputValue(
+          altitudeUnit === "mi"
+            ? MtoMi(KmtoM(distanceInKm)).toFixed(1)
+            : distanceInKm.toFixed(1)
+        );
       } else if (newType === "altitude" && inputType === "distance") {
         // Convert from distance to altitude
-        const valueInKm = altitudeUnit === "mi" ? MtoKm(MitoM(initialNum)) : initialNum;
+        const valueInKm =
+          altitudeUnit === "mi" ? MtoKm(MitoM(initialNum)) : initialNum;
         const altitudeInKm = Math.max(0, valueInKm - EARTH_RADIUS_KM); // Ensure altitude is not negative
-        setInitialInputValue(altitudeUnit === "mi" ? MtoMi(KmtoM(altitudeInKm)).toFixed(1) : altitudeInKm.toFixed(1));
+        setInitialInputValue(
+          altitudeUnit === "mi"
+            ? MtoMi(KmtoM(altitudeInKm)).toFixed(1)
+            : altitudeInKm.toFixed(1)
+        );
       }
     }
 
     if (!isNaN(finalNum)) {
       if (newType === "distance" && inputType === "altitude") {
         // Convert from altitude to distance
-        const valueInKm = altitudeUnit === "mi" ? MtoKm(MitoM(finalNum)) : finalNum;
+        const valueInKm =
+          altitudeUnit === "mi" ? MtoKm(MitoM(finalNum)) : finalNum;
         const distanceInKm = valueInKm + EARTH_RADIUS_KM;
-        setFinalInputValue(altitudeUnit === "mi" ? MtoMi(KmtoM(distanceInKm)).toFixed(1) : distanceInKm.toFixed(1));
+        setFinalInputValue(
+          altitudeUnit === "mi"
+            ? MtoMi(KmtoM(distanceInKm)).toFixed(1)
+            : distanceInKm.toFixed(1)
+        );
       } else if (newType === "altitude" && inputType === "distance") {
         // Convert from distance to altitude
-        const valueInKm = altitudeUnit === "mi" ? MtoKm(MitoM(finalNum)) : finalNum;
+        const valueInKm =
+          altitudeUnit === "mi" ? MtoKm(MitoM(finalNum)) : finalNum;
         const altitudeInKm = Math.max(0, valueInKm - EARTH_RADIUS_KM); // Ensure altitude is not negative
-        setFinalInputValue(altitudeUnit === "mi" ? MtoMi(KmtoM(altitudeInKm)).toFixed(1) : altitudeInKm.toFixed(1));
+        setFinalInputValue(
+          altitudeUnit === "mi"
+            ? MtoMi(KmtoM(altitudeInKm)).toFixed(1)
+            : altitudeInKm.toFixed(1)
+        );
       }
     }
     // Recalculate after type change and potential value conversion
@@ -209,14 +256,18 @@ export default function HohmannTransferPage() {
       if (field === "initial") {
         return altitudeUnit === "km" ? "e.g., 400 (LEO)" : "e.g., 249 (LEO)";
       } else {
-        return altitudeUnit === "km" ? "e.g., 35786 (GEO)" : "e.g., 22236 (GEO)";
+        return altitudeUnit === "km"
+          ? "e.g., 35786 (GEO)"
+          : "e.g., 22236 (GEO)";
       }
     } else {
       // Distance from center placeholders
       if (field === "initial") {
         return altitudeUnit === "km" ? "e.g., 6771 (LEO)" : "e.g., 4208 (LEO)";
       } else {
-        return altitudeUnit === "km" ? "e.g., 42157 (GEO)" : "e.g., 26190 (GEO)";
+        return altitudeUnit === "km"
+          ? "e.g., 42157 (GEO)"
+          : "e.g., 26190 (GEO)";
       }
     }
   };
@@ -228,17 +279,18 @@ export default function HohmannTransferPage() {
 
   return (
     <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-
       {/* Title */}
       <ToolTitle toolKey="hohmann-transfer" />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <div className="border-border bg-card rounded-lg border p-6 shadow-lg">
           <p className="text-muted-foreground mb-6">
-            Calculate the required delta-V (change in velocity) and transfer time for an efficient Hohmann transfer
-            between two circular orbits around Earth. Assumes impulsive burns and coplanar orbits. Calculate the
-            required delta-V (change in velocity) and transfer time for an efficient Hohmann transfer between two
-            circular orbits around Earth. Assumes impulsive burns and coplanar orbits.
+            Calculate the required delta-V (change in velocity) and transfer
+            time for an efficient Hohmann transfer between two circular orbits
+            around Earth. Assumes impulsive burns and coplanar orbits. Calculate
+            the required delta-V (change in velocity) and transfer time for an
+            efficient Hohmann transfer between two circular orbits around Earth.
+            Assumes impulsive burns and coplanar orbits.
           </p>
 
           {/* Input Type Selection */}
@@ -250,7 +302,9 @@ export default function HohmannTransferPage() {
                   key={type}
                   onClick={() => handleInputTypeChange(type)}
                   className={`w-full rounded-md px-3 py-2 text-center text-sm font-medium transition-colors ${
-                    inputType === type ? "bg-card text-primary shadow" : "text-muted-foreground hover:bg-accent"
+                    inputType === type
+                      ? "bg-card text-primary shadow"
+                      : "text-muted-foreground hover:bg-accent"
                   }`}
                 >
                   {type === "altitude" ? "Altitude" : "Distance from Center"}
@@ -259,7 +313,8 @@ export default function HohmannTransferPage() {
             </div>
             {inputType === "distance" && (
               <p className="text-muted-foreground mt-2 text-xs">
-                Distance is measured from the center of the Earth (Radius ≈ {EARTH_RADIUS_KM} km /{" "}
+                Distance is measured from the center of the Earth (Radius ≈{" "}
+                {EARTH_RADIUS_KM} km /{" "}
                 {MtoMi(KmtoM(EARTH_RADIUS_KM)).toFixed(0)} mi).
               </p>
             )}
@@ -272,7 +327,9 @@ export default function HohmannTransferPage() {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* Initial Input */}
                 <div>
-                  <Label htmlFor="initial-value">{getInputLabel("initial")}</Label>
+                  <Label htmlFor="initial-value">
+                    {getInputLabel("initial")}
+                  </Label>
                   <Input
                     type="number"
                     id="initial-value"
@@ -303,7 +360,12 @@ export default function HohmannTransferPage() {
             {/* Unit Selector */}
             <div className="sm:col-span-1">
               <Label htmlFor="unit">Unit</Label>
-              <Select value={altitudeUnit} onValueChange={(value) => setAltitudeUnit(value as AltitudeUnit)}>
+              <Select
+                value={altitudeUnit}
+                onValueChange={(value) =>
+                  setAltitudeUnit(value as AltitudeUnit)
+                }
+              >
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
                 </SelectTrigger>
@@ -325,15 +387,20 @@ export default function HohmannTransferPage() {
 
           {formattedResults && (
             <div>
-              <h2 className="text-foreground mb-4 text-xl font-semibold">Transfer Details:</h2>
+              <h2 className="text-foreground mb-4 text-xl font-semibold">
+                Transfer Details:
+              </h2>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 {/* Initial Altitude Display */}
                 <div className="border-border flex items-start gap-4 rounded-lg border p-4">
                   <FaSatellite className="mt-1 h-6 w-6 shrink-0 text-[#9D6EC1]" />
                   <div>
-                    <div className="text-foreground font-medium">Initial Orbit</div>
+                    <div className="text-foreground font-medium">
+                      Initial Orbit
+                    </div>
                     <div className="text-muted-foreground text-sm">
-                      {formattedResults.initialAltitudeKm} km / {formattedResults.initialAltitudeMi} mi
+                      {formattedResults.initialAltitudeKm} km /{" "}
+                      {formattedResults.initialAltitudeMi} mi
                     </div>
                   </div>
                 </div>
@@ -342,9 +409,12 @@ export default function HohmannTransferPage() {
                 <div className="border-border flex items-start gap-4 rounded-lg border p-4">
                   <FaSatellite className="mt-1 h-6 w-6 shrink-0 text-[#2ECC71]" />
                   <div>
-                    <div className="text-foreground font-medium">Final Orbit</div>
+                    <div className="text-foreground font-medium">
+                      Final Orbit
+                    </div>
                     <div className="text-muted-foreground text-sm">
-                      {formattedResults.finalAltitudeKm} km / {formattedResults.finalAltitudeMi} mi
+                      {formattedResults.finalAltitudeKm} km /{" "}
+                      {formattedResults.finalAltitudeMi} mi
                     </div>
                   </div>
                 </div>
@@ -353,10 +423,15 @@ export default function HohmannTransferPage() {
                 <div className="border-border flex items-start gap-4 rounded-lg border p-4">
                   <FaGasPump className="mt-1 h-6 w-6 shrink-0 text-orange-500" />
                   <div>
-                    <div className="text-foreground font-medium">First Burn (ΔV₁)</div>
+                    <div className="text-foreground font-medium">
+                      First Burn (ΔV₁)
+                    </div>
                     <div className="text-muted-foreground text-sm">
-                      {formattedResults.deltaV1Kms} km/s / {formattedResults.deltaV1MiS} mi/s
-                      <span className="text-muted-foreground ml-2 text-xs">({formattedResults.deltaV1Ms} m/s)</span>
+                      {formattedResults.deltaV1Kms} km/s /{" "}
+                      {formattedResults.deltaV1MiS} mi/s
+                      <span className="text-muted-foreground ml-2 text-xs">
+                        ({formattedResults.deltaV1Ms} m/s)
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -365,10 +440,15 @@ export default function HohmannTransferPage() {
                 <div className="border-border flex items-start gap-4 rounded-lg border p-4">
                   <FaGasPump className="mt-1 h-6 w-6 shrink-0 text-orange-500" />
                   <div>
-                    <div className="text-foreground font-medium">Second Burn (ΔV₂)</div>
+                    <div className="text-foreground font-medium">
+                      Second Burn (ΔV₂)
+                    </div>
                     <div className="text-muted-foreground text-sm">
-                      {formattedResults.deltaV2Kms} km/s / {formattedResults.deltaV2MiS} mi/s
-                      <span className="text-muted-foreground ml-2 text-xs">({formattedResults.deltaV2Ms} m/s)</span>
+                      {formattedResults.deltaV2Kms} km/s /{" "}
+                      {formattedResults.deltaV2MiS} mi/s
+                      <span className="text-muted-foreground ml-2 text-xs">
+                        ({formattedResults.deltaV2Ms} m/s)
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -381,8 +461,11 @@ export default function HohmannTransferPage() {
                       Total Delta-V (ΔV<sub>Total</sub>)
                     </div>
                     <div className="text-muted-foreground text-sm">
-                      {formattedResults.totalDeltaVKms} km/s / {formattedResults.totalDeltaVMiS} mi/s
-                      <span className="text-muted-foreground ml-2 text-xs">({formattedResults.totalDeltaVMs} m/s)</span>
+                      {formattedResults.totalDeltaVKms} km/s /{" "}
+                      {formattedResults.totalDeltaVMiS} mi/s
+                      <span className="text-muted-foreground ml-2 text-xs">
+                        ({formattedResults.totalDeltaVMs} m/s)
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -391,10 +474,14 @@ export default function HohmannTransferPage() {
                 <div className="border-border flex items-start gap-4 rounded-lg border p-4">
                   <FaClock className="mt-1 h-6 w-6 shrink-0 text-blue-500" />
                   <div>
-                    <div className="text-foreground font-medium">Transfer Time</div>
+                    <div className="text-foreground font-medium">
+                      Transfer Time
+                    </div>
                     <div className="text-muted-foreground text-sm">
                       {formattedResults.transferTimeFormatted}
-                      <span className="text-muted-foreground ml-2 text-xs">({formattedResults.transferTimeS} s)</span>
+                      <span className="text-muted-foreground ml-2 text-xs">
+                        ({formattedResults.transferTimeS} s)
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -426,7 +513,7 @@ export default function HohmannTransferPage() {
       </div>
 
       {/* Theory Section */}
-      <Theory />
+      <Theory toolKey="hohmann-transfer" />
 
       {/* Open Source Card */}
       <OpenSourceCard />

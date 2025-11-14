@@ -20,7 +20,7 @@ import { Label } from "@packages/ui/components/ui/label";
 
 import OpenSourceCard from "../../components/OpenSourceCard";
 import ToolTitle from "../../components/ToolTitle";
-import Theory from "./theory";
+import Theory from "../../components/Theory";
 
 // Define the input mode type and gas properties
 type CalculationMode = "mach" | "pressure" | "temperature" | "area";
@@ -73,7 +73,10 @@ export default function IsentropicFlowPage() {
       const gamma = gasType === "custom" ? parseFloat(customGamma) : GAS_PROPERTIES[gasType].gamma;
 
       if (isNaN(gamma) || gamma <= 1) {
-        return { results: null, error: "Specific heat ratio must be greater than 1" };
+        return {
+          results: null,
+          error: "Specific heat ratio must be greater than 1",
+        };
       }
 
       let calculatedMach: number;
@@ -93,10 +96,16 @@ export default function IsentropicFlowPage() {
         case "pressure":
           const pressureValue = parseFloat(pressureRatio);
           if (isNaN(pressureValue)) {
-            return { results: null, error: "Please enter a valid pressure ratio" };
+            return {
+              results: null,
+              error: "Please enter a valid pressure ratio",
+            };
           }
           if (pressureValue <= 0 || pressureValue > 1) {
-            return { results: null, error: "Pressure ratio must be between 0 and 1" };
+            return {
+              results: null,
+              error: "Pressure ratio must be between 0 and 1",
+            };
           }
           calculatedMach = findMachFromPressureRatio(pressureValue, gamma);
           break;
@@ -104,10 +113,16 @@ export default function IsentropicFlowPage() {
         case "temperature":
           const temperatureValue = parseFloat(temperatureRatio);
           if (isNaN(temperatureValue)) {
-            return { results: null, error: "Please enter a valid temperature ratio" };
+            return {
+              results: null,
+              error: "Please enter a valid temperature ratio",
+            };
           }
           if (temperatureValue <= 0 || temperatureValue > 1) {
-            return { results: null, error: "Temperature ratio must be between 0 and 1" };
+            return {
+              results: null,
+              error: "Temperature ratio must be between 0 and 1",
+            };
           }
           calculatedMach = findMachFromTemperatureRatio(temperatureValue, gamma);
           break;
@@ -118,7 +133,10 @@ export default function IsentropicFlowPage() {
             return { results: null, error: "Please enter a valid area ratio" };
           }
           if (areaValue < 1) {
-            return { results: null, error: "Area ratio must be greater than or equal to 1" };
+            return {
+              results: null,
+              error: "Area ratio must be greater than or equal to 1",
+            };
           }
           const isSupersonic = flowRegime === "supersonic";
           calculatedMach = findMachFromAreaRatio(areaValue, gamma, isSupersonic);
@@ -135,7 +153,10 @@ export default function IsentropicFlowPage() {
       if (err instanceof Error) {
         return { results: null, error: err.message };
       }
-      return { results: null, error: "Invalid input. Please check your values." };
+      return {
+        results: null,
+        error: "Invalid input. Please check your values.",
+      };
     }
   })();
 
@@ -523,7 +544,7 @@ export default function IsentropicFlowPage() {
       </div>
 
       {/* Theory Section - Replaced */}
-      <Theory />
+      <Theory toolKey="isentropic-flow" />
 
       {/* Open Source Card */}
       <OpenSourceCard />

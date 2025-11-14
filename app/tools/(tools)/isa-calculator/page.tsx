@@ -32,7 +32,7 @@ import { Label } from "@packages/ui/components/ui/label";
 import OpenSourceCard from "../../components/OpenSourceCard";
 import ToolTitle from "../../components/ToolTitle";
 import Visualization from "./visualization";
-import Theory from "./theory";
+import Theory from "../../components/Theory";
 
 type InputType = "altitude" | "pressure" | "temperature";
 type AltitudeUnit = "m" | "ft" | "km" | "mi";
@@ -251,8 +251,7 @@ export default function IsaCalculatorPage() {
   };
 
   return (
-    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
       {/* Title */}
       <ToolTitle toolKey="isa-calculator" />
 
@@ -371,7 +370,7 @@ export default function IsaCalculatorPage() {
       </div>
 
       {/* Theory Section */}
-      <Theory />
+      <Theory toolKey="isa-calculator" />
 
       {/* Open Source Card */}
       <OpenSourceCard />

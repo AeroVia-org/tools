@@ -138,7 +138,6 @@ We welcome contributions from the aerospace community! Here's how to add a new t
 2. **Create tool folder** at `app/(tools)/your-tool-key/`
 
 3. **Implement required files**:
-
    - `page.tsx` - Main tool interface and user interaction
    - `logic.ts` - Core calculation functions with proper TypeScript types
    - `logic.test.ts` - Comprehensive unit tests using Vitest

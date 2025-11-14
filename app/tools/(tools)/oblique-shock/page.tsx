@@ -7,7 +7,7 @@
 import { useState, useCallback } from "react";
 import { FaBolt, FaCalculator, FaInfoCircle } from "react-icons/fa";
 import { calculateObliqueShock, ObliqueShockResult, calculateMaxDeflectionAngle } from "./logic";
-import Theory from "./theory";
+import Theory from "../../components/Theory";
 import Visualization from "./visualization";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
@@ -67,13 +67,25 @@ export default function ObliqueShockPage() {
       const gamma = gasType === "custom" ? parseFloat(customGamma) : GAS_PROPERTIES[gasType].gamma;
 
       if (isNaN(M1) || M1 <= 0 || M1 <= 1) {
-        return { results: null, displayMachAngle: null, displayMaxDeflection: null };
+        return {
+          results: null,
+          displayMachAngle: null,
+          displayMaxDeflection: null,
+        };
       }
       if (isNaN(theta) || theta < 0) {
-        return { results: null, displayMachAngle: null, displayMaxDeflection: null };
+        return {
+          results: null,
+          displayMachAngle: null,
+          displayMaxDeflection: null,
+        };
       }
       if (isNaN(gamma) || gamma <= 1) {
-        return { results: null, displayMachAngle: null, displayMaxDeflection: null };
+        return {
+          results: null,
+          displayMachAngle: null,
+          displayMaxDeflection: null,
+        };
       }
 
       const isWeakSolution = solutionType === "weak";
@@ -86,12 +98,24 @@ export default function ObliqueShockPage() {
 
       if (theta > maxTheta + 0.0001) {
         // Add small tolerance for floating point
-        return { results: calculatedResults, displayMachAngle: machAngleDeg, displayMaxDeflection: maxTheta };
+        return {
+          results: calculatedResults,
+          displayMachAngle: machAngleDeg,
+          displayMaxDeflection: maxTheta,
+        };
       }
 
-      return { results: calculatedResults, displayMachAngle: machAngleDeg, displayMaxDeflection: maxTheta };
+      return {
+        results: calculatedResults,
+        displayMachAngle: machAngleDeg,
+        displayMaxDeflection: maxTheta,
+      };
     } catch {
-      return { results: null, displayMachAngle: null, displayMaxDeflection: null };
+      return {
+        results: null,
+        displayMachAngle: null,
+        displayMaxDeflection: null,
+      };
     }
   })();
 
@@ -103,7 +127,13 @@ export default function ObliqueShockPage() {
       const theta = parseFloat(deflectionAngle);
       if (!isNaN(M1) && !isNaN(theta) && displayMaxDeflection !== null && theta > displayMaxDeflection + 0.0001) {
         setError(
-          `Deflection angle (${formatNumber(theta, 2)}°) exceeds maximum possible (${formatNumber(displayMaxDeflection, 2)}°) for M₁=${formatNumber(M1, 2)}. Shock is detached. Results shown are for the detached shock limit if applicable, or may be invalid.`,
+          `Deflection angle (${formatNumber(theta, 2)}°) exceeds maximum possible (${formatNumber(
+            displayMaxDeflection,
+            2,
+          )}°) for M₁=${formatNumber(
+            M1,
+            2,
+          )}. Shock is detached. Results shown are for the detached shock limit if applicable, or may be invalid.`,
         );
       } else if (!results) {
         setError("Invalid input. Please check your values.");
@@ -256,9 +286,11 @@ export default function ObliqueShockPage() {
                     </span>
                   </h2>
                   <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
-                    Theoretical limits for M₁={formatNumber(results.upstreamMach, 2)}, γ=
+                    Theoretical limits for M₁=
+                    {formatNumber(results.upstreamMach, 2)}, γ=
                     {formatNumber(results.gamma, 3)}: Mach Angle (μ) = {formatNumber(displayMachAngle, 2)}°, Max
-                    Deflection (θ<sub>max</sub>) = {formatNumber(displayMaxDeflection, 2)}°
+                    Deflection (θ
+                    <sub>max</sub>) = {formatNumber(displayMaxDeflection, 2)}°
                   </p>
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
                     <ResultCard
@@ -327,7 +359,7 @@ export default function ObliqueShockPage() {
       </div>
 
       {/* Theory Section */}
-      <Theory />
+      <Theory toolKey="oblique-shock" />
 
       {/* Open Source Card */}
       <OpenSourceCard />

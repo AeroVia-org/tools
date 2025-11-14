@@ -8,7 +8,7 @@ import { useState, useEffect, useCallback } from "react";
 import { FaTachometerAlt, FaPlaneDeparture, FaCheck, FaTimes } from "react-icons/fa";
 
 import { calculateTWR, calculateRequiredThrust, calculateMaximumMass, TWRResult } from "./logic";
-import Theory from "./theory";
+import Theory from "../../components/Theory";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
 import { Label } from "@packages/ui/components/ui/label";
@@ -505,7 +505,7 @@ export default function TWRCalculatorPage() {
       </div>
 
       {/* Theory Section */}
-      <Theory />
+      <Theory toolKey="twr-calculator" />
 
       {/* Open Source Card */}
       <OpenSourceCard />

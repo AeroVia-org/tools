@@ -120,7 +120,6 @@ import OpenSourceCard from "../../components/OpenSourceCard";
 export default function OrbitalManeuverPlannerPage() {
   return (
     <div className="bg-background min-h-screen">
-
       {/* Title */}
       <ToolTitle toolKey="orbital-maneuver-planner" />
 
