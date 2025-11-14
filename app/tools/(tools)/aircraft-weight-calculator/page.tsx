@@ -25,7 +25,7 @@ import {
   DistanceUnit,
 } from "./logic";
 import Visualization from "./visualization";
-import Theory from "./theory";
+import Theory from "../../components/Theory";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
 import { Label } from "@packages/ui/components/ui/label";
@@ -676,7 +676,7 @@ export default function AircraftWeightCalculatorPage() {
       </div>
 
       {/* Theory Section */}
-      <Theory />
+      <Theory toolKey="aircraft-weight-calculator" />
 
       {/* Open Source Card */}
       <OpenSourceCard />

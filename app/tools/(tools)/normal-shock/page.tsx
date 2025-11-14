@@ -9,7 +9,7 @@ import { calculateNormalShock, calculateFromPitotRatio, NormalShockResult, gener
 import { FaBolt, FaTable, FaArrowRight } from "react-icons/fa";
 import Visualization from "./visualization";
 import Details from "./details";
-import Theory from "./theory";
+import Theory from "../../components/Theory";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
 import { Label } from "@packages/ui/components/ui/label";
@@ -67,7 +67,10 @@ export default function NormalShockPage() {
       const gamma = gasType === "custom" ? parseFloat(customGamma) : GAS_PROPERTIES[gasType].gamma;
 
       if (isNaN(gamma) || gamma <= 1) {
-        return { results: null, error: "Specific heat ratio must be greater than 1" };
+        return {
+          results: null,
+          error: "Specific heat ratio must be greater than 1",
+        };
       }
 
       if (calculationMode === "mach") {
@@ -77,7 +80,10 @@ export default function NormalShockPage() {
           return { results: null, error: "Please enter a valid Mach number" };
         }
         if (machNumber <= 1) {
-          return { results: null, error: "Mach number must be greater than 1 for normal shock" };
+          return {
+            results: null,
+            error: "Mach number must be greater than 1 for normal shock",
+          };
         }
 
         const calculatedResults = calculateNormalShock(machNumber, gamma);
@@ -87,10 +93,16 @@ export default function NormalShockPage() {
         const ratio = parseFloat(pitotRatio);
 
         if (isNaN(ratio)) {
-          return { results: null, error: "Please enter a valid pitot pressure ratio" };
+          return {
+            results: null,
+            error: "Please enter a valid pitot pressure ratio",
+          };
         }
         if (ratio <= 1) {
-          return { results: null, error: "Pitot pressure ratio must be greater than 1" };
+          return {
+            results: null,
+            error: "Pitot pressure ratio must be greater than 1",
+          };
         }
 
         const calculatedResults = calculateFromPitotRatio(ratio, gamma);
@@ -100,7 +112,10 @@ export default function NormalShockPage() {
       if (err instanceof Error) {
         return { results: null, error: err.message };
       }
-      return { results: null, error: "Invalid input. Please ensure Mach number is > 1." };
+      return {
+        results: null,
+        error: "Invalid input. Please ensure Mach number is > 1.",
+      };
     }
   })();
 
@@ -413,7 +428,7 @@ export default function NormalShockPage() {
       )}
 
       {/* Theory Section - Replaced */}
-      <Theory />
+      <Theory toolKey="normal-shock" />
 
       {/* Open Source Card */}
       <OpenSourceCard />

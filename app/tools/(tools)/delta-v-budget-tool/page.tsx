@@ -2,9 +2,8 @@
 
 import { useState, useCallback } from "react";
 import { FaSatellite, FaPlus, FaTrash, FaEdit, FaChartPie } from "react-icons/fa";
-
 import { calculateDeltaVBudget, createMissionPhase, getCommonDeltaVValues, MissionPhase } from "./logic";
-import Theory from "./theory";
+import Theory from "../../components/Theory";
 import { Checkbox } from "@packages/ui/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
@@ -306,7 +305,9 @@ export default function DeltaVBudgetToolPage() {
                           <div className="flex items-center gap-2">
                             <span className="text-foreground font-medium">{phase.name}</span>
                             <span
-                              className={`rounded-full px-2 py-1 text-xs font-medium ${getCategoryColor(phase.category)}`}
+                              className={`rounded-full px-2 py-1 text-xs font-medium ${getCategoryColor(
+                                phase.category,
+                              )}`}
                             >
                               {phase.category}
                             </span>
@@ -451,7 +452,7 @@ export default function DeltaVBudgetToolPage() {
       </div>
 
       {/* Theory Section */}
-      <Theory />
+      <Theory toolKey="delta-v-budget-tool" />
 
       {/* Open Source Card */}
       <OpenSourceCard />

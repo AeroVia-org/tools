@@ -116,7 +116,6 @@ import OpenSourceCard from "../../components/OpenSourceCard";
 export default function OrbitalElementsCalculatorPage() {
   return (
     <div className="bg-background min-h-screen">
-
       {/* Title */}
       <ToolTitle toolKey="orbital-elements-calculator" />
 

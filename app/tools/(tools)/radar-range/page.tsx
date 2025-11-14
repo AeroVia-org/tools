@@ -16,7 +16,7 @@ import {
   convertSignalToW,
 } from "./logic";
 import Visualization from "./visualization";
-import Theory from "./theory";
+import Theory from "../../components/Theory";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
 import { Label } from "@packages/ui/components/ui/label";
@@ -87,7 +87,10 @@ export default function RadarRangePage() {
     const rcsNum = parseFloat(rcs);
     const signalNum = parseFloat(minDetectableSignal);
     if (isNaN(powerNum) || isNaN(gainNum) || isNaN(freqNum) || isNaN(rcsNum) || isNaN(signalNum)) {
-      return { results: null, error: "Please enter valid numbers for all inputs." };
+      return {
+        results: null,
+        error: "Please enter valid numbers for all inputs.",
+      };
     }
     try {
       // Convert inputs to SI units using helpers from logic.ts
@@ -102,7 +105,10 @@ export default function RadarRangePage() {
       if (err instanceof Error) {
         return { results: null, error: err.message };
       }
-      return { results: null, error: "An unknown error occurred during calculation." };
+      return {
+        results: null,
+        error: "An unknown error occurred during calculation.",
+      };
     }
   })();
 
@@ -225,7 +231,12 @@ export default function RadarRangePage() {
                 />
                 <Select
                   value={units.frequency}
-                  onValueChange={(value) => setUnits({ ...units, frequency: value as InputUnits["frequency"] })}
+                  onValueChange={(value) =>
+                    setUnits({
+                      ...units,
+                      frequency: value as InputUnits["frequency"],
+                    })
+                  }
                 >
                   <SelectTrigger className="w-20">
                     <SelectValue />
@@ -283,7 +294,12 @@ export default function RadarRangePage() {
                 />
                 <Select
                   value={units.minSignal}
-                  onValueChange={(value) => setUnits({ ...units, minSignal: value as InputUnits["minSignal"] })}
+                  onValueChange={(value) =>
+                    setUnits({
+                      ...units,
+                      minSignal: value as InputUnits["minSignal"],
+                    })
+                  }
                 >
                   <SelectTrigger className="w-20">
                     <SelectValue />
@@ -318,7 +334,12 @@ export default function RadarRangePage() {
                   </div>
                   <Select
                     value={units.range}
-                    onValueChange={(value) => setUnits({ ...units, range: value as InputUnits["range"] })}
+                    onValueChange={(value) =>
+                      setUnits({
+                        ...units,
+                        range: value as InputUnits["range"],
+                      })
+                    }
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue />
@@ -350,7 +371,7 @@ export default function RadarRangePage() {
       </div>
 
       {/* Theory Section */}
-      <Theory />
+      <Theory toolKey="radar-range" />
 
       {/* Open Source Card */}
       <OpenSourceCard />

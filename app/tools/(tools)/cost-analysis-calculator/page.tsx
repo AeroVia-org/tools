@@ -114,8 +114,7 @@ import OpenSourceCard from "../../components/OpenSourceCard";
 
 export default function CostAnalysisCalculatorPage() {
   return (
-    <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
       {/* Title */}
       <ToolTitle toolKey="cost-analysis-calculator" />
 
@@ -123,8 +122,8 @@ export default function CostAnalysisCalculatorPage() {
         <FaDollarSign className="text-muted-foreground mx-auto mb-6 text-6xl" />
         <h2 className="text-foreground mb-4 text-2xl font-bold">Cost Analysis Calculator</h2>
         <p className="text-muted-foreground mx-auto mb-8 max-w-2xl text-lg">
-          Calculate costs vs quantities, tool costs vs production amounts, and economic analysis
-          for aerospace projects with break-even analysis and learning curves.
+          Calculate costs vs quantities, tool costs vs production amounts, and economic analysis for aerospace projects
+          with break-even analysis and learning curves.
         </p>
 
         <div className="border-border bg-card mx-auto max-w-4xl rounded-lg border p-6 text-left shadow-lg">
@@ -220,49 +219,49 @@ export default function CostAnalysisCalculatorPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border">
-                  <th className="text-left py-2 font-semibold">Component</th>
-                  <th className="text-right py-2 font-semibold">Development Cost</th>
-                  <th className="text-right py-2 font-semibold">Unit Cost (1-10)</th>
-                  <th className="text-right py-2 font-semibold">Unit Cost (100+)</th>
-                  <th className="text-right py-2 font-semibold">Learning Curve</th>
+                <tr className="border-border border-b">
+                  <th className="py-2 text-left font-semibold">Component</th>
+                  <th className="py-2 text-right font-semibold">Development Cost</th>
+                  <th className="py-2 text-right font-semibold">Unit Cost (1-10)</th>
+                  <th className="py-2 text-right font-semibold">Unit Cost (100+)</th>
+                  <th className="py-2 text-right font-semibold">Learning Curve</th>
                 </tr>
               </thead>
               <tbody className="text-muted-foreground">
-                <tr className="border-b border-border">
+                <tr className="border-border border-b">
                   <td className="py-2">Aircraft Wing</td>
-                  <td className="text-right py-2">$50M</td>
-                  <td className="text-right py-2">$2.5M</td>
-                  <td className="text-right py-2">$800K</td>
-                  <td className="text-right py-2">85%</td>
+                  <td className="py-2 text-right">$50M</td>
+                  <td className="py-2 text-right">$2.5M</td>
+                  <td className="py-2 text-right">$800K</td>
+                  <td className="py-2 text-right">85%</td>
                 </tr>
-                <tr className="border-b border-border">
+                <tr className="border-border border-b">
                   <td className="py-2">Satellite Bus</td>
-                  <td className="text-right py-2">$100M</td>
-                  <td className="text-right py-2">$15M</td>
-                  <td className="text-right py-2">$8M</td>
-                  <td className="text-right py-2">90%</td>
+                  <td className="py-2 text-right">$100M</td>
+                  <td className="py-2 text-right">$15M</td>
+                  <td className="py-2 text-right">$8M</td>
+                  <td className="py-2 text-right">90%</td>
                 </tr>
-                <tr className="border-b border-border">
+                <tr className="border-border border-b">
                   <td className="py-2">Rocket Engine</td>
-                  <td className="text-right py-2">$200M</td>
-                  <td className="text-right py-2">$5M</td>
-                  <td className="text-right py-2">$2M</td>
-                  <td className="text-right py-2">80%</td>
+                  <td className="py-2 text-right">$200M</td>
+                  <td className="py-2 text-right">$5M</td>
+                  <td className="py-2 text-right">$2M</td>
+                  <td className="py-2 text-right">80%</td>
                 </tr>
-                <tr className="border-b border-border">
+                <tr className="border-border border-b">
                   <td className="py-2">UAV Airframe</td>
-                  <td className="text-right py-2">$10M</td>
-                  <td className="text-right py-2">$500K</td>
-                  <td className="text-right py-2">$150K</td>
-                  <td className="text-right py-2">88%</td>
+                  <td className="py-2 text-right">$10M</td>
+                  <td className="py-2 text-right">$500K</td>
+                  <td className="py-2 text-right">$150K</td>
+                  <td className="py-2 text-right">88%</td>
                 </tr>
                 <tr>
                   <td className="py-2">Landing Gear</td>
-                  <td className="text-right py-2">$25M</td>
-                  <td className="text-right py-2">$1.2M</td>
-                  <td className="text-right py-2">$400K</td>
-                  <td className="text-right py-2">85%</td>
+                  <td className="py-2 text-right">$25M</td>
+                  <td className="py-2 text-right">$1.2M</td>
+                  <td className="py-2 text-right">$400K</td>
+                  <td className="py-2 text-right">85%</td>
                 </tr>
               </tbody>
             </table>

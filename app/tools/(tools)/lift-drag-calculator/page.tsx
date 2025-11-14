@@ -13,11 +13,22 @@ import {
   FaCalculator,
   FaExclamationTriangle,
 } from "react-icons/fa";
-import { calculateLiftAndDrag, getAirfoilTypes, LiftDragResult, FlightConditions } from "./logic";
+import {
+  calculateLiftAndDrag,
+  getAirfoilTypes,
+  LiftDragResult,
+  FlightConditions,
+} from "./logic";
 import { MStoKMH, MStoKnots, MtoFt, FttoM, Ft2toM2 } from "@/lib/conversions";
-import Theory from "./theory";
+import Theory from "../../components/Theory";
 import { Checkbox } from "@packages/ui/components/ui/checkbox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
 import { Label } from "@packages/ui/components/ui/label";
 import ToolTitle from "../../components/ToolTitle";
@@ -49,33 +60,40 @@ export default function LiftDragCalculatorPage() {
   const [customClMax, setCustomClMax] = useState<string>("1.4");
   const [customCl0, setCustomCl0] = useState<string>("0.25");
   const [customCd0, setCustomCd0] = useState<string>("0.006");
-  const [customOswaldEfficiency, setCustomOswaldEfficiency] = useState<string>("0.85");
+  const [customOswaldEfficiency, setCustomOswaldEfficiency] =
+    useState<string>("0.85");
 
   // Results state
   const [results, setResults] = useState<LiftDragResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   // Convert velocity to m/s
-  const velocityToMs = useCallback((vel: number, unit: VelocityUnit): number => {
-    switch (unit) {
-      case "km/h":
-        return vel / 3.6;
-      case "knot":
-        return vel * 0.5144;
-      default:
-        return vel;
-    }
-  }, []);
+  const velocityToMs = useCallback(
+    (vel: number, unit: VelocityUnit): number => {
+      switch (unit) {
+        case "km/h":
+          return vel / 3.6;
+        case "knot":
+          return vel * 0.5144;
+        default:
+          return vel;
+      }
+    },
+    []
+  );
 
   // Convert altitude to meters
-  const altitudeToMeters = useCallback((alt: number, unit: AltitudeUnit): number => {
-    switch (unit) {
-      case "ft":
-        return FttoM(alt);
-      default:
-        return alt;
-    }
-  }, []);
+  const altitudeToMeters = useCallback(
+    (alt: number, unit: AltitudeUnit): number => {
+      switch (unit) {
+        case "ft":
+          return FttoM(alt);
+        default:
+          return alt;
+      }
+    },
+    []
+  );
 
   // Convert area to m²
   const areaToM2 = useCallback((area: number, unit: AreaUnit): number => {
@@ -88,14 +106,17 @@ export default function LiftDragCalculatorPage() {
   }, []);
 
   // Convert length to meters
-  const lengthToMeters = useCallback((length: number, unit: LengthUnit): number => {
-    switch (unit) {
-      case "ft":
-        return FttoM(length);
-      default:
-        return length;
-    }
-  }, []);
+  const lengthToMeters = useCallback(
+    (length: number, unit: LengthUnit): number => {
+      switch (unit) {
+        case "ft":
+          return FttoM(length);
+        default:
+          return length;
+      }
+    },
+    []
+  );
 
   // Handle calculation
   const handleCalculate = useCallback(() => {
@@ -115,7 +136,13 @@ export default function LiftDragCalculatorPage() {
       const wingSpanM = lengthToMeters(parseFloat(wingSpan), lengthUnit);
 
       // Validate numeric values
-      if (isNaN(velocityMs) || isNaN(altitudeM) || isNaN(angleOfAttackDeg) || isNaN(wingAreaM2) || isNaN(wingSpanM)) {
+      if (
+        isNaN(velocityMs) ||
+        isNaN(altitudeM) ||
+        isNaN(angleOfAttackDeg) ||
+        isNaN(wingAreaM2) ||
+        isNaN(wingSpanM)
+      ) {
         throw new Error("Please enter valid numbers for all fields.");
       }
 
@@ -147,7 +174,9 @@ export default function LiftDragCalculatorPage() {
         customClMax: useCustomAirfoil ? parseFloat(customClMax) : undefined,
         customCl0: useCustomAirfoil ? parseFloat(customCl0) : undefined,
         customCd0: useCustomAirfoil ? parseFloat(customCd0) : undefined,
-        customOswaldEfficiency: useCustomAirfoil ? parseFloat(customOswaldEfficiency) : undefined,
+        customOswaldEfficiency: useCustomAirfoil
+          ? parseFloat(customOswaldEfficiency)
+          : undefined,
       };
 
       const result = calculateLiftAndDrag(conditions);
@@ -207,7 +236,6 @@ export default function LiftDragCalculatorPage() {
 
   return (
     <div className="mx-auto py-8 flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:px-8">
-
       {/* Title */}
       <ToolTitle toolKey="lift-drag-calculator" />
 
@@ -215,13 +243,17 @@ export default function LiftDragCalculatorPage() {
         {/* Input Card */}
         <div className="border-border bg-card rounded-lg border p-6 shadow-lg">
           <p className="text-muted-foreground mb-6">
-            Calculate lift and drag forces for an aircraft based on flight conditions, wing geometry, and airfoil
-            characteristics. This calculator uses simplified aerodynamic models suitable for preliminary design.
+            Calculate lift and drag forces for an aircraft based on flight
+            conditions, wing geometry, and airfoil characteristics. This
+            calculator uses simplified aerodynamic models suitable for
+            preliminary design.
           </p>
 
           {/* Flight Conditions Section */}
           <div className="mb-6 space-y-4">
-            <h3 className="text-foreground text-lg font-medium">Flight Conditions</h3>
+            <h3 className="text-foreground text-lg font-medium">
+              Flight Conditions
+            </h3>
 
             {/* Velocity */}
             <div className="grid grid-cols-3 gap-4">
@@ -238,7 +270,12 @@ export default function LiftDragCalculatorPage() {
               </div>
               <div>
                 <Label>Unit</Label>
-                <Select value={velocityUnit} onValueChange={(value) => setVelocityUnit(value as VelocityUnit)}>
+                <Select
+                  value={velocityUnit}
+                  onValueChange={(value) =>
+                    setVelocityUnit(value as VelocityUnit)
+                  }
+                >
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
                   </SelectTrigger>
@@ -266,7 +303,12 @@ export default function LiftDragCalculatorPage() {
               </div>
               <div>
                 <Label>Unit</Label>
-                <Select value={altitudeUnit} onValueChange={(value) => setAltitudeUnit(value as AltitudeUnit)}>
+                <Select
+                  value={altitudeUnit}
+                  onValueChange={(value) =>
+                    setAltitudeUnit(value as AltitudeUnit)
+                  }
+                >
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
                   </SelectTrigger>
@@ -290,13 +332,17 @@ export default function LiftDragCalculatorPage() {
                 placeholder="e.g., 5"
                 className="mt-1"
               />
-              <p className="text-muted-foreground mt-1 text-xs">Angle in degrees</p>
+              <p className="text-muted-foreground mt-1 text-xs">
+                Angle in degrees
+              </p>
             </div>
           </div>
 
           {/* Wing Geometry Section */}
           <div className="mb-6 space-y-4">
-            <h3 className="text-foreground text-lg font-medium">Wing Geometry</h3>
+            <h3 className="text-foreground text-lg font-medium">
+              Wing Geometry
+            </h3>
 
             {/* Wing Area */}
             <div className="grid grid-cols-3 gap-4">
@@ -313,7 +359,10 @@ export default function LiftDragCalculatorPage() {
               </div>
               <div>
                 <Label>Unit</Label>
-                <Select value={areaUnit} onValueChange={(value) => setAreaUnit(value as AreaUnit)}>
+                <Select
+                  value={areaUnit}
+                  onValueChange={(value) => setAreaUnit(value as AreaUnit)}
+                >
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
                   </SelectTrigger>
@@ -340,7 +389,10 @@ export default function LiftDragCalculatorPage() {
               </div>
               <div>
                 <Label>Unit</Label>
-                <Select value={lengthUnit} onValueChange={(value) => setLengthUnit(value as LengthUnit)}>
+                <Select
+                  value={lengthUnit}
+                  onValueChange={(value) => setLengthUnit(value as LengthUnit)}
+                >
                   <SelectTrigger className="mt-1 w-full">
                     <SelectValue />
                   </SelectTrigger>
@@ -355,12 +407,18 @@ export default function LiftDragCalculatorPage() {
 
           {/* Airfoil Section */}
           <div className="mb-6 space-y-4">
-            <h3 className="text-foreground text-lg font-medium">Airfoil Characteristics</h3>
+            <h3 className="text-foreground text-lg font-medium">
+              Airfoil Characteristics
+            </h3>
 
             {/* Airfoil Type Selection */}
             <div>
               <Label>Airfoil Type</Label>
-              <Select value={airfoilType} onValueChange={(value) => setAirfoilType(value)} disabled={useCustomAirfoil}>
+              <Select
+                value={airfoilType}
+                onValueChange={(value) => setAirfoilType(value)}
+                disabled={useCustomAirfoil}
+              >
                 <SelectTrigger className="mt-1 w-full">
                   <SelectValue />
                 </SelectTrigger>
@@ -379,7 +437,9 @@ export default function LiftDragCalculatorPage() {
               <Checkbox
                 id="custom-airfoil"
                 checked={useCustomAirfoil}
-                onCheckedChange={(checked) => setUseCustomAirfoil(checked === true)}
+                onCheckedChange={(checked) =>
+                  setUseCustomAirfoil(checked === true)
+                }
               />
               <Label>Use Custom Airfoil Parameters</Label>
             </div>
@@ -453,7 +513,9 @@ export default function LiftDragCalculatorPage() {
 
         {/* Results Card */}
         <div className="border-border bg-card rounded-lg border p-6 shadow-lg">
-          <h2 className="text-foreground mb-6 text-lg font-semibold">Lift & Drag Results</h2>
+          <h2 className="text-foreground mb-6 text-lg font-semibold">
+            Lift & Drag Results
+          </h2>
 
           {results ? (
             <div className="space-y-6">
@@ -462,30 +524,48 @@ export default function LiftDragCalculatorPage() {
                 {/* Lift Force */}
                 <div className="border-border bg-muted/50 flex flex-col items-center rounded-lg border p-4 text-center">
                   <FaPlaneDeparture className="mb-2 h-8 w-8 text-blue-600" />
-                  <h3 className="text-foreground text-lg font-medium">Lift Force</h3>
-                  <div className="text-primary mt-1 text-2xl font-bold">{formatNumber(results.lift)} N</div>
-                  <div className="text-muted-foreground mt-1 text-sm">CL = {formatNumber(results.cl, 3)}</div>
+                  <h3 className="text-foreground text-lg font-medium">
+                    Lift Force
+                  </h3>
+                  <div className="text-primary mt-1 text-2xl font-bold">
+                    {formatNumber(results.lift)} N
+                  </div>
+                  <div className="text-muted-foreground mt-1 text-sm">
+                    CL = {formatNumber(results.cl, 3)}
+                  </div>
                 </div>
 
                 {/* Drag Force */}
                 <div className="border-border bg-muted/50 flex flex-col items-center rounded-lg border p-4 text-center">
                   <FaWind className="mb-2 h-8 w-8 text-red-600" />
-                  <h3 className="text-foreground text-lg font-medium">Drag Force</h3>
-                  <div className="text-primary mt-1 text-2xl font-bold">{formatNumber(results.drag)} N</div>
-                  <div className="text-muted-foreground mt-1 text-sm">CD = {formatNumber(results.cd, 4)}</div>
+                  <h3 className="text-foreground text-lg font-medium">
+                    Drag Force
+                  </h3>
+                  <div className="text-primary mt-1 text-2xl font-bold">
+                    {formatNumber(results.drag)} N
+                  </div>
+                  <div className="text-muted-foreground mt-1 text-sm">
+                    CD = {formatNumber(results.cd, 4)}
+                  </div>
                 </div>
               </div>
 
               {/* Performance Metrics */}
               <div className="border-border rounded-lg border p-4">
-                <h3 className="text-foreground mb-4 text-lg font-medium">Performance Metrics</h3>
+                <h3 className="text-foreground mb-4 text-lg font-medium">
+                  Performance Metrics
+                </h3>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   {/* Lift-to-Drag Ratio */}
                   <div className="border-border flex items-start gap-4 rounded-lg border p-3">
                     <FaCalculator className="mt-1 h-5 w-5 shrink-0 text-green-600" />
                     <div>
-                      <div className="text-foreground font-medium">Lift/Drag Ratio</div>
-                      <div className="text-foreground text-lg font-semibold">{formatNumber(results.clCd, 1)}</div>
+                      <div className="text-foreground font-medium">
+                        Lift/Drag Ratio
+                      </div>
+                      <div className="text-foreground text-lg font-semibold">
+                        {formatNumber(results.clCd, 1)}
+                      </div>
                       <div className="text-muted-foreground mt-1 text-sm">
                         Max L/D = {formatNumber(results.maxLiftToDragRatio, 1)}
                       </div>
@@ -496,7 +576,9 @@ export default function LiftDragCalculatorPage() {
                   <div className="border-border flex items-start gap-4 rounded-lg border p-3">
                     <FaTachometerAlt className="mt-1 h-5 w-5 shrink-0 text-orange-600" />
                     <div>
-                      <div className="text-foreground font-medium">Stall Speed</div>
+                      <div className="text-foreground font-medium">
+                        Stall Speed
+                      </div>
                       <div className="text-foreground text-lg font-semibold">
                         {formatNumber(results.stallSpeed)} m/s
                       </div>
@@ -510,11 +592,15 @@ export default function LiftDragCalculatorPage() {
                   <div className="border-border flex items-start gap-4 rounded-lg border p-3">
                     <FaRuler className="mt-1 h-5 w-5 shrink-0 text-purple-600" />
                     <div>
-                      <div className="text-foreground font-medium">Optimal AOA</div>
+                      <div className="text-foreground font-medium">
+                        Optimal AOA
+                      </div>
                       <div className="text-foreground text-lg font-semibold">
                         {formatNumber(results.optimalAngleOfAttack, 1)}°
                       </div>
-                      <div className="text-muted-foreground mt-1 text-sm">For max L/D ratio</div>
+                      <div className="text-muted-foreground mt-1 text-sm">
+                        For max L/D ratio
+                      </div>
                     </div>
                   </div>
 
@@ -522,11 +608,15 @@ export default function LiftDragCalculatorPage() {
                   <div className="border-border flex items-start gap-4 rounded-lg border p-3">
                     <FaRuler className="mt-1 h-5 w-5 shrink-0 text-indigo-600" />
                     <div>
-                      <div className="text-foreground font-medium">Aspect Ratio</div>
+                      <div className="text-foreground font-medium">
+                        Aspect Ratio
+                      </div>
                       <div className="text-foreground text-lg font-semibold">
                         {formatNumber(results.aspectRatio, 1)}
                       </div>
-                      <div className="text-muted-foreground mt-1 text-sm">Span²/Area</div>
+                      <div className="text-muted-foreground mt-1 text-sm">
+                        Span²/Area
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -534,18 +624,22 @@ export default function LiftDragCalculatorPage() {
 
               {/* Flight Conditions Summary */}
               <div className="border-border rounded-lg border p-4">
-                <h3 className="text-foreground mb-4 text-lg font-medium">Flight Conditions</h3>
+                <h3 className="text-foreground mb-4 text-lg font-medium">
+                  Flight Conditions
+                </h3>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div className="border-border flex items-start gap-4 rounded-lg border p-3">
                     <FaTachometerAlt className="mt-1 h-5 w-5 shrink-0 text-blue-600" />
                     <div>
-                      <div className="text-foreground font-medium">Velocity</div>
+                      <div className="text-foreground font-medium">
+                        Velocity
+                      </div>
                       <div className="text-foreground text-base font-semibold">
                         {formatNumber(results.velocity)} m/s
                       </div>
                       <div className="text-muted-foreground mt-1 text-sm">
-                        {formatNumber(MStoKMH(results.velocity))} km/h ≈ {formatNumber(MStoKnots(results.velocity))}{" "}
-                        knots
+                        {formatNumber(MStoKMH(results.velocity))} km/h ≈{" "}
+                        {formatNumber(MStoKnots(results.velocity))} knots
                       </div>
                     </div>
                   </div>
@@ -553,8 +647,12 @@ export default function LiftDragCalculatorPage() {
                   <div className="border-border flex items-start gap-4 rounded-lg border p-3">
                     <FaRuler className="mt-1 h-5 w-5 shrink-0 text-green-600" />
                     <div>
-                      <div className="text-foreground font-medium">Altitude</div>
-                      <div className="text-foreground text-base font-semibold">{formatNumber(results.altitude)} m</div>
+                      <div className="text-foreground font-medium">
+                        Altitude
+                      </div>
+                      <div className="text-foreground text-base font-semibold">
+                        {formatNumber(results.altitude)} m
+                      </div>
                       <div className="text-muted-foreground mt-1 text-sm">
                         {formatNumber(MtoFt(results.altitude))} ft
                       </div>
@@ -564,12 +662,15 @@ export default function LiftDragCalculatorPage() {
                   <div className="border-border flex items-start gap-4 rounded-lg border p-3">
                     <FaWind className="mt-1 h-5 w-5 shrink-0 text-purple-600" />
                     <div>
-                      <div className="text-foreground font-medium">Air Density</div>
+                      <div className="text-foreground font-medium">
+                        Air Density
+                      </div>
                       <div className="text-foreground text-base font-semibold">
                         {formatNumber(results.density, 4)} kg/m³
                       </div>
                       <div className="text-muted-foreground mt-1 text-sm">
-                        Dynamic pressure: {formatNumber(results.dynamicPressure)} Pa
+                        Dynamic pressure:{" "}
+                        {formatNumber(results.dynamicPressure)} Pa
                       </div>
                     </div>
                   </div>
@@ -578,9 +679,12 @@ export default function LiftDragCalculatorPage() {
                     <FaPlaneDeparture className="mt-1 h-5 w-5 shrink-0 text-orange-600" />
                     <div>
                       <div className="text-foreground font-medium">Airfoil</div>
-                      <div className="text-foreground text-base font-semibold">{results.airfoilName}</div>
+                      <div className="text-foreground text-base font-semibold">
+                        {results.airfoilName}
+                      </div>
                       <div className="text-muted-foreground mt-1 text-sm">
-                        CLmax: {formatNumber(results.clMax, 2)} | CD0: {formatNumber(results.cd0, 4)}
+                        CLmax: {formatNumber(results.clMax, 2)} | CD0:{" "}
+                        {formatNumber(results.cd0, 4)}
                       </div>
                     </div>
                   </div>
@@ -613,7 +717,7 @@ export default function LiftDragCalculatorPage() {
       </div>
 
       {/* Theory Section */}
-      <Theory />
+      <Theory toolKey="lift-drag-calculator" />
 
       {/* Open Source Card */}
       <OpenSourceCard />

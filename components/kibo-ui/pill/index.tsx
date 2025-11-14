@@ -15,23 +15,17 @@ export const Pill = ({
   className,
   ...props
 }: PillProps) => (
-  <Badge
-    className={cn("gap-2 rounded-full px-3 py-1.5 font-normal", className)}
-    variant={variant}
-    {...props}
-  />
+  <Badge className={cn("gap-2 rounded-full px-3 py-1.5 font-normal", className)} variant={variant} {...props} />
 );
 
 export type PillAvatarProps = ComponentProps<typeof AvatarImage> & {
   fallback?: string;
 };
 
-export const PillAvatar = ({
-  fallback,
-  className,
-  ...props
-}: PillAvatarProps) => (
-  <Avatar className={cn("-ml-1 h-8 w-8", className)}> {/* Custom - made size bigger to show avatar image better */}
+export const PillAvatar = ({ fallback, className, ...props }: PillAvatarProps) => (
+  <Avatar className={cn("-ml-1 h-8 w-8", className)}>
+    {" "}
+    {/* Custom - made size bigger to show avatar image better */}
     <AvatarImage {...props} />
     <AvatarFallback>{fallback}</AvatarFallback>
   </Avatar>
@@ -41,10 +35,7 @@ export type PillButtonProps = ComponentProps<typeof Button>;
 
 export const PillButton = ({ className, ...props }: PillButtonProps) => (
   <Button
-    className={cn(
-      "-my-2 -mr-2 size-6 rounded-full p-0.5 hover:bg-foreground/5",
-      className
-    )}
+    className={cn("hover:bg-foreground/5 -my-2 -mr-2 size-6 rounded-full p-0.5", className)}
     size="icon"
     variant="ghost"
     {...props}
@@ -56,18 +47,8 @@ export type PillStatusProps = {
   className?: string;
 };
 
-export const PillStatus = ({
-  children,
-  className,
-  ...props
-}: PillStatusProps) => (
-  <div
-    className={cn(
-      "flex items-center gap-2 border-r pr-2 font-medium",
-      className
-    )}
-    {...props}
-  >
+export const PillStatus = ({ children, className, ...props }: PillStatusProps) => (
+  <div className={cn("flex items-center gap-2 border-r pr-2 font-medium", className)} {...props}>
     {children}
   </div>
 );
@@ -77,10 +58,7 @@ export type PillIndicatorProps = {
   pulse?: boolean;
 };
 
-export const PillIndicator = ({
-  variant = "success",
-  pulse = false,
-}: PillIndicatorProps) => (
+export const PillIndicator = ({ variant = "success", pulse = false }: PillIndicatorProps) => (
   <span className="relative flex size-2">
     {pulse && (
       <span
@@ -89,7 +67,7 @@ export const PillIndicator = ({
           variant === "success" && "bg-emerald-400",
           variant === "error" && "bg-rose-400",
           variant === "warning" && "bg-amber-400",
-          variant === "info" && "bg-sky-400"
+          variant === "info" && "bg-sky-400",
         )}
       />
     )}
@@ -99,7 +77,7 @@ export const PillIndicator = ({
         variant === "success" && "bg-emerald-500",
         variant === "error" && "bg-rose-500",
         variant === "warning" && "bg-amber-500",
-        variant === "info" && "bg-sky-500"
+        variant === "info" && "bg-sky-500",
       )}
     />
   </span>
@@ -112,15 +90,11 @@ export type PillDeltaProps = {
 
 export const PillDelta = ({ className, delta }: PillDeltaProps) => {
   if (!delta) {
-    return (
-      <MinusIcon className={cn("size-3 text-muted-foreground", className)} />
-    );
+    return <MinusIcon className={cn("text-muted-foreground size-3", className)} />;
   }
 
   if (delta > 0) {
-    return (
-      <ChevronUpIcon className={cn("size-3 text-emerald-500", className)} />
-    );
+    return <ChevronUpIcon className={cn("size-3 text-emerald-500", className)} />;
   }
 
   return <ChevronDownIcon className={cn("size-3 text-rose-500", className)} />;
@@ -131,16 +105,8 @@ export type PillIconProps = {
   className?: string;
 };
 
-export const PillIcon = ({
-  icon: Icon,
-  className,
-  ...props
-}: PillIconProps) => (
-  <Icon
-    className={cn("size-3 text-muted-foreground", className)}
-    size={12}
-    {...props}
-  />
+export const PillIcon = ({ icon: Icon, className, ...props }: PillIconProps) => (
+  <Icon className={cn("text-muted-foreground size-3", className)} size={12} {...props} />
 );
 
 export type PillAvatarGroupProps = {
@@ -148,16 +114,12 @@ export type PillAvatarGroupProps = {
   className?: string;
 };
 
-export const PillAvatarGroup = ({
-  children,
-  className,
-  ...props
-}: PillAvatarGroupProps) => (
+export const PillAvatarGroup = ({ children, className, ...props }: PillAvatarGroupProps) => (
   <div
     className={cn(
-      "-space-x-1 flex items-center",
+      "flex items-center -space-x-1",
       "[&>*:not(:first-of-type)]:[mask-image:radial-gradient(circle_9px_at_-4px_50%,transparent_99%,white_100%)]",
-      className
+      className,
     )}
     {...props}
   >

@@ -117,7 +117,6 @@ import OpenSourceCard from "../../components/OpenSourceCard";
 export default function HyperbolicTrajectoryCalculatorPage() {
   return (
     <div className="bg-background min-h-screen">
-
       {/* Title */}
       <ToolTitle toolKey="hyperbolic-trajectory-calculator" />
 
