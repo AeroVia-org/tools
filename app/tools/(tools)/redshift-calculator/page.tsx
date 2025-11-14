@@ -6,7 +6,6 @@ import { Label } from "@packages/ui/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import OpenSourceCard from "../../components/OpenSourceCard";
 import ToolTitle from "../../components/ToolTitle";
-import Theory from "./theory";
 import {
   frequencyToWavelength,
   wavelengthToFrequency,
@@ -34,6 +33,7 @@ import {
   HztoTHz,
 } from "@/lib/conversions";
 import RedshiftVisualization from "./visualization";
+import Theory from "../../components/Theory";
 
 type WavelengthUnit = "m" | "nm" | "μm" | "Å" | "mm" | "cm";
 type FrequencyUnit = "Hz" | "kHz" | "MHz" | "GHz" | "THz";
@@ -457,7 +457,7 @@ export default function RedshiftCalculatorPage() {
       </div>
 
       {/* Theory Section */}
-      <Theory />
+      <Theory toolKey="redshift-calculator" />
 
       {/* Open Source Card */}
       <OpenSourceCard />

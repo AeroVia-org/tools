@@ -8,20 +8,20 @@ const RedshiftVisualization = ({ redshift }: { redshift: number | null }) => {
       )}
       <p className="mt-1 text-center text-sm text-gray-500 dark:text-gray-400">
         {redshift === null ? (
-          <p>Enter values to see the result.</p>
+          <span>Enter values to see the result.</span>
         ) : (
           <>
             {redshift < 0 && (
-              <p>
+              <span>
                 You will observe a <span className="text-blue-500">blueshift</span>.
-              </p>
+              </span>
             )}
             {redshift > 0 && (
-              <p>
+              <span>
                 You will observe a <span className="text-red-500">redshift</span>.
-              </p>
+              </span>
             )}
-            {redshift === 0 && <p>You will not observe any shift.</p>}
+            {redshift === 0 && <span>You will not observe any shift.</span>}
           </>
         )}
       </p>
