@@ -33,3 +33,25 @@ export const KnotsToMS = (knots: number): number => knots / 1.94384;
 // Area
 export const M2toFt2 = (m2: number): number => m2 * 10.7639;
 export const Ft2toM2 = (ft2: number): number => ft2 / 10.7639;
+
+// Wavelength
+export const MtoNm = (m: number): number => m * 1e9;
+export const NmtoM = (nm: number): number => nm * 1e-9;
+export const MtoUm = (m: number): number => m * 1e6;
+export const UmtoM = (um: number): number => um * 1e-6;
+export const MtoAngstrom = (m: number): number => m * 1e10;
+export const AngstromtoM = (angstrom: number): number => angstrom * 1e-10;
+export const MtoMm = (m: number): number => m * 1000;
+export const MmtoM = (mm: number): number => mm / 1000;
+export const MtoCm = (m: number): number => m * 100;
+export const CmtoM = (cm: number): number => cm / 100;
+
+// Frequency
+export const HztoKHz = (hz: number): number => hz / 1000;
+export const KHztoHz = (khz: number): number => khz * 1000;
+export const HztoMHz = (hz: number): number => hz / 1e6;
+export const MHztoHz = (mhz: number): number => mhz * 1e6;
+export const HztoGHz = (hz: number): number => hz / 1e9;
+export const GHztoHz = (ghz: number): number => ghz * 1e9;
+export const HztoTHz = (hz: number): number => hz / 1e12;
+export const THztoHz = (thz: number): number => thz * 1e12;
