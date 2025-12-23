@@ -1,9 +1,6 @@
-import { describe, it, expect } from 'vitest'
-import { calculateDefault } from './logic'
+import { describe } from 'vitest'
 
-describe('Default Calculator', () => {
-  it('should calculate correctly', () => {
-    const result = calculateDefault(0)
-    expect(result).toBe(1)
-  })
+describe('Redshift Calculator', () => {
+  //TODO: Add tests
+  // it('...')
 })

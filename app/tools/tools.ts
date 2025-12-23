@@ -878,7 +878,7 @@ export const allTools: Tool[] = [
 
   // Astronomy
   {
-    status: "Coming Soon",
+    status: "Active",
     key: "sunrise-sunset-calculator",
     title: "Sunrise/Sunset & Moonrise/Moonset Calculator",
     icon: FaSun,
