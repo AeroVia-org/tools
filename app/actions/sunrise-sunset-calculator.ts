@@ -1,20 +1,20 @@
 "use server";
 
-import type { Coordinates, SunData } from "../tools/(tools)/sunrise-sunset-calculator/types";
+import { type AstronomyRequestData, type Coordinates, type AstronomyData } from "../tools/(tools)/sunrise-sunset-calculator/types";
 
-// type TimeZone = "UTC" | "Local" | "Location" | { tzid: string };
-
-interface LocationResponseItem {
-  lat: string;
-  lon: string;
-  importance: number;
-}
-
-interface SunriseSunsetResponse {
-  status: string;
-  results: {
-    sunrise: string;
-    sunset: string;
+interface AstronomyApiResponse {
+  "location": {
+    "location_string": string;
+    "latitude": number;
+    "longitude": number;
+    "elevation": number;
+  };
+  "astronomy": {
+    "date": string;
+    "sunrise": string;
+    "sunset": string;
+    "moonrise": string;
+    "moonset": string;
   };
 }
 
@@ -25,51 +25,69 @@ function formatDate(date: Date): string {
 /**
  * Parses a time string into a Date object.
  * @param date The date giving the correct day, month and year.
- * @param time The time in the format of "H:MM:SS (AM/PM)"
+ * @param time The time in the format of "HH:MM" or "-:-"
  */
-function parseTime(date: Date, time: string): Date {
-  const [hours, minutes, seconds] = time.split(" ")[0].split(":").map(Number);
-  const isPM = time.includes("PM");
-  const hour = isPM ? (hours % 12 + 12) : (hours % 12);
-  const minute = minutes;
-  const second = seconds;
+function parseTime(date: Date, time: string): Date | null {
+  if (time === "-:-") return null;
+  if (time.length > 5) {
+    const [datePart, timePart] = time.split(" ");
+    const [year, month, day] = datePart.split("-").map(Number);
+    const [hours, minutes] = timePart.split(":").map(Number);
+    const parsedDate = new Date(year, month - 1, day);
+    parsedDate.setHours(hours, minutes, 0);
+    return parsedDate;
+  }
+  const [hours, minutes] = time.split(":").map(Number);
   const parsedDate = new Date(date);
-  parsedDate.setHours(hour, minute, second);
+  parsedDate.setHours(hours, minutes, 0);
   return parsedDate;
 }
 
-function getLocationApiUrl(location: string) {
-  return `https://nominatim.openstreetmap.org/search?q=${location}&format=json`;
+function getAstronomyApiUrlForCoords(latitude: number, longitude: number, date: string): URL {
+  const url = new URL("https://api.ipgeolocation.io/v2/astronomy");
+  url.searchParams.set("apiKey", process.env.IPGEOLOCATION_API_KEY!);
+  url.searchParams.set("lat", latitude.toString());
+  url.searchParams.set("long", longitude.toString());
+  url.searchParams.set("date", date);
+  url.searchParams.set("time_zone", "UTC");
+  return url;
 }
 
-function getSunriseApiUrl(latitude: number, longitude: number, date: string) {
-  return `https://api.sunrise-sunset.org/json?lat=${latitude}&lng=${longitude}&date=${date}`;
+function getAstronomyApiUrlForLocation(location: string, date: string): URL {
+  const url = new URL("https://api.ipgeolocation.io/v2/astronomy");
+  url.searchParams.set("apiKey", process.env.IPGEOLOCATION_API_KEY!);
+  url.searchParams.set("location", location);
+  url.searchParams.set("date", date);
+  url.searchParams.set("time_zone", "UTC");
+  return url;
 }
 
-async function getCoordinatesFromLocation(location: string): Promise<Coordinates> {
-  const response = await fetch(getLocationApiUrl(location));
-  const data: LocationResponseItem[] = await response.json();
-  if (data.length === 0) throw new Error(`No location found for ${location}`);
-  const mostImportantLocation = data.sort((a, b) => b.importance - a.importance)[0];
+function isCoordinates(location: AstronomyRequestData["location"]): location is Coordinates {
+  return typeof location === "object" && location !== null && "latitude" in location && "longitude" in location;
+}
+
+export async function getAstronomyData(requestData: AstronomyRequestData): Promise<AstronomyData> {
+  const url = isCoordinates(requestData.location)
+    ? getAstronomyApiUrlForCoords(
+        requestData.location.latitude,
+        requestData.location.longitude,
+        formatDate(requestData.date),
+      )
+    : getAstronomyApiUrlForLocation(requestData.location, formatDate(requestData.date));
+  const response = await fetch(url);
+  if (response.status !== 200) {
+    throw new Error(`Failed to fetch astronomy data. Status: ${response.status} ${response.statusText}`);
+  }
+  const data: AstronomyApiResponse = await response.json();
+  const responseDate = new Date(data.astronomy.date);
   return {
-    latitude: parseFloat(mostImportantLocation.lat),
-    longitude: parseFloat(mostImportantLocation.lon),
+    sunrise: parseTime(responseDate, data.astronomy.sunrise),
+    sunset: parseTime(responseDate, data.astronomy.sunset),
+    moonrise: parseTime(responseDate, data.astronomy.moonrise),
+    moonset: parseTime(responseDate, data.astronomy.moonset),
+    latitude: data.location.latitude,
+    longitude: data.location.longitude,
+    location: data.location.location_string,
+    date: responseDate,
   };
-}
-
-export async function getSunDataFromLatitudeAndLongitude(latitude: number, longitude: number, date?: Date): Promise<SunData> {
-  const givenDate = date ?? new Date();
-  const formattedDate = formatDate(givenDate);
-  const response = await fetch(getSunriseApiUrl(latitude, longitude, formattedDate));
-  const data: SunriseSunsetResponse = await response.json();
-  if (data.status !== "OK") throw new Error(`Failed to get sunrise/sunset data for ${latitude}, ${longitude} on ${formattedDate}: ${data.status}`);
-  return {
-    sunrise: parseTime(givenDate, data.results.sunrise),
-    sunset: parseTime(givenDate, data.results.sunset),
-  };
-}
-
-export async function getSunDataFromLocation(location: string, date?: Date): Promise<SunData> {
-  const coordinates = await getCoordinatesFromLocation(location);
-  return await getSunDataFromLatitudeAndLongitude(coordinates.latitude, coordinates.longitude, date);
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { BsMoonStars, BsSun } from "react-icons/bs";
 import { MdMyLocation } from "react-icons/md";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@packages/ui/components/ui/select";
 import { Input } from "@packages/ui/components/ui/input";
@@ -11,20 +10,16 @@ import ToolTitle from "../../components/ToolTitle";
 import Theory from "../../components/Theory";
 import { Button } from "@/components/ui/button";
 import tzLookup from "tz-lookup";
-import { Coordinates } from "./types";
+import { AstronomyData, Coordinates } from "./types";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { ChevronDownIcon, Moon, Sun } from "lucide-react";
 import { format } from "date-fns";
+import { getAstronomyData } from "@/app/actions/sunrise-sunset-calculator";
 
-type CelestialMode = "sunrise" | "moonrise";
+type ComputedQuantity = "sunrise" | "moonrise";
 type LocationMode = "place" | "coordinates" | "current";
 type TimezoneMode = "local" | "locationLocal" | "utc" | "tzid";
-
-type RiseSetTimes = {
-  rise: Date;
-  set: Date;
-};
 
 const fallbackTimezones = [
   "UTC",
@@ -36,8 +31,31 @@ const fallbackTimezones = [
   "Australia/Sydney",
 ];
 
+function InfoBox({
+  name,
+  formattedTime,
+  icon,
+  color,
+}: {
+  name: string;
+  formattedTime: [string, string];
+  icon: React.ReactNode;
+  color: "text-red-400" | "text-blue-300";
+}) {
+  return (
+    <>
+      <div className={`flex items-center gap-2 text-sm font-medium ${color}`}>
+        {icon}
+        {name}
+      </div>
+      <div className="text-foreground text-2xl font-semibold">{formattedTime[1]}</div>
+      <p className="text-muted-foreground text-sm">{formattedTime[0]}</p>
+    </>
+  );
+}
+
 export default function SunriseSunsetCalculatorPage() {
-  const [celestialMode, setCelestialMode] = useState<CelestialMode>("sunrise");
+  const [computedQuantity, setComputedQuantity] = useState<ComputedQuantity>("sunrise");
   const [locationMode, setLocationMode] = useState<LocationMode>("place");
   const [timezoneMode, setTimezoneMode] = useState<TimezoneMode>("utc");
 
@@ -64,6 +82,7 @@ export default function SunriseSunsetCalculatorPage() {
   const [eventDate, setEventDate] = useState<Date>(new Date());
   const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<AstronomyData | null>(null);
 
   const selectedTimeZone = useMemo(() => {
     switch (timezoneMode) {
@@ -71,9 +90,10 @@ export default function SunriseSunsetCalculatorPage() {
         return tzLookup(deviceCoordinates!.latitude, deviceCoordinates!.longitude);
       case "locationLocal":
         try {
+          if (!result) return "UTC";
           const parsedCoords = {
-            latitude: parseFloat(latitude),
-            longitude: parseFloat(longitude),
+            latitude: result.latitude,
+            longitude: result.longitude,
           };
           const tzid = tzLookup(parsedCoords.latitude, parsedCoords.longitude);
           return tzid;
@@ -87,37 +107,23 @@ export default function SunriseSunsetCalculatorPage() {
     }
   }, [latitude, longitude, timezoneMode, deviceCoordinates, timezoneId]);
 
-  const formatTime = useCallback(
-    (date: Date) => {
-      return new Intl.DateTimeFormat(undefined, {
+  const timezonedDate = useCallback(
+    (date: Date | null, fallbackDate: Date) => {
+      const dateString = new Intl.DateTimeFormat(undefined, {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
         hour: "numeric",
         minute: "2-digit",
         hour12: false,
         timeZone: selectedTimeZone,
-      }).format(date);
+      }).format(date ?? fallbackDate);
+      let [datePart, timePart] = dateString.split(", ");
+      if (!date) timePart = '--:--';
+      return [datePart, timePart] as [string, string];
     },
-    [selectedTimeZone],
+    [selectedTimeZone, result],
   );
-
-  const computeDummyTimes = useCallback((): RiseSetTimes => {
-    const base = new Date();
-    const rise = new Date(base);
-    const set = new Date(base);
-
-    // Simple offsets to make the UI feel dynamic across modes.
-    const baseRiseHour = celestialMode === "sunrise" ? 6 : 17;
-    const baseSetHour = celestialMode === "sunrise" ? 18 : 5;
-    const locationOffset = locationMode === "coordinates" ? 0.5 : locationMode === "current" ? -0.5 : 0;
-    const tzOffset =
-      timezoneMode === "utc" ? 0 : timezoneMode === "locationLocal" ? 0.75 : timezoneMode === "tzid" ? 0.25 : 1;
-
-    rise.setHours(baseRiseHour + locationOffset + tzOffset, 20, 0, 0);
-    set.setHours(baseSetHour + locationOffset + tzOffset, 10, 0, 0);
-
-    return { rise, set };
-  }, [celestialMode, locationMode, timezoneMode]);
-
-  const result = useMemo(() => computeDummyTimes(), [computeDummyTimes]);
 
   const requestDeviceCoordinates = useCallback(() => {
     if (typeof navigator === "undefined" || !navigator.geolocation) {
@@ -166,20 +172,36 @@ export default function SunriseSunsetCalculatorPage() {
     }
   }, [deviceCoordinates, geoStatus]);
 
-  const onLocationModeChange = (mode: LocationMode) => {
-    setLocationMode(mode);
-    if (mode === "place" && timezoneMode === "locationLocal") {
-      setTimezoneMode("utc");
-    }
-  };
-
   useEffect(() => {
     if (locationMode === "current") {
       handleUseCurrentLocation();
     }
   }, [handleUseCurrentLocation, locationMode]);
 
-  const modeLabel = celestialMode === "sunrise" ? "Sunrise & Sunset" : "Moonrise & Moonset";
+  const handleCalculate = useCallback(async () => {
+    setIsCalculating(true);
+    try {
+      let result;
+      if (locationMode === "place") {
+        result = await getAstronomyData({ location: locationQuery, date: eventDate });
+      } else if (locationMode === "coordinates") {
+        result = await getAstronomyData({
+          location: { latitude: parseFloat(latitude), longitude: parseFloat(longitude) },
+          date: eventDate,
+        });
+      } else if (locationMode === "current") {
+        result = await getAstronomyData({ location: deviceCoordinates!, date: eventDate });
+      }
+      setResult(result!);
+      setError(null);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "An unknown error occurred.");
+    } finally {
+      setIsCalculating(false);
+    }
+  }, [locationQuery, eventDate]);
+
+  const modeLabel = computedQuantity === "sunrise" ? "Sunrise & Sunset" : "Moonrise & Moonset";
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
@@ -200,11 +222,11 @@ export default function SunriseSunsetCalculatorPage() {
                 { key: "sunrise", label: "Sunrise / Sunset", icon: Sun },
                 { key: "moonrise", label: "Moonrise / Moonset", icon: Moon },
               ].map(({ key, label, icon: Icon }) => {
-                const active = celestialMode === key;
+                const active = computedQuantity === key;
                 return (
                   <button
                     key={key}
-                    onClick={() => setCelestialMode(key as CelestialMode)}
+                    onClick={() => setComputedQuantity(key as ComputedQuantity)}
                     className={`flex w-full items-center justify-center gap-2 rounded-md px-3 py-2 text-center text-sm font-medium transition-colors ${
                       active
                         ? key === "sunrise"
@@ -234,7 +256,7 @@ export default function SunriseSunsetCalculatorPage() {
                 return (
                   <button
                     key={key}
-                    onClick={() => onLocationModeChange(key as LocationMode)}
+                    onClick={() => setLocationMode(key as LocationMode)}
                     className={`w-full rounded-md px-3 py-2 text-center text-sm font-medium transition-colors ${
                       active ? "bg-card text-primary shadow" : "text-muted-foreground hover:bg-accent"
                     }`}
@@ -295,8 +317,8 @@ export default function SunriseSunsetCalculatorPage() {
                   Using browser location
                 </div>
                 <div className="text-muted-foreground flex flex-wrap items-center gap-3 text-sm">
-                  <span>Lat: {latitude}</span>
-                  <span>Lng: {longitude}</span>
+                  <span>Lat: {deviceCoordinates?.latitude.toFixed(4) ?? "-"}</span>
+                  <span>Lng: {deviceCoordinates?.longitude.toFixed(4) ?? "-"}</span>
                   <button
                     onClick={handleUseCurrentLocation}
                     className="text-primary hover:text-primary/80 underline underline-offset-4 transition"
@@ -326,8 +348,8 @@ export default function SunriseSunsetCalculatorPage() {
                   mode="single"
                   selected={eventDate}
                   captionLayout="dropdown"
-                  startMonth={new Date(1900, 0)}
-                  endMonth={new Date(new Date().getFullYear() + 10, 11)}
+                  startMonth={new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 90)}
+                  endMonth={new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 90)}
                   onSelect={(date) => {
                     setEventDate(date ?? new Date());
                     setDatePickerOpen(false);
@@ -355,9 +377,7 @@ export default function SunriseSunsetCalculatorPage() {
                     className={`flex-1 rounded-md px-3 py-2 text-center text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
                       active ? "bg-card text-primary shadow" : "text-muted-foreground hover:bg-accent"
                     }`}
-                    disabled={
-                      (key === "local" && !deviceCoordinates) || (key === "locationLocal" && locationMode === "place")
-                    }
+                    disabled={key === "local" && !deviceCoordinates}
                   >
                     {label}
                   </button>
@@ -382,53 +402,64 @@ export default function SunriseSunsetCalculatorPage() {
                 </Select>
               </div>
             )}
+
+            {error && (
+              <div>
+                <p className="text-foreground mt-6 font-medium">Error</p>
+                <p className="text-destructive mt-2 text-sm">{error}</p>
+              </div>
+            )}
           </div>
-          <Button className="mt-4 w-full">Calculate</Button>
+          <Button
+            className="mt-4 w-full"
+            disabled={
+              isCalculating ||
+              (locationMode === "place" && locationQuery === "") ||
+              (locationMode === "coordinates" && (latitude === "" || longitude === "")) ||
+              (locationMode === "current" && !deviceCoordinates)
+            }
+            onClick={handleCalculate}
+          >
+            Calculate
+          </Button>
         </div>
 
         {/* Results Card */}
         <div className="border-border bg-card rounded-lg border p-6 shadow-lg">
-          <h2 className="text-foreground mb-4 text-lg font-semibold">{modeLabel}</h2>
-          <div className="text-muted-foreground mb-4 text-sm">
-            <p>
-              Timezone: <span className="text-foreground font-medium">{selectedTimeZone}</span>
-            </p>
-            {/* //TODO: Get these from the API response */}
-            {/* <p>Date: <span className="text-foreground font-medium">{format(eventDate, "MMMM dd, yyyy")}</span></p> */}
-            {/* <p>Location: <span className="text-foreground font-medium">{latitude}, {longitude}</span></p> */}
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="border-border flex flex-col gap-2 rounded-lg border p-4">
-              <div className="flex items-center gap-2 text-sm font-medium text-red-400">
-                {celestialMode === "sunrise" ? (
-                  <>
-                    <Sun className="h-4 w-4" /> Sunrise
-                  </>
-                ) : (
-                  <>
-                    <Moon className="h-4 w-4" /> Moonrise
-                  </>
-                )}
+          {result && (
+            <>
+              <h2 className="text-foreground mb-4 text-lg font-semibold">{modeLabel}</h2>
+              <div className="text-muted-foreground mb-4 text-sm">
+                <p>
+                  Timezone: <span className="text-foreground font-medium">{selectedTimeZone}</span>
+                </p>
+                <p>
+                  Date: <span className="text-foreground font-medium">{format(result.date, "MMMM dd, yyyy")}</span>
+                </p>
+                <p>
+                  Location: <span className="text-foreground font-medium">{result.location ?? "Unknown"}</span>
+                </p>
               </div>
-              <div className="text-foreground text-2xl font-semibold">{formatTime(result.rise)}</div>
-            </div>
 
-            <div className="border-border flex flex-col gap-2 rounded-lg border p-4">
-              <div className="flex items-center gap-2 text-sm font-medium text-blue-300">
-                {celestialMode === "sunrise" ? (
-                  <>
-                    <Sun className="h-4 w-4" /> Sunset
-                  </>
-                ) : (
-                  <>
-                    <Moon className="h-4 w-4" /> Moonset
-                  </>
-                )}
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="border-border flex flex-col gap-2 rounded-lg border p-4">
+                  {computedQuantity === "sunrise" ? (
+                    <InfoBox name="Sunrise" formattedTime={timezonedDate(result.sunrise, eventDate)} icon={<Sun className="h-4 w-4" />} color="text-red-400" />
+                  ) : (
+                    <InfoBox name="Moonrise" formattedTime={timezonedDate(result.moonrise, eventDate)} icon={<Moon className="h-4 w-4" />} color="text-red-400" />
+                  )}
+                </div>
+
+                <div className="border-border flex flex-col gap-2 rounded-lg border p-4">
+                  {computedQuantity === "sunrise" ? (
+                    <InfoBox name="Sunset" formattedTime={timezonedDate(result.sunset, eventDate)} icon={<Sun className="h-4 w-4" />} color="text-blue-300" />
+                  ) : (
+                    <InfoBox name="Moonset" formattedTime={timezonedDate(result.moonset, eventDate)} icon={<Moon className="h-4 w-4" />} color="text-blue-300" />
+                  )}
+                </div>
               </div>
-              <div className="text-foreground text-2xl font-semibold">{formatTime(result.set)}</div>
-            </div>
-          </div>
+            </>
+          )}
         </div>
       </div>
 
