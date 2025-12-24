@@ -87,7 +87,8 @@ export default function SunriseSunsetCalculatorPage() {
   const selectedTimeZone = useMemo(() => {
     switch (timezoneMode) {
       case "local":
-        return tzLookup(deviceCoordinates!.latitude, deviceCoordinates!.longitude);
+        if (!deviceCoordinates) return "UTC";
+        return tzLookup(deviceCoordinates.latitude, deviceCoordinates.longitude);
       case "locationLocal":
         try {
           if (!result) return "UTC";
@@ -105,7 +106,7 @@ export default function SunriseSunsetCalculatorPage() {
       default:
         return "UTC";
     }
-  }, [latitude, longitude, timezoneMode, deviceCoordinates, timezoneId]);
+  }, [timezoneMode, deviceCoordinates, timezoneId, result]);
 
   const timezonedDate = useCallback(
     (date: Date | null, fallbackDate: Date) => {
@@ -122,7 +123,7 @@ export default function SunriseSunsetCalculatorPage() {
       if (!date) timePart = '--:--';
       return [datePart, timePart] as [string, string];
     },
-    [selectedTimeZone, result],
+    [selectedTimeZone],
   );
 
   const requestDeviceCoordinates = useCallback(() => {
@@ -420,13 +421,13 @@ export default function SunriseSunsetCalculatorPage() {
             }
             onClick={handleCalculate}
           >
-            Calculate
+            {isCalculating ? "Calculating..." : "Calculate"}
           </Button>
         </div>
 
         {/* Results Card */}
         <div className="border-border bg-card rounded-lg border p-6 shadow-lg">
-          {result && (
+          {result ? (
             <>
               <h2 className="text-foreground mb-4 text-lg font-semibold">{modeLabel}</h2>
               <div className="text-muted-foreground mb-4 text-sm">
@@ -459,6 +460,10 @@ export default function SunriseSunsetCalculatorPage() {
                 </div>
               </div>
             </>
+          ) : (
+            <div className="-translate-y-1/2 top-1/2 relative text-muted-foreground text-center">
+              <p>The result will be displayed here after pressing the "Calculate" button.</p>
+            </div>
           )}
         </div>
       </div>
